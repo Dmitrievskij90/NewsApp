@@ -46,7 +46,7 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCell.identifier, for: indexPath) as? SearchCell else {
             return UICollectionViewCell()
         }
-        cell.backgroundColor = UIColor.blue
+        
         return cell
     }
 
