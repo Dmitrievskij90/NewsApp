@@ -18,13 +18,14 @@ class SearchCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
+        imageView.image = UIImage(named: "news_image")
         return imageView
     }()
 
-    let autorLabel: UILabel = {
+    let authorLabel: UILabel = {
         let label = UILabel()
         label.text = "Autor"
-        label.font = .systemFont(ofSize: 16)
+        label.font = .boldSystemFont(ofSize: 16)
         label.textColor = .black
         return label
     }()
@@ -32,8 +33,9 @@ class SearchCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "A Field Guide for Nature-Resistant Nerds"
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 14)
         label.textColor = .black
+        label.numberOfLines = 2
         return label
     }()
 
@@ -44,7 +46,7 @@ class SearchCell: UICollectionViewCell {
         backgroundColor = UIColor(white: 0.9, alpha: 1)
 
         let verticalStackView = UIStackView(arrangedSubviews: [
-            autorLabel,
+            authorLabel,
             titleLabel
         ])
         verticalStackView.axis = .vertical

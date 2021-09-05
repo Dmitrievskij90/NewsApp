@@ -26,7 +26,7 @@ class NewsSearchController: UIViewController {
     }
 
     func fechData() {
-        let urlString = "https://newsapi.org/v2/everything?q=Football&sortBy=popularity&apiKey=61bba430f9444209af20b7856ae3d12e"
+        let urlString = "https://newsapi.org/v2/everything?q=Football&sortBy=publishedAt&apiKey=61bba430f9444209af20b7856ae3d12e"
 
         NetworkService.shared.fetchData(with: urlString) { ( newsResults: NewsData?, error) in
 
@@ -67,10 +67,15 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
 
         let res = results[indexPath.item]
 
-        cell.autorLabel.text = res.author
+        cell.authorLabel.text = res.source.name
         cell.titleLabel.text = res.title
-        cell.imageView.sd_setImage(with: URL(string: res.urlToImage))
-        
+
+        if let image = res.urlToImage {
+            cell.imageView.sd_setImage(with: URL(string: image))
+        } else {
+            cell.imageView.image = UIImage(named: "news_image")
+        }
+
         return cell
     }
 
