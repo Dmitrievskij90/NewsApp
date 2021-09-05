@@ -12,6 +12,13 @@ class NewsSearchController: UIViewController {
 
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var results = [Articles]()
+    private let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(style: .large)
+        aiv.color = .darkGray
+        aiv.startAnimating()
+        aiv.hidesWhenStopped = true
+        return aiv
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +30,9 @@ class NewsSearchController: UIViewController {
         view.backgroundColor = .white
         self.view = view
         setupCollectinView()
+
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.centerInSuperview()
     }
 
     func fechData() {
@@ -36,6 +46,7 @@ class NewsSearchController: UIViewController {
 
             self.results = newsResults?.articles ?? []
             DispatchQueue.main.async {
+                self.activityIndicatorView.stopAnimating()
                 self.collectionView.reloadData()
             }
         }
@@ -70,7 +81,7 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
         cell.authorLabel.text = res.source.name
         cell.titleLabel.text = res.title
 
-        if let image = res.urlToImage {
+        if let image = res.urlToImage, res.urlToImage != "" {
             cell.imageView.sd_setImage(with: URL(string: image))
         } else {
             cell.imageView.image = UIImage(named: "news_image")
