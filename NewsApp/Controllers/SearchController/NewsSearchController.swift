@@ -12,17 +12,21 @@ class NewsSearchController: UIViewController {
 
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var results = [Articles]()
-    private let activityIndicatorView: UIActivityIndicatorView = {
-        let aiv = UIActivityIndicatorView(style: .large)
-        aiv.color = .darkGray
-        aiv.startAnimating()
-        aiv.hidesWhenStopped = true
-        return aiv
+    private var timer: Timer?
+    private let searhController = UISearchController(searchResultsController: nil)
+    private let enterSearchTermLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Please search term above..."
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
     }()
+
+    var string = "576"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fechData()
+
     }
 
     override func loadView() {
@@ -30,26 +34,17 @@ class NewsSearchController: UIViewController {
         view.backgroundColor = .white
         self.view = view
         setupCollectinView()
+        setupSearchBar()
 
-        view.addSubview(activityIndicatorView)
-        activityIndicatorView.centerInSuperview()
+        collectionView.addSubview(enterSearchTermLabel)
+        enterSearchTermLabel.fillSuperview(padding: .init(top: 100, left: 100, bottom: 0, right: 100))
     }
 
-    func fechData() {
-        let urlString = "https://newsapi.org/v2/everything?q=Football&sortBy=publishedAt&apiKey=61bba430f9444209af20b7856ae3d12e"
-
-        NetworkService.shared.fetchData(with: urlString) { ( newsResults: NewsData?, error) in
-
-            if let err = error {
-                print("Failed fatching data", err)
-            }
-
-            self.results = newsResults?.articles ?? []
-            DispatchQueue.main.async {
-                self.activityIndicatorView.stopAnimating()
-                self.collectionView.reloadData()
-            }
-        }
+    private func setupSearchBar() {
+        definesPresentationContext = true
+        navigationItem.searchController = self.searhController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searhController.searchBar.delegate = self
     }
 
     private func setupCollectinView() {
@@ -68,6 +63,7 @@ class NewsSearchController: UIViewController {
 
 extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        enterSearchTermLabel.isHidden = results.count != 0
         return results.count
     }
 
