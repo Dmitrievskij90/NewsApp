@@ -15,7 +15,7 @@ class SearchCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "plant_image")
         imageView.constrainWidth(constant: 80)
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         return imageView
