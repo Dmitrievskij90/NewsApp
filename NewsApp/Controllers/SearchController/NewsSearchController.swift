@@ -99,6 +99,27 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     }
 }
 
+extension NewsSearchController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        timer?.invalidate()
+
+        let term = searchText.replacingOccurrences(of: " ", with: "")
+
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
+            NetworkService.shared.fetchNews(searchTerm: term) { (results, error) in
+                if let err = error {
+                    print("Failed to fetch apps:", err)
+                    return
+                }
+                self.results = results?.articles ?? []
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+        })
+    }
+}
+
 
 
 
