@@ -86,6 +86,11 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width - 32, height: 100)
     }
+
+     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let appDetailController = DetailsController()
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
 }
 
 extension NewsSearchController: UISearchBarDelegate {
