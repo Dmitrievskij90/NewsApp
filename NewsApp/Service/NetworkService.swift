@@ -20,7 +20,8 @@ class NetworkService {
     func fetchData<T: Codable>(with urlString: String, completion: @escaping (T?, Error?) -> ()) {
                                                     
         guard let url = URL(string: urlString) else {
-            fatalError("Can't load url")
+            print("Can't load url")
+            return
         }
 
         URLSession.shared.dataTask(with: url) { (data, responce, error) in

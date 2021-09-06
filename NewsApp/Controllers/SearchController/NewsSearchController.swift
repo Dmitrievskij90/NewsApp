@@ -22,11 +22,8 @@ class NewsSearchController: UIViewController {
         return label
     }()
 
-    var string = "576"
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
 
     override func loadView() {
@@ -89,14 +86,6 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width - 32, height: 100)
     }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 32
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return.init(top: 32, left: 0, bottom: 32, right: 0)
-    }
 }
 
 extension NewsSearchController: UISearchBarDelegate {
@@ -119,7 +108,6 @@ extension NewsSearchController: UISearchBarDelegate {
         })
     }
 }
-
 
 
 

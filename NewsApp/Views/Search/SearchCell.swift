@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchCell: UICollectionViewCell {
+class SearchCell: BaseCell {
 
     static let identifier = "SearchCell"
 
@@ -25,7 +25,7 @@ class SearchCell: UICollectionViewCell {
     let authorLabel: UILabel = {
         let label = UILabel()
         label.text = "Autor"
-        label.font = .boldSystemFont(ofSize: 16)
+        label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
         return label
     }()
@@ -33,7 +33,7 @@ class SearchCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "A Field Guide for Nature-Resistant Nerds"
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 16)
         label.textColor = .black
         label.numberOfLines = 2
         return label
@@ -43,7 +43,7 @@ class SearchCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = 16
-        backgroundColor = UIColor(white: 0.9, alpha: 1)
+        backgroundColor = .white
 
         let verticalStackView = UIStackView(arrangedSubviews: [
             authorLabel,
@@ -56,11 +56,11 @@ class SearchCell: UICollectionViewCell {
             imageView,
             verticalStackView
         ])
-        stackVIew.spacing = 8
+        stackVIew.spacing = 16
         stackVIew.alignment = .center
 
         addSubview(stackVIew)
-        stackVIew.fillSuperview()
+        stackVIew.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
 
     }
 
