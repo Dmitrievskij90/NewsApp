@@ -19,16 +19,28 @@ class ImageHeaderCell: UICollectionViewCell {
         return imageView
     }()
 
+    let sourceLabel: UILabel = {
+        let label = UILabel()
+        label.constrainHeight(constant: 50)
+        label.font = UIFont(name: "ScopeOne-Regular", size: 25)
+        label.textColor = .black
+        label.textAlignment = .center
+        return label
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.isUserInteractionEnabled = false
 
-        backgroundColor = .blue
+        let verticalStackView = UIStackView(arrangedSubviews: [
+            sourceLabel,
+            headerImagView
+        ])
+        verticalStackView.axis = .vertical
 
-        addSubview(headerImagView)
-        headerImagView.fillSuperview(padding: .init(top: 10, left: 10, bottom: 10, right: 10))
+        addSubview(verticalStackView)
+        verticalStackView.fillSuperview(padding: .init(top: 10, left: 10, bottom: 10, right: 10))
     }
-
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
