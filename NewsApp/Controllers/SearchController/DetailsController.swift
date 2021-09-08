@@ -11,8 +11,7 @@ class DetailsController: UIViewController {
 
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
 
-    let cellId = "cellId"
-    let headerCellId = "headerCellId"
+    var dataSource: Articles?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +21,7 @@ class DetailsController: UIViewController {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
         self.view = view
+
         setupCollectinView()
     }
 
@@ -50,12 +50,14 @@ extension DetailsController: UICollectionViewDataSource, UICollectionViewDelegat
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageHeaderCell.identifier, for: indexPath) as? ImageHeaderCell else {
                 return UICollectionViewCell()
             }
+            cell.dataSource = self.dataSource
             return cell
         }
 
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsDetailCell.identifier, for: indexPath) as? NewsDetailCell else {
             return UICollectionViewCell()
         }
+        cell.dataSource = self.dataSource
         return cell
     }
 
@@ -63,7 +65,7 @@ extension DetailsController: UICollectionViewDataSource, UICollectionViewDelegat
         if indexPath.item == 0 {
             return.init(width: view.frame.width, height: view.frame.height / 3)
         }
-        return .init(width: view.frame.width, height: view.frame.height / 2 )
+        return .init(width: view.frame.width, height: view.frame.height / 2)
     }
 
 
