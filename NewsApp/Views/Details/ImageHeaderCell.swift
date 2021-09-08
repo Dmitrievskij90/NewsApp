@@ -10,6 +10,19 @@ import UIKit
 class ImageHeaderCell: UICollectionViewCell {
     static let identifier = "ImageHeaderCell"
 
+    var dataSource: Articles? {
+        didSet {
+            if let source = dataSource {
+                sourceLabel.text = source.source.name.uppercased()
+                if let image = source.urlToImage, source.urlToImage != "" {
+                    headerImagView.sd_setImage(with: URL(string: image))
+                } else {
+                    headerImagView.image = UIImage(named: "news_image")
+                }
+            }
+        }
+    }
+
     let headerImagView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "news_image")
