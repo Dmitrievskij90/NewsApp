@@ -88,7 +88,9 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     }
 
      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let res = results[indexPath.item]
         let appDetailController = DetailsController()
+        appDetailController.dataSource = res
         navigationController?.pushViewController(appDetailController, animated: true)
     }
 }
