@@ -14,8 +14,12 @@ class DetailsController: UIViewController {
     private let floatingContainerView = FloatingContainerView()
     private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
 
+    // MARK: - Lificycle methods
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDismissFloatinContainerView))
+        view.addGestureRecognizer(tapGestureRecognizer)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -23,6 +27,8 @@ class DetailsController: UIViewController {
         tabBarController?.tabBar.alpha = 0
     }
 
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
@@ -52,6 +58,7 @@ class DetailsController: UIViewController {
         floatingContainerView.imageView.sd_setImage(with: URL(string: dataSource?.urlToImage ?? ""))
     }
 
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 10 {
             if floatingContainerView.transform == .identity {
@@ -61,8 +68,16 @@ class DetailsController: UIViewController {
             }
         }
     }
+
+    @objc func handleDismissFloatinContainerView() {
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+            self.floatingContainerView.transform = .identity
+        }
+    }
 }
 
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout methods
+// MARK: -
 extension DetailsController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
