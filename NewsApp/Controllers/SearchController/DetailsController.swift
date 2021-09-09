@@ -10,19 +10,26 @@ import UIKit
 class DetailsController: UIViewController {
 
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-
     var dataSource: Articles?
+    private let floatingContainerView = FloatingContainerView()
+    private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.alpha = 0
     }
 
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
         self.view = view
-
+        navigationController?.navigationBar.tintColor = .label
         setupCollectinView()
+        setupFloatingContainerView()
     }
 
     private func setupCollectinView() {
@@ -37,6 +44,22 @@ class DetailsController: UIViewController {
         collectionView.delegate = self
 
         view.addSubview(collectionView)
+    }
+
+    private func setupFloatingContainerView() {
+        view.addSubview(floatingContainerView)
+        floatingContainerView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: -90, right: 16), size: .init(width: 0, height: 90))
+        floatingContainerView.imageView.sd_setImage(with: URL(string: dataSource?.urlToImage ?? ""))
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 10 {
+            if floatingContainerView.transform == .identity {
+                UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+                    self.floatingContainerView.transform = .init(translationX: 0, y: -100 - self.bottomPadding)
+                }
+            }
+        }
     }
 }
 
