@@ -13,7 +13,6 @@ class SearchCell: BaseCell {
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "plant_image")
         imageView.constrainWidth(constant: 80)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
