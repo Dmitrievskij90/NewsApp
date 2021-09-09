@@ -11,6 +11,7 @@ class BaseTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = .black
 
         viewControllers = [
             createNavController(viewController: NewsSearchController(), title: "Search", imageName: "search_icon"),
