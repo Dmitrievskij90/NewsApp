@@ -9,6 +9,8 @@ import UIKit
 
 class FloatingContainerView: UIView {
 
+    var transitionHandler: (()->())?
+
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.constrainWidth(constant: 80)
@@ -36,8 +38,9 @@ class FloatingContainerView: UIView {
         button.contentMode = .center
         button.backgroundColor = .darkGray
         button.layer.cornerRadius = 20
-        button.constrainWidth(constant: 80)
+        button.constrainWidth(constant: 90)
         button.constrainHeight(constant: 40)
+        button.addTarget(self, action: #selector(goToWebController), for: .touchUpInside)
         return button
     }()
 
@@ -62,5 +65,9 @@ class FloatingContainerView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc func goToWebController() {
+        transitionHandler!()
     }
 }

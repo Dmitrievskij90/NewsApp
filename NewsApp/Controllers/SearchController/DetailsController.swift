@@ -56,6 +56,12 @@ class DetailsController: UIViewController {
         view.addSubview(floatingContainerView)
         floatingContainerView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: -90, right: 16), size: .init(width: 0, height: 90))
         floatingContainerView.imageView.sd_setImage(with: URL(string: dataSource?.urlToImage ?? ""))
+        floatingContainerView.transitionHandler = { [weak self] in
+            let viewController = WebNewsViewController()
+            viewController.modalPresentationStyle = .fullScreen
+            viewController.urlString = self?.dataSource?.url ?? ""
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
 
 
