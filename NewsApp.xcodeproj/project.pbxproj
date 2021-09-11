@@ -23,6 +23,7 @@
 		5CA46F0A26E377A70031A540 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA46F0926E377A70031A540 /* BaseTabBarController.swift */; };
 		5CA46F0F26E37AAB0031A540 /* NewsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA46F0E26E37AAB0031A540 /* NewsSearchController.swift */; };
 		5CA46F1626E37D390031A540 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA46F1526E37D390031A540 /* SearchCell.swift */; };
+		5CA874BC26ECF32900ABA803 /* TodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA874BB26ECF32900ABA803 /* TodayCell.swift */; };
 		5CB501D926E6513900246670 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB501D826E6513900246670 /* BaseCell.swift */; };
 		5CB501DC26E655C700246670 /* ScopeOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CB501DB26E655C700246670 /* ScopeOne-Regular.ttf */; };
 		5CB501E226E6716700246670 /* DetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB501E126E6716700246670 /* DetailsController.swift */; };
@@ -53,6 +54,7 @@
 		5CA46F0926E377A70031A540 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		5CA46F0E26E37AAB0031A540 /* NewsSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsSearchController.swift; sourceTree = "<group>"; };
 		5CA46F1526E37D390031A540 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		5CA874BB26ECF32900ABA803 /* TodayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCell.swift; sourceTree = "<group>"; };
 		5CB501D826E6513900246670 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		5CB501DB26E655C700246670 /* ScopeOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ScopeOne-Regular.ttf"; sourceTree = "<group>"; };
 		5CB501E126E6716700246670 /* DetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsController.swift; sourceTree = "<group>"; };
@@ -175,19 +177,28 @@
 		5CA46F1326E37D030031A540 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5CA46F1426E37D0D0031A540 /* Search */,
-				5CB501E426E6746F00246670 /* Details */,
+				5CA874BA26ECF31600ABA803 /* TodayCell */,
+				5CA46F1426E37D0D0031A540 /* SearchCell */,
+				5CB501E426E6746F00246670 /* DetailsCells */,
 				5CB501D826E6513900246670 /* BaseCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5CA46F1426E37D0D0031A540 /* Search */ = {
+		5CA46F1426E37D0D0031A540 /* SearchCell */ = {
 			isa = PBXGroup;
 			children = (
 				5CA46F1526E37D390031A540 /* SearchCell.swift */,
 			);
-			path = Search;
+			path = SearchCell;
+			sourceTree = "<group>";
+		};
+		5CA874BA26ECF31600ABA803 /* TodayCell */ = {
+			isa = PBXGroup;
+			children = (
+				5CA874BB26ECF32900ABA803 /* TodayCell.swift */,
+			);
+			path = TodayCell;
 			sourceTree = "<group>";
 		};
 		5CB501DE26E6563E00246670 /* Resources */ = {
@@ -198,14 +209,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		5CB501E426E6746F00246670 /* Details */ = {
+		5CB501E426E6746F00246670 /* DetailsCells */ = {
 			isa = PBXGroup;
 			children = (
 				5CB501E526E674B700246670 /* ImageHeaderCell.swift */,
 				5CB501E926E675DF00246670 /* NewsDetailCell.swift */,
 				5C7098C926E93EB600A8AEC5 /* FloatingContainerView.swift */,
 			);
-			path = Details;
+			path = DetailsCells;
 			sourceTree = "<group>";
 		};
 		5CB501EC26E6764A00246670 /* DetailsController */ = {
@@ -370,6 +381,7 @@
 				5CA46EF726E36DDC0031A540 /* ViewController.swift in Sources */,
 				5C43A93326E51185005FDD7B /* NetworkService.swift in Sources */,
 				5CA46F0F26E37AAB0031A540 /* NewsSearchController.swift in Sources */,
+				5CA874BC26ECF32900ABA803 /* TodayCell.swift in Sources */,
 				5CA46EF326E36DDC0031A540 /* AppDelegate.swift in Sources */,
 				5CB501EA26E675DF00246670 /* NewsDetailCell.swift in Sources */,
 				5CFB9F5026E3AFF90095D548 /* UIView+Layout.swift in Sources */,

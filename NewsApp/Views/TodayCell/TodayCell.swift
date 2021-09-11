@@ -8,9 +8,11 @@
 import UIKit
 
 class TodayCell: BaseCell {
+    static let identifier = "TodayCell"
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .yellow
     }
 
     required init?(coder: NSCoder) {
