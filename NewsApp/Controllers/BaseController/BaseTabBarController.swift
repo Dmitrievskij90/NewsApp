@@ -14,8 +14,8 @@ class BaseTabBarController: UITabBarController {
         navigationController?.navigationBar.tintColor = .black
 
         viewControllers = [
-            createNavController(viewController: NewsSearchController(), title: "Search", imageName: "search_icon"),
-            createNavController(viewController: UIViewController(), title: "Today", imageName: "today_icon")
+            createNavController(viewController: UIViewController(), title: "Today", imageName: "today_icon"),
+            createNavController(viewController: NewsSearchController(), title: "Search", imageName: "search_icon")
         ]
     }
 
