@@ -10,6 +10,20 @@ import UIKit
 class TodayCell: BaseCell {
     static let identifier = "TodayCell"
     private var topConstaraint: NSLayoutConstraint?
+    var results: Articles? {
+        didSet {
+            if let source = results {
+                sourceLabel.text = source.source.name.uppercased()
+                dateLabel.text = Helpers.shared.convertDate(date: source.publishedAt)
+                titleLabel.text = source.title
+                if let image = source.urlToImage, source.urlToImage != "" {
+                    imageView.sd_setImage(with: URL(string: image))
+                } else {
+                    imageView.image = UIImage(named: "news_image")
+                }
+            }
+        }
+    }
 
     private let sourceLabel: UILabel = {
         let label = UILabel()
@@ -33,10 +47,10 @@ class TodayCell: BaseCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "news_image")
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
-        imageView.centerInSuperview(size: .init(width: 240, height: 240))
+        imageView.centerInSuperview(size: .init(width: 300, height: 240))
         return imageView
     }()
 
