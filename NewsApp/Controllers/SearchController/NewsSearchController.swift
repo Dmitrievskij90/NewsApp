@@ -22,10 +22,19 @@ class NewsSearchController: UIViewController {
         return label
     }()
 
+    // MARK: - Lificycle methods
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.alpha = 1
+    }
+
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
@@ -58,6 +67,8 @@ class NewsSearchController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout methods
+// MARK: -
 extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         enterSearchTermLabel.isHidden = results.count != 0
@@ -86,6 +97,13 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width - 32, height: 100)
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let res = results[indexPath.item]
+        let appDetailController = DetailsController()
+        appDetailController.dataSource = res
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
 }
 
 extension NewsSearchController: UISearchBarDelegate {
@@ -93,7 +111,7 @@ extension NewsSearchController: UISearchBarDelegate {
         timer?.invalidate()
 
         let term = searchText.replacingOccurrences(of: " ", with: "")
-
+        
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
             NetworkService.shared.fetchNews(searchTerm: term) { (results, error) in
                 if let err = error {
