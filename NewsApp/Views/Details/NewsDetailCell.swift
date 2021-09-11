@@ -33,7 +33,7 @@ class NewsDetailCell: UICollectionViewCell {
     let dateLabel: UILabel = {
         let label = UILabel()
         label.constrainHeight(constant: 40)
-        label.constrainWidth(constant: 100)
+//        label.constrainWidth(constant: 100)
         label.centerXInSuperview()
         label.font = .systemFont(ofSize: 15)
         label.textColor = .lightGray
@@ -61,7 +61,7 @@ class NewsDetailCell: UICollectionViewCell {
         verticalStackView.axis = .vertical
 
         addSubview(verticalStackView)
-        verticalStackView.fillSuperview(padding: .init(top: 0, left: 15, bottom: 0, right: 15))
+        verticalStackView.fillSuperview(padding: .init(top: 0, left: 24, bottom: 0, right: 24))
     }
 
     required init?(coder: NSCoder) {
