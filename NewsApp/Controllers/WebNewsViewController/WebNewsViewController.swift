@@ -9,7 +9,6 @@ import UIKit
 import WebKit
 
 class WebNewsViewController: UIViewController, WKNavigationDelegate {
-
     private var webView = WKWebView()
     var urlString = ""
 
@@ -31,7 +30,4 @@ class WebNewsViewController: UIViewController, WKNavigationDelegate {
         view.addSubview(webView)
         webView.fillSuperview()
     }
-
 }
-
-//"https://www.apple.com"

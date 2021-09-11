@@ -64,7 +64,8 @@ class DetailsController: UIViewController {
         }
     }
 
-
+    // MARK: - FloatingContainerView animation methods
+    // MARK: -
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 10 {
             if floatingContainerView.transform == .identity {

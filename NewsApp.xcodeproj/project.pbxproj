@@ -72,6 +72,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C141CE426ECD1CE0052028E /* WebNewsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */,
+			);
+			path = WebNewsViewController;
+			sourceTree = "<group>";
+		};
 		5C43A92C26E50B5F005FDD7B /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +139,7 @@
 			children = (
 				5CA46F0D26E37A8A0031A540 /* SearchController */,
 				5CB501EC26E6764A00246670 /* DetailsController */,
+				5C141CE426ECD1CE0052028E /* WebNewsViewController */,
 				5CA46F0826E3776D0031A540 /* BaseController */,
 			);
 			path = Controllers;
@@ -148,8 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				5CA46F0E26E37AAB0031A540 /* NewsSearchController.swift */,
-				5CB501E126E6716700246670 /* DetailsController.swift */,
-				5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */,
 			);
 			path = SearchController;
 			sourceTree = "<group>";
@@ -193,6 +200,7 @@
 		5CB501EC26E6764A00246670 /* DetailsController */ = {
 			isa = PBXGroup;
 			children = (
+				5CB501E126E6716700246670 /* DetailsController.swift */,
 			);
 			path = DetailsController;
 			sourceTree = "<group>";
