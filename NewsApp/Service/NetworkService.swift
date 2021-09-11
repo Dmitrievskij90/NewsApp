@@ -12,7 +12,7 @@ class NetworkService {
 
     func fetchNews(searchTerm: String, completion: @escaping (NewsData?, Error?) -> ()) {
 
-        let urlString = "https://newsapi.org/v2/everything?q=\(searchTerm)&sortBy=publishedAt&apiKey=61bba430f9444209af20b7856ae3d12e"
+        let urlString = "https://newsapi.org/v2/everything?q=\(searchTerm)&sortBy=publishedAt&pageSize=100&apiKey=61bba430f9444209af20b7856ae3d12e"
 
         fetchData(with: urlString, completion: completion)
     }
