@@ -17,6 +17,11 @@ class TodayController: UIViewController {
         fetchTodayNews()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.alpha = 1
+    }
+
     private func fetchTodayNews() {
         NetworkService.shared.fetchTodayNews { (results, error) in
             if let err = error {
@@ -69,6 +74,13 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width - 48, height: 400)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let res = results[indexPath.item]
+        let appDetailController = DetailsController()
+        appDetailController.dataSource = res
+        navigationController?.pushViewController(appDetailController, animated: true)
     }
 
 }
