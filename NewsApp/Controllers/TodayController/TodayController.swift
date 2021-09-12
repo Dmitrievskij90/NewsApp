@@ -11,9 +11,16 @@ class TodayController: UIViewController {
 
     private var todayCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var results = [Articles]()
+    private let activityIndicator: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(style: .large)
+        aiv.color = .darkGray
+        aiv.hidesWhenStopped = true
+        return aiv
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = .label
         fetchTodayNews()
     }
 
@@ -23,15 +30,21 @@ class TodayController: UIViewController {
     }
 
     private func fetchTodayNews() {
+        let dispatchGroup = DispatchGroup()
+
+        dispatchGroup.enter()
+        activityIndicator.startAnimating()
         NetworkService.shared.fetchTodayNews { (results, error) in
             if let err = error {
                 print("Can't fetch today news", err)
             }
             self.results = results?.articles ?? []
-            print(self.results.count)
-            DispatchQueue.main.async {
-                self.todayCollectionView.reloadData()
-            }
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            self.activityIndicator.stopAnimating()
+            self.todayCollectionView.reloadData()
         }
     }
 
@@ -39,7 +52,18 @@ class TodayController: UIViewController {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
 
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshButonPressed))
+        navigationItem.rightBarButtonItem = refreshButton
+        refreshButton.tintColor = .label
+
         setupCollectinView()
+
+        view.addSubview(activityIndicator)
+        activityIndicator.centerInSuperview()
+    }
+
+    @objc func refreshButonPressed() {
+        fetchTodayNews()
     }
 
     private func setupCollectinView() {
