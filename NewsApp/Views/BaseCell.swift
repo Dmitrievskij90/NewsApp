@@ -14,10 +14,14 @@ class BaseCell: UICollectionViewCell {
             if isHighlighted {
                 UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
                     self.transform = .init(scaleX: 0.9, y: 0.9)
+//                    self.backgroundColor = .purple
+                    self.layer.shadowColor = UIColor.purple.cgColor
                 }
             } else {
                 UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
                     self.transform = .identity
+                    self.backgroundColor = .white
+                    self.layer.shadowColor = UIColor.darkGray.cgColor
                 }
             }
         }
@@ -25,9 +29,10 @@ class BaseCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.shadowOpacity = 0.2
+        layer.shadowOpacity = 0.5
         layer.shadowRadius = 10
         layer.shadowOffset = .init(width: 0, height: 10)
+        layer.shadowColor = UIColor.darkGray.cgColor
     }
 
     required init?(coder: NSCoder) {

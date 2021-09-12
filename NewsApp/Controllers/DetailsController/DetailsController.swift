@@ -27,6 +27,15 @@ class DetailsController: UIViewController {
         tabBarController?.tabBar.alpha = 0
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if floatingContainerView.transform == .identity {
+            UIView.animate(withDuration: 0.7, delay: 5, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+                self.floatingContainerView.transform = .init(translationX: 0, y: -100 - self.bottomPadding)
+            }
+        }
+    }
+
     // MARK: - setup user interface methods
     // MARK: -
     override func loadView() {
