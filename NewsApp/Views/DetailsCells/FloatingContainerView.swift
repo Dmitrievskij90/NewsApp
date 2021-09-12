@@ -14,7 +14,7 @@ class FloatingContainerView: UIView {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.constrainWidth(constant: 80)
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         return imageView
@@ -37,7 +37,7 @@ class FloatingContainerView: UIView {
         button.setTitle("GO", for: .normal)
         button.contentMode = .center
         button.backgroundColor = .darkGray
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 16
         button.constrainWidth(constant: 90)
         button.constrainHeight(constant: 40)
         button.addTarget(self, action: #selector(goToWebController), for: .touchUpInside)

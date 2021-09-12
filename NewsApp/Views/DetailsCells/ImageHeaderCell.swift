@@ -26,7 +26,7 @@ class ImageHeaderCell: UICollectionViewCell {
     let headerImagView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "news_image")
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         return imageView
@@ -44,6 +44,7 @@ class ImageHeaderCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.isUserInteractionEnabled = false
+        clipsToBounds = true
 
         let verticalStackView = UIStackView(arrangedSubviews: [
             sourceLabel,

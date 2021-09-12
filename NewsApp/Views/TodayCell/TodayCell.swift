@@ -27,7 +27,6 @@ class TodayCell: BaseCell {
 
     private let sourceLabel: UILabel = {
         let label = UILabel()
-//        label.constrainHeight(constant: 50)
         label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .black
         label.textAlignment = .center
@@ -40,6 +39,9 @@ class TodayCell: BaseCell {
         label.font = .systemFont(ofSize: 15)
         label.textColor = .lightGray
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 10
+        label.constrainHeight(constant: 15)
         label.text = "8 September 2021"
         return label
     }()
@@ -47,7 +49,7 @@ class TodayCell: BaseCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "news_image")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         imageView.centerInSuperview(size: .init(width: 300, height: 240))
@@ -73,9 +75,10 @@ class TodayCell: BaseCell {
             sourceLabel,
             dateLabel
         ])
-        topVerticalStackView.axis = .horizontal
+        topVerticalStackView.axis = .vertical
         topVerticalStackView.alignment = .center
         topVerticalStackView.spacing = 10
+        topVerticalStackView.constrainHeight(constant: 40)
 
 
         let verticalStackView = UIStackView(arrangedSubviews: [
@@ -88,7 +91,7 @@ class TodayCell: BaseCell {
         verticalStackView.spacing = 5
 
         addSubview(verticalStackView)
-        verticalStackView.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 24, left: 24, bottom: 24, right: 24))
+        verticalStackView.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 24, bottom: 10, right: 24))
         self.topConstaraint = verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 24)
         self.topConstaraint?.isActive = true
     }
