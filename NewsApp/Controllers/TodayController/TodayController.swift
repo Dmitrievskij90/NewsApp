@@ -72,6 +72,10 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 32
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width - 48, height: 400)
     }
@@ -82,5 +86,4 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
         appDetailController.dataSource = res
         navigationController?.pushViewController(appDetailController, animated: true)
     }
-
 }
