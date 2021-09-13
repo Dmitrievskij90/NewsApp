@@ -59,7 +59,6 @@ class WelcomeController: UIViewController {
         appLabel.centerInSuperview(size: .init(width: 200, height: 200), constantY: -100)
 
         setupStackView()
-
     }
 
     private func setupStackView() {
@@ -77,10 +76,23 @@ class WelcomeController: UIViewController {
     }
 
     @objc func registerButtopnTapped() {
-
+        let destinationVC = RegisterController()
+        let navVC = UINavigationController(rootViewController: destinationVC)
+        navVC.modalPresentationStyle = .fullScreen
+        present(navVC, animated: true, completion: nil)
     }
 
     @objc func signinButtonTapped() {
+        if !KeychainManager.shared.isUserSignedIn.isEmpty {
+            presentBaseTabBarController()
+        } else {
+//            presentRegisterAlert(withTitle: "Please register or sign in", message: "")
+        }
+    }
 
+    private func presentBaseTabBarController() {
+        let dV = BaseTabBarController()
+        dV.modalPresentationStyle = .fullScreen
+        present(dV, animated: true, completion: nil)
     }
 }
