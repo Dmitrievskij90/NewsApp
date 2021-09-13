@@ -52,7 +52,7 @@ class TodayCell: BaseCell {
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
-        imageView.centerInSuperview(size: .init(width: 350, height: 240))
+        imageView.centerInSuperview(size: .init(width: 350, height: 200))
         return imageView
     }()
 

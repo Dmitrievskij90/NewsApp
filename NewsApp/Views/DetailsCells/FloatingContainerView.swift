@@ -30,13 +30,13 @@ class FloatingContainerView: UIView {
         return label
     }()
 
-    let getButton: UIButton = {
+    let goButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitle("GO", for: .normal)
         button.contentMode = .center
-        button.backgroundColor = .darkGray
+        button.backgroundColor = .init(hex: 0xBE1FBB)
         button.layer.cornerRadius = 16
         button.constrainWidth(constant: 90)
         button.constrainHeight(constant: 40)
@@ -54,7 +54,7 @@ class FloatingContainerView: UIView {
         let stackVIew = UIStackView(arrangedSubviews: [
             imageView,
             label,
-            getButton
+            goButton
         ])
         stackVIew.spacing = 16
         stackVIew.alignment = .center

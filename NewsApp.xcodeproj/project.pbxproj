@@ -30,6 +30,9 @@
 		5CB501E626E674B700246670 /* ImageHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB501E526E674B700246670 /* ImageHeaderCell.swift */; };
 		5CB501EA26E675DF00246670 /* NewsDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB501E926E675DF00246670 /* NewsDetailCell.swift */; };
 		5CBF2FE726EE411E00DB1D89 /* WelcomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF2FE626EE411E00DB1D89 /* WelcomeController.swift */; };
+		5CBF2FEF26EE4DEF00DB1D89 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF2FEE26EE4DEF00DB1D89 /* RegisterController.swift */; };
+		5CF9EFCA26EFAD2900655DD2 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF9EFC926EFAD2900655DD2 /* KeychainManager.swift */; };
+		5CF9EFCE26EFC33500655DD2 /* UIViewController+UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF9EFCD26EFC33500655DD2 /* UIViewController+UIAlertController.swift */; };
 		5CFB9F5026E3AFF90095D548 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFB9F4F26E3AFF90095D548 /* UIView+Layout.swift */; };
 		8CC475C40541A9E8C5942F55 /* Pods_NewsApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08021A5553E9BE722E1932DB /* Pods_NewsApp.framework */; };
 /* End PBXBuildFile section */
@@ -62,6 +65,9 @@
 		5CB501E526E674B700246670 /* ImageHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHeaderCell.swift; sourceTree = "<group>"; };
 		5CB501E926E675DF00246670 /* NewsDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailCell.swift; sourceTree = "<group>"; };
 		5CBF2FE626EE411E00DB1D89 /* WelcomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeController.swift; sourceTree = "<group>"; };
+		5CBF2FEE26EE4DEF00DB1D89 /* RegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
+		5CF9EFC926EFAD2900655DD2 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		5CF9EFCD26EFC33500655DD2 /* UIViewController+UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UIAlertController.swift"; sourceTree = "<group>"; };
 		5CFB9F4F26E3AFF90095D548 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		9B015C455B2417AF9A09A2E6 /* Pods-NewsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsApp.release.xcconfig"; path = "Target Support Files/Pods-NewsApp/Pods-NewsApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				5C43A93226E51185005FDD7B /* NetworkService.swift */,
+				5CF9EFC926EFAD2900655DD2 /* KeychainManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -151,7 +158,7 @@
 		5CA46F0726E3775C0031A540 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5CBF2FDF26EE40BC00DB1D89 /* WelcomeController */,
+				5CBF2FDF26EE40BC00DB1D89 /* WelcomeControllers */,
 				5C141CE826ECEFA90052028E /* TodayController */,
 				5CA46F0D26E37A8A0031A540 /* SearchController */,
 				5CB501EC26E6764A00246670 /* DetailsController */,
@@ -230,12 +237,13 @@
 			path = DetailsController;
 			sourceTree = "<group>";
 		};
-		5CBF2FDF26EE40BC00DB1D89 /* WelcomeController */ = {
+		5CBF2FDF26EE40BC00DB1D89 /* WelcomeControllers */ = {
 			isa = PBXGroup;
 			children = (
 				5CBF2FE626EE411E00DB1D89 /* WelcomeController.swift */,
+				5CBF2FEE26EE4DEF00DB1D89 /* RegisterController.swift */,
 			);
-			path = WelcomeController;
+			path = WelcomeControllers;
 			sourceTree = "<group>";
 		};
 		5CFB9F4E26E3AFE00095D548 /* Helpers */ = {
@@ -244,6 +252,7 @@
 				5CFB9F4F26E3AFF90095D548 /* UIView+Layout.swift */,
 				5C7098C626E9382100A8AEC5 /* Helpers.swift */,
 				5C4BADE326EA702C000620A1 /* UIColor+Extension.swift */,
+				5CF9EFCD26EFC33500655DD2 /* UIViewController+UIAlertController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -397,6 +406,9 @@
 				5CA46EF326E36DDC0031A540 /* AppDelegate.swift in Sources */,
 				5CB501EA26E675DF00246670 /* NewsDetailCell.swift in Sources */,
 				5CFB9F5026E3AFF90095D548 /* UIView+Layout.swift in Sources */,
+				5CF9EFCA26EFAD2900655DD2 /* KeychainManager.swift in Sources */,
+				5CBF2FEF26EE4DEF00DB1D89 /* RegisterController.swift in Sources */,
+				5CF9EFCE26EFC33500655DD2 /* UIViewController+UIAlertController.swift in Sources */,
 				5CB501D926E6513900246670 /* BaseCell.swift in Sources */,
 				5CA46EF526E36DDC0031A540 /* SceneDelegate.swift in Sources */,
 				5C141CEA26ECEFBD0052028E /* TodayController.swift in Sources */,
