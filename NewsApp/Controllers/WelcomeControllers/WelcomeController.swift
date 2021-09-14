@@ -86,7 +86,10 @@ class WelcomeController: UIViewController {
         if !KeychainManager.shared.isUserSignedIn.isEmpty {
             presentBaseTabBarController()
         } else {
-//            presentRegisterAlert(withTitle: "Please register or sign in", message: "")
+            let destinationVC = LoginViewController()
+            let navVC = UINavigationController(rootViewController: destinationVC)
+            navVC.modalPresentationStyle = .fullScreen
+            present(navVC, animated: true, completion: nil)
         }
     }
 
