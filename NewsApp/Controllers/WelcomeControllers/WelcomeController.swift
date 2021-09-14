@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import KeychainAccess
 
 class WelcomeController: UIViewController {
-
+    private let keychain = Keychain()
+    private let defaults = UserDefaults.standard
+    
     let appLabel: UILabel = {
         let label = UILabel()
         label.text = "JUST NEWS"
@@ -48,6 +51,7 @@ class WelcomeController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        validateIsItFirstAppLaunch()
     }
 
     override func loadView() {
@@ -59,6 +63,15 @@ class WelcomeController: UIViewController {
         appLabel.centerInSuperview(size: .init(width: 200, height: 200), constantY: -100)
 
         setupStackView()
+    }
+
+    private func validateIsItFirstAppLaunch() {
+        let notFirsAppLaunch = defaults.bool(forKey: "isTrue")
+
+        if !notFirsAppLaunch {
+            keychain["remember"] = nil
+            defaults.setValue(true, forKey: "isTrue")
+        }
     }
 
     private func setupStackView() {
