@@ -12,6 +12,7 @@
 		5C43A93326E51185005FDD7B /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C43A93226E51185005FDD7B /* NetworkService.swift */; };
 		5C4BADE426EA702C000620A1 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4BADE326EA702C000620A1 /* UIColor+Extension.swift */; };
 		5C4BADE726EA7E93000620A1 /* WebNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */; };
+		5C55A51026F0EC79004B148F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55A50F26F0EC79004B148F /* LoginViewController.swift */; };
 		5C7098C726E9382100A8AEC5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7098C626E9382100A8AEC5 /* Helpers.swift */; };
 		5C7098CA26E93EB600A8AEC5 /* FloatingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7098C926E93EB600A8AEC5 /* FloatingContainerView.swift */; };
 		5CA46EF326E36DDC0031A540 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA46EF226E36DDC0031A540 /* AppDelegate.swift */; };
@@ -45,6 +46,7 @@
 		5C43A93226E51185005FDD7B /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		5C4BADE326EA702C000620A1 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebNewsViewController.swift; sourceTree = "<group>"; };
+		5C55A50F26F0EC79004B148F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5C7098C626E9382100A8AEC5 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		5C7098C926E93EB600A8AEC5 /* FloatingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingContainerView.swift; sourceTree = "<group>"; };
 		5CA46EEF26E36DDC0031A540 /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -242,6 +244,7 @@
 			children = (
 				5CBF2FE626EE411E00DB1D89 /* WelcomeController.swift */,
 				5CBF2FEE26EE4DEF00DB1D89 /* RegisterController.swift */,
+				5C55A50F26F0EC79004B148F /* LoginViewController.swift */,
 			);
 			path = WelcomeControllers;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 				5C4BADE426EA702C000620A1 /* UIColor+Extension.swift in Sources */,
 				5CA46EF726E36DDC0031A540 /* ViewController.swift in Sources */,
 				5C43A93326E51185005FDD7B /* NetworkService.swift in Sources */,
+				5C55A51026F0EC79004B148F /* LoginViewController.swift in Sources */,
 				5CA46F0F26E37AAB0031A540 /* NewsSearchController.swift in Sources */,
 				5CA874BC26ECF32900ABA803 /* TodayCell.swift in Sources */,
 				5CA46EF326E36DDC0031A540 /* AppDelegate.swift in Sources */,
