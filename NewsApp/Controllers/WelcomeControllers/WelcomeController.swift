@@ -12,7 +12,7 @@ class WelcomeController: UIViewController {
     let appLabel: UILabel = {
         let label = UILabel()
         label.text = "JUST NEWS"
-        label.font = .boldSystemFont(ofSize: 30)
+        label.font = .boldSystemFont(ofSize: 35)
         label.textAlignment = .center
         label.textColor = .black
         return label
@@ -26,7 +26,7 @@ class WelcomeController: UIViewController {
         button.contentMode = .center
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.black.cgColor
-        button.backgroundColor = .gray
+        button.backgroundColor = .init(hex: 0xBE1FBB)
         button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(registerButtopnTapped), for: .touchUpInside)
         return button
