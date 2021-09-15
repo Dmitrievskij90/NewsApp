@@ -14,9 +14,9 @@ class BaseTabBarController: UITabBarController {
         navigationController?.navigationBar.tintColor = .black
 
         viewControllers = [
-            createNavController(viewController: TodayController(), title: "Today", imageName: "today_icon"),
-            createNavController(viewController: NewsSearchController(), title: "Search", imageName: "search_icon"),
-            createNavController(viewController: ProfileVIewController(), title: "Search", imageName: "search_icon")
+            createNavController(viewController: TodayController(), title: "Today", imageName: "iphone"),
+            createNavController(viewController: NewsSearchController(), title: "Search", imageName: "magnifyingglass"),
+            createNavController(viewController: ProfileVIewController(), title: "Profile", imageName: "person")
         ]
     }
 
@@ -26,7 +26,7 @@ class BaseTabBarController: UITabBarController {
         let navController = UINavigationController(rootViewController: viewController)
         navController.tabBarItem.title = title
         navController.navigationBar.prefersLargeTitles = true
-        navController.tabBarItem.image = UIImage(named: imageName)
+        navController.tabBarItem.image = UIImage(systemName: imageName)
         UITabBar.appearance().tintColor = .init(hex: 0xBE1FBB)
 
         return navController

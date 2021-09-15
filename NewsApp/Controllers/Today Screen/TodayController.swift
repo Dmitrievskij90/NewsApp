@@ -11,8 +11,7 @@ import KeychainAccess
 class TodayController: UIViewController {
     private var todayCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var results = [Articles]()
-    private let keychain = Keychain()
-    
+
     private let activityIndicator: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .large)
         aiv.color = .darkGray
@@ -62,18 +61,6 @@ class TodayController: UIViewController {
 
         view.addSubview(activityIndicator)
         activityIndicator.centerInSuperview()
-
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButonPressed))
-        navigationItem.leftBarButtonItem = cancelButton
-        cancelButton.tintColor = .label
-    }
-
-    @objc func cancelButonPressed() {
-        keychain["remember"] = nil
-        
-        let destinationVC = WelcomeController()
-        destinationVC.modalPresentationStyle = .fullScreen
-        present(destinationVC, animated: true, completion: nil)
     }
 
     @objc func refreshButonPressed() {
