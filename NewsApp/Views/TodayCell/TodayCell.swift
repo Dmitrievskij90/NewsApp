@@ -48,11 +48,10 @@ class TodayCell: BaseCell {
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "news_image")
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
-        imageView.centerInSuperview(size: .init(width: 350, height: 200))
+        imageView.constrainHeight(constant: 200)
         return imageView
     }()
 
@@ -100,3 +99,4 @@ class TodayCell: BaseCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
