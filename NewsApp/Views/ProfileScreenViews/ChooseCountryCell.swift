@@ -13,7 +13,7 @@ class ChooseCountryCell: UITableViewCell {
     let countryLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
-        label.textColor = .white
+        label.textColor = .black
         label.text = "Choose country for top headlines"
         label.textAlignment = .center
         label.layer.cornerRadius = 10
@@ -21,14 +21,23 @@ class ChooseCountryCell: UITableViewCell {
         return label
     }()
 
+    let bottomView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.constrainHeight(constant: 1)
+        return view
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         accessoryType = .disclosureIndicator
-        backgroundColor = .init(hex: 0xBE1FBB)
         layer.cornerRadius = 16
         clipsToBounds = true
         addSubview(countryLabel)
         countryLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor,padding: .init(top: 5, left: 15, bottom: 5, right: 15))
+
+        countryLabel.addSubview(bottomView)
+        bottomView.anchor(top: nil, leading: countryLabel.leadingAnchor, bottom: countryLabel.bottomAnchor, trailing: countryLabel.trailingAnchor)
     }
 
     required init?(coder: NSCoder) {
