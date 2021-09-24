@@ -12,9 +12,9 @@ class CountryCell: UITableViewCell {
 
     let countryLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
-        label.textAlignment = .center
+        label.textAlignment = .right
         return label
     }()
 
