@@ -24,6 +24,8 @@ class FloatingContainerView: UIView {
         let label = UILabel()
         label.text = "Do you want more information?"
         label.numberOfLines = 2
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
@@ -38,6 +40,8 @@ class FloatingContainerView: UIView {
         button.contentMode = .center
         button.backgroundColor = .init(hex: 0xBE1FBB)
         button.layer.cornerRadius = 16
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
         button.constrainWidth(constant: 90)
         button.constrainHeight(constant: 40)
         button.addTarget(self, action: #selector(goToWebController), for: .touchUpInside)
