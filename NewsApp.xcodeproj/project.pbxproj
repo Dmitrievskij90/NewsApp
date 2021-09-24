@@ -112,6 +112,16 @@
 			path = "Today Screen";
 			sourceTree = "<group>";
 		};
+		5C148E9A26FDE60D00F465AC /* ProfileScreenViews */ = {
+			isa = PBXGroup;
+			children = (
+				5CE00E2C26F78F1B00BAFAAE /* CountryCell.swift */,
+				5CBA606826FA432B00A81A53 /* ChooseCountryCell.swift */,
+				5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */,
+			);
+			path = ProfileScreenViews;
+			sourceTree = "<group>";
+		};
 		5C43A92C26E50B5F005FDD7B /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,10 +222,8 @@
 				5CA874BA26ECF31600ABA803 /* TodayCell */,
 				5CA46F1426E37D0D0031A540 /* SearchCell */,
 				5CB501E426E6746F00246670 /* DetailsCells */,
+				5C148E9A26FDE60D00F465AC /* ProfileScreenViews */,
 				5CB501D826E6513900246670 /* BaseCell.swift */,
-				5CE00E2C26F78F1B00BAFAAE /* CountryCell.swift */,
-				5CBA606826FA432B00A81A53 /* ChooseCountryCell.swift */,
-				5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
