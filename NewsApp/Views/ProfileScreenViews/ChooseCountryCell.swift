@@ -14,8 +14,8 @@ class ChooseCountryCell: UITableViewCell {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
-        label.text = "Choose country for top headlines"
-        label.textAlignment = .center
+        label.text = "Country for top headlines"
+        label.textAlignment = .left
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
         return label
@@ -28,9 +28,20 @@ class ChooseCountryCell: UITableViewCell {
         return view
     }()
 
+    private let accessoryImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "iphone")
+        imageView.tintColor = .init(hex: 0xBE1FBB)
+        return imageView
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        accessoryType = .disclosureIndicator
+
+        addSubview(accessoryImageView)
+        accessoryImageView.anchor(top: nil, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 19, bottom: 0, right: 19) ,size: .init(width: 25, height: 25))
+        accessoryImageView.centerYInSuperview()
+
         layer.cornerRadius = 16
         clipsToBounds = true
         addSubview(countryLabel)
