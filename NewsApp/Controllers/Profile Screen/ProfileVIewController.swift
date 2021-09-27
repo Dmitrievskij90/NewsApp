@@ -51,6 +51,11 @@ class ProfileViewController: UIViewController {
         loadUserImage()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+
     // MARK: - setup user interface methods
     // MARK: -
     override func loadView() {
@@ -73,6 +78,11 @@ class ProfileViewController: UIViewController {
     private func setupFooterForTableView() {
         let footer = ProfileTableFooter()
         footer.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50)
+        footer.transitionHandler = {
+            let viewController = CategoriesViewController()
+            viewController.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
         self.tableView.tableFooterView = footer
     }
 

@@ -9,6 +9,8 @@ import UIKit
 
 class ProfileTableFooter: UIView {
 
+    var transitionHandler: (()->())? = nil
+
     let bottomView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -54,6 +56,6 @@ class ProfileTableFooter: UIView {
     }
 
     @objc func buttonPressed() {
-
+        transitionHandler?()
     }
 }
