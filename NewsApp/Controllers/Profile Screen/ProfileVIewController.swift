@@ -12,6 +12,7 @@ class ProfileViewController: UIViewController {
     private let fileManager = FileManager.default
     private let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(KeychainManager.shared.userLogin)
     private let keychain = Keychain()
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -22,7 +23,7 @@ class ProfileViewController: UIViewController {
         tableView.backgroundColor = .white
         return tableView
     }()
-    private let exitButton: UIButton = {
+    private let logOutButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -41,27 +42,44 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        sections = [
-            CountrySection(title: "Choose country",
-                     countries: ["USA", "RUSSIA", "FRANCE", "GERMANY"],
-                     countriesImages: ["usa_image", "russia_image", "france_image", "germany_image"])
+        sections = [CountrySection(
+                        title: "Choose country",
+                        countries: ["USA", "RUSSIA", "FRANCE", "GERMANY"],
+                        countriesImages: ["usa_image", "russia_image", "france_image", "germany_image"])
         ]
+
         loadUserImage()
     }
 
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
         view.backgroundColor = .gray
 
+        setupTableView()
+        setupFooterForTableView()
+        setupLogOutButton()
+    }
+
+    private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
-        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: view.frame.width, height: view.frame.height / 2))
-        
-        view.addSubview(exitButton)
-        exitButton.anchor(top: nil, leading: nil, bottom: view.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 100, right: 0), size: .init(width: 100, height: 50))
-        exitButton.centerXInSuperview()
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: view.frame.width, height: view.frame.height))
+    }
+
+    private func setupFooterForTableView() {
+        let footer = ProfileTableFooter()
+        footer.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50)
+        self.tableView.tableFooterView = footer
+    }
+
+    private func setupLogOutButton() {
+        view.addSubview(logOutButton)
+        logOutButton.anchor(top: nil, leading: nil, bottom: view.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 100, right: 0), size: .init(width: 100, height: 50))
+        logOutButton.centerXInSuperview()
     }
 
     @objc func exitButonPressed() {
@@ -91,7 +109,8 @@ class ProfileViewController: UIViewController {
     }
 }
 
-
+//MARK: - UITableViewDataSource and UITableViewDelegate methods
+//MARK: -
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -172,6 +191,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+//MARK: - UIImagePickerControllerDelegate methods
+//MARK: -
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let path = documentsPath?.path else {
@@ -183,15 +204,15 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             tableView.reloadData()
 
             if fileManager.fileExists(atPath: path) == false {
-                  do {
-                      try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-                  } catch {
-                      fatalError("Can't save image to directory")
-                  }
-              }
-              let data = image.jpegData(compressionQuality: 0.5)
-              let imageName = "userImage.png"
-              fileManager.createFile(atPath: "\(path)/\(imageName)", contents: data, attributes: nil)
+                do {
+                    try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+                } catch {
+                    fatalError("Can't save image to directory")
+                }
+            }
+            let data = image.jpegData(compressionQuality: 0.5)
+            let imageName = "userImage.png"
+            fileManager.createFile(atPath: "\(path)/\(imageName)", contents: data, attributes: nil)
 
         } else {
             fatalError("Can't find image")
