@@ -22,8 +22,9 @@ class CountryCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.constrainWidth(constant: 50)
-        imageView.constrainHeight(constant: 50)
+        imageView.layer.cornerRadius = 5
+        imageView.constrainWidth(constant: 30)
+        imageView.constrainHeight(constant: 30)
         return imageView
     }()
 
@@ -35,9 +36,11 @@ class CountryCell: UITableViewCell {
         ])
         stackView.alignment = .center
         stackView.spacing = 5
+        stackView.backgroundColor = .init(hex: 0xF1EFF1)
+        stackView.layer.cornerRadius = 10
 
         addSubview(stackView)
-        stackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
+        stackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 5, left: 10, bottom: 5, right: 10))
     }
 
     required init?(coder: NSCoder) {
