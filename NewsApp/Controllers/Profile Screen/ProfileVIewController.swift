@@ -152,3 +152,32 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         return 200
     }
 }
+
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let path = documentsPath?.path else {
+            fatalError("Can't find document path")
+        }
+
+        if let image = info [.originalImage] as? UIImage {
+            self.image = image
+            tableView.reloadData()
+
+            if fileManager.fileExists(atPath: path) == false {
+                  do {
+                      try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+                  } catch {
+                      fatalError("Can't save image to directory")
+                  }
+              }
+              let data = image.jpegData(compressionQuality: 0.5)
+              let imageName = "userImage.png"
+              fileManager.createFile(atPath: "\(path)/\(imageName)", contents: data, attributes: nil)
+
+        } else {
+            fatalError("Can't find image")
+        }
+        dismiss(animated: true, completion: nil)
+    }
+}
+
