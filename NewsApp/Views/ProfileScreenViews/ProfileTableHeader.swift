@@ -12,7 +12,7 @@ class ProfileTableHeader: UITableViewHeaderFooterView {
     static let identifier = "ProfileTableHeader"
     private let countryImageName = UserDefaults.standard.value(forKey: "countryImage") as? String ?? "usa_image"
 
-    var imageTapHandler: (() ->())?
+    var imageTapHandler: (() ->())? = nil
 
     let bcgView: UIView = {
         let view = UIView()
@@ -115,6 +115,6 @@ class ProfileTableHeader: UITableViewHeaderFooterView {
     }
 
     @objc func imageViewTapped() {
-        imageTapHandler!()
+        imageTapHandler?()
     }
 }

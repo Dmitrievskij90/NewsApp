@@ -9,7 +9,7 @@ import UIKit
 
 class FloatingContainerView: UIView {
 
-    var transitionHandler: (()->())?
+    var transitionHandler: (()->())? = nil
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -72,6 +72,6 @@ class FloatingContainerView: UIView {
     }
 
     @objc func goToWebController() {
-        transitionHandler!()
+        transitionHandler?()
     }
 }
