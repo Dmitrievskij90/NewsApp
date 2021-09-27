@@ -43,8 +43,8 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         sections = [
             CountrySection(title: "Choose country",
-                     countries: ["USA", "RUSSIA", "FRANCE"],
-                     countriesImages: ["usa_image", "russia_image", "france_image"])
+                     countries: ["USA", "RUSSIA", "FRANCE", "GERMANY"],
+                     countriesImages: ["usa_image", "russia_image", "france_image", "germany_image"])
         ]
         loadUserImage()
     }
@@ -141,6 +141,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 UserDefaults.standard.setValue("ru", forKey: "chosenCountry")
             case "FRANCE":
                 UserDefaults.standard.setValue("fr", forKey: "chosenCountry")
+            case "GERMANY":
+                UserDefaults.standard.setValue("de", forKey: "chosenCountry")
             default:
                 UserDefaults.standard.setValue("us", forKey: "chosenCountry")
             }
