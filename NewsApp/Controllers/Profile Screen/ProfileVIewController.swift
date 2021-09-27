@@ -65,6 +65,13 @@ class ProfileViewController: UIViewController {
         destinationVC.modalPresentationStyle = .fullScreen
         present(destinationVC, animated: true, completion: nil)
     }
+
+    private func displayImagePickerController() {
+        let imagePicerController = UIImagePickerController()
+        imagePicerController.delegate = self
+        imagePicerController.sourceType = .photoLibrary
+        present(imagePicerController, animated: true, completion: nil)
+    }
 }
 
 
