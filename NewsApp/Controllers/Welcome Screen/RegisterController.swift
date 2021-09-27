@@ -9,7 +9,7 @@ import UIKit
 import KeychainAccess
 
 class RegisterController: UIViewController {
-    
+
     private let loginTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
@@ -22,7 +22,7 @@ class RegisterController: UIViewController {
         textField.font = .systemFont(ofSize: 18)
         textField.backgroundColor = .lightGray
         textField.textAlignment = .center
-        textField.autocapitalizationType = .none
+        textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
         return textField
     }()
@@ -39,7 +39,7 @@ class RegisterController: UIViewController {
         textField.font = .systemFont(ofSize: 18)
         textField.backgroundColor = .lightGray
         textField.textAlignment = .center
-        textField.autocapitalizationType = .none
+        textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
         textField.isSecureTextEntry = true
         return textField
@@ -69,6 +69,7 @@ class RegisterController: UIViewController {
         rememberSwitch.isOn = false
         rememberSwitch.onTintColor = .init(hex: 0xBE1FBB)
         rememberSwitch.thumbTintColor = .white
+        rememberSwitch.isUserInteractionEnabled = false
         return rememberSwitch
     }()
     
@@ -88,6 +89,8 @@ class RegisterController: UIViewController {
         button.contentMode = .center
         button.backgroundColor = .init(hex: 0xBE1FBB)
         button.layer.cornerRadius = 16
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
         button.addTarget(self, action: #selector(doneButonPressed), for: .touchUpInside)
         return button
     }()
@@ -183,5 +186,13 @@ extension RegisterController: UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if loginTextField.text == "" || passwordTextField.text == "" || repeatPasswordTextField.text == "" {
+            rememberSwitch.isUserInteractionEnabled = false
+        } else {
+            rememberSwitch.isUserInteractionEnabled = true
+        }
     }
 }

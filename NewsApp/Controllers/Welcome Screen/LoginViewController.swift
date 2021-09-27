@@ -49,6 +49,7 @@ class LoginViewController: UIViewController {
         rememberSwitch.isOn = false
         rememberSwitch.onTintColor = .init(hex: 0xBE1FBB)
         rememberSwitch.thumbTintColor = .white
+        rememberSwitch.isUserInteractionEnabled = false
         return rememberSwitch
     }()
 
@@ -60,7 +61,7 @@ class LoginViewController: UIViewController {
         return label
     }()
 
-    let doneButton: UIButton = {
+    let letsGoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -68,6 +69,8 @@ class LoginViewController: UIViewController {
         button.contentMode = .center
         button.backgroundColor = .init(hex: 0xBE1FBB)
         button.layer.cornerRadius = 16
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
         button.addTarget(self, action: #selector(doneButonPressed), for: .touchUpInside)
         return button
     }()
@@ -106,9 +109,9 @@ class LoginViewController: UIViewController {
         view.addSubview(stackView)
         stackView.centerInSuperview(size: .init(width: 300, height: 400), constantY: -50)
 
-        view.addSubview(doneButton)
-        doneButton.anchor(top: stackView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: 100, height: 50))
-        doneButton.centerXInSuperview()
+        view.addSubview(letsGoButton)
+        letsGoButton.anchor(top: stackView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: 100, height: 50))
+        letsGoButton.centerXInSuperview()
     }
 
     @objc func cancelButonPressed() {
@@ -154,5 +157,13 @@ extension LoginViewController: UITextFieldDelegate {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if loginTextField.text == "" || passwordTextField.text == "" {
+            rememberSwitch.isUserInteractionEnabled = false
+        } else {
+            rememberSwitch.isUserInteractionEnabled = true
+        }
     }
 }
