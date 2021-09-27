@@ -10,6 +10,8 @@ import UIKit
 class ProfileTableHeader: UITableViewHeaderFooterView {
 
     static let identifier = "ProfileTableHeader"
+    private let countryImageName = UserDefaults.standard.value(forKey: "countryImage") as? String ?? "usa_image"
+
     var imageTapHandler: (() ->())?
 
     let bcgView: UIView = {
@@ -54,13 +56,11 @@ class ProfileTableHeader: UITableViewHeaderFooterView {
     let countryImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
-        imageView.image = UIImage(named: "russia_image")
         imageView.constrainHeight(constant: 40)
         imageView.constrainWidth(constant: 50)
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
-
 
     let userImageView: UIImageView = {
         let imageView = UIImageView()
@@ -106,6 +106,8 @@ class ProfileTableHeader: UITableViewHeaderFooterView {
 
         let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         userImageView.addGestureRecognizer(tapGestureregognizer)
+
+        countryImageView.image = UIImage(named: countryImageName)
     }
 
     required init?(coder: NSCoder) {
