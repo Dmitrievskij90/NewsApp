@@ -120,6 +120,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             default:
                 UserDefaults.standard.setValue("us", forKey: "chosenCountry")
             }
+
+            let countryImage = sections[indexPath.section].countriesImages[indexPath.row - 1]
+            UserDefaults.standard.setValue(countryImage, forKey: "countryImage")
+
             sections[indexPath.section].isOpened = false
             tableView.reloadSections([indexPath.section], with: .none)
         }
@@ -128,6 +132,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileTableHeader.identifier) as? ProfileTableHeader else {
             return UIView()
+        }
+        header.helloLabel.text = "Hello,\(KeychainManager.shared.userLogin)!"
+        header.userImageView.image = image
+        header.imageTapHandler = { [unowned self] in
+            self.displayImagePickerController()
         }
         return header
     }
