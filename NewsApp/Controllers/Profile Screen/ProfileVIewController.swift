@@ -9,19 +9,19 @@ import UIKit
 import KeychainAccess
 
 class ProfileViewController: UIViewController {
+    private let fileManager = FileManager.default
+    private let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(KeychainManager.shared.userLogin)
     private let keychain = Keychain()
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
         tableView.register(CountryCell.self, forCellReuseIdentifier: CountryCell.identifier)
         tableView.register(ChooseCountryCell.self, forCellReuseIdentifier: ChooseCountryCell.identifier)
         tableView.register(ProfileTableHeader.self, forHeaderFooterViewReuseIdentifier: ProfileTableHeader.identifier)
         tableView.backgroundColor = .white
         return tableView
     }()
-
-    private var sections = [CountrySection]()
-
     private let exitButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
@@ -30,9 +30,14 @@ class ProfileViewController: UIViewController {
         button.contentMode = .center
         button.backgroundColor = .init(hex: 0xBE1FBB)
         button.layer.cornerRadius = 16
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
         button.addTarget(self, action: #selector(exitButonPressed), for: .touchUpInside)
         return button
     }()
+
+    private var image = UIImage(named: "news_image")
+    private var sections = [CountrySection]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +46,7 @@ class ProfileViewController: UIViewController {
                      countries: ["USA", "RUSSIA", "FRANCE"],
                      countriesImages: ["usa_image", "russia_image", "france_image"])
         ]
+        loadUserImage()
     }
 
     override func loadView() {
@@ -51,7 +57,7 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
-        tableView.fillSuperview(padding: .init(top: 0, left: 0, bottom: 100, right: 0))
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: view.frame.width, height: view.frame.height / 2))
         
         view.addSubview(exitButton)
         exitButton.anchor(top: nil, leading: nil, bottom: view.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 100, right: 0), size: .init(width: 100, height: 50))
@@ -71,6 +77,17 @@ class ProfileViewController: UIViewController {
         imagePicerController.delegate = self
         imagePicerController.sourceType = .photoLibrary
         present(imagePicerController, animated: true, completion: nil)
+    }
+
+    private func loadUserImage() {
+        guard let path = documentsPath?.path else {
+            fatalError("Can't find document path")
+        }
+        if let imageName = try? fileManager.contentsOfDirectory(atPath: "\(path)")[0] {
+            if let loadedImage = UIImage(contentsOfFile: "\(path)/\(imageName)") {
+                self.image = loadedImage
+            }
+        }
     }
 }
 
