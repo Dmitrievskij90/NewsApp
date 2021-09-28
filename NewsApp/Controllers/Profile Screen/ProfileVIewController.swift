@@ -88,7 +88,7 @@ class ProfileViewController: UIViewController {
 
     private func setupLogOutButton() {
         view.addSubview(logOutButton)
-        logOutButton.anchor(top: nil, leading: nil, bottom: view.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 100, right: 0), size: .init(width: 100, height: 50))
+        logOutButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 10, right: 0), size: .init(width: 100, height: 50))
         logOutButton.centerXInSuperview()
     }
 
@@ -197,7 +197,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 200
+        return view.frame.height / 4
     }
 }
 
