@@ -7,37 +7,17 @@
 
 import UIKit
 
-class FavoriteCategoriesViewController: UIViewController {
-
+class FavouriteCategoriesViewController: UIViewController {
     private var categoryCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    var set = Set<String>()
-//     var set:Set = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
-    var documentDirectorypath = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-
+    private var set = Set<String>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        set = UserDefaults.standard.value(forKey: "categoriesSet") as? Set<String> ?? Set<String>()
-//        print(set)
-//        var folderPath = documentDirectorypath
-//        folderPath?.appendPathComponent("New test folder")
-//        let dataPath = folderPath?.appendingPathComponent("categoriesSet.json")
-//        if let newData = FileManager.default.contents(atPath: dataPath!.path) {
-//            set = try! JSONDecoder().decode(Set<String>.self, from: newData)
-//            print(set)
-//        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        var folderPath = documentDirectorypath
-        folderPath?.appendPathComponent("New test folder")
-        let dataPath = folderPath?.appendingPathComponent("categoriesSet.json")
-        if let newData = FileManager.default.contents(atPath: dataPath!.path) {
-            set = try! JSONDecoder().decode(Set<String>.self, from: newData)
-            print(set)
-        }
+        set = CategoryManager.shared.loadCategoriesSet()
 
         DispatchQueue.main.async {
             self.categoryCollectionView.reloadData()
@@ -67,7 +47,7 @@ class FavoriteCategoriesViewController: UIViewController {
     }
 }
 
-extension FavoriteCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension FavouriteCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        return categoriesArray.count
         return set.count
