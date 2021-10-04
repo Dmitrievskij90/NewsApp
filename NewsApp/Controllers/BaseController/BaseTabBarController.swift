@@ -43,9 +43,6 @@ class BaseTabBarController: UITabBarController {
         if !notFirsAppLaunch {
             CategoryManager.shared.saveCategories(with: categoriesSet)
             UserDefaults.standard.setValue(true, forKey: "isrue")
-//            tr = true
-        } else {
-//            tr = UserDefaults.standard.value(forKey: "isSelected") as? Bool ?? true
         }
     }
 }

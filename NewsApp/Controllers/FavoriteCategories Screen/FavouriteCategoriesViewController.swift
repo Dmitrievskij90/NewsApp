@@ -49,7 +49,6 @@ class FavouriteCategoriesViewController: UIViewController {
 
 extension FavouriteCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return categoriesArray.count
         return set.count
     }
 

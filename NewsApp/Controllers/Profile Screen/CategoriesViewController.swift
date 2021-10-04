@@ -7,12 +7,18 @@
 
 import UIKit
 
-
 class CategoriesViewController: UIViewController {
     private var categoryCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private var categoriesSet:Set = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
-    private var categoriesArray = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
-    var tr: Bool?
+    private var categoriesSet = Set<String>()
+    private var categoriesStruct = [
+        Categories(name: "business", isFavorited: true),
+        Categories(name: "entertainment", isFavorited: true),
+        Categories(name: "general", isFavorited: true),
+        Categories(name: "health", isFavorited: true),
+        Categories(name: "science", isFavorited: true),
+        Categories(name: "sports", isFavorited: true),
+        Categories(name: "technology", isFavorited: true),
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +28,7 @@ class CategoriesViewController: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
         categoriesSet = CategoryManager.shared.loadCategoriesSet()
+        categoriesStruct = CategoryManager.shared.loadCategoriesStruct()
     }
 
     override func loadView() {
@@ -44,21 +51,27 @@ class CategoriesViewController: UIViewController {
         categoryCollectionView.delegate = self
 
         view.addSubview(categoryCollectionView)
+        categoryCollectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
 }
 
 extension CategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categoriesArray.count
+        return categoriesStruct.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCell.identifier, for: indexPath) as? CategoriesCell else {
             return UICollectionViewCell()
         }
-        cell.layer.cornerRadius = 15
-        cell.categoryLabel.text = categoriesArray[indexPath.item]
 
+        let text = categoriesStruct[indexPath.item].name
+        let favorire = categoriesStruct[indexPath.item].isFavorited
+
+        cell.layer.cornerRadius = 15
+        cell.categoryLabel.text = text
+        cell.layer.shadowColor = favorire ? UIColor.purple.cgColor : UIColor.darkGray.cgColor
+        cell.starImageView.tintColor = favorire ? UIColor.red : .gray
 
         return cell
     }
@@ -72,27 +85,13 @@ extension CategoriesViewController: UICollectionViewDataSource, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let name = categoriesStruct[indexPath.item]
+        let hasFavorited = name.isFavorited
+        categoriesStruct[indexPath.item].isFavorited = !hasFavorited
+        categoryCollectionView.reloadItems(at: [indexPath])
+        CategoryManager.shared.saveCategoriesStruct(with: categoriesStruct)
 
-//        if let cell = collectionView.cellForItem(at: indexPath),  tr ?? true{
-//            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut) {
-//                cell.transform = .init(scaleX: 0.9, y: 0.9)
-//                cell.backgroundColor = .green
-//            }
-//            UserDefaults.standard.setValue(false, forKey: "isSelected")
-//            tr = false
-//            print(tr)
-//        } else if let cell = collectionView.cellForItem(at: indexPath),  !(tr ?? false) {
-//            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut) {
-//                cell.transform = .identity
-//                cell.backgroundColor = .white
-//            }
-//            UserDefaults.standard.setValue(true, forKey: "isSelected")
-//            tr = true
-//            print(tr)
-//        }
-
-        let item = categoriesArray[indexPath.item]
-
+        let item = categoriesStruct[indexPath.item].name
         if categoriesSet.contains(item) {
             categoriesSet.remove(item)
             CategoryManager.shared.saveCategories(with: categoriesSet)
