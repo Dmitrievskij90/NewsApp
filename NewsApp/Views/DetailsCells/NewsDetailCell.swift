@@ -9,12 +9,17 @@ import UIKit
 
 class NewsDetailCell: UICollectionViewCell {
     static let identifier = "NewsDetailCell"
+    private let attributes: [NSAttributedString.Key : Any] = [
+        .foregroundColor : UIColor.black,
+        .font : UIFont.systemFont(ofSize: 18)
+    ]
 
     var dataSource: Articles? {
         didSet {
             if let source = dataSource {
+                let attributedString = NSAttributedString(string: source.description ?? "", attributes: attributes)
                 titleLabel.text = source.title
-                descriptionTextView.text = source.description
+                descriptionTextView.attributedText = attributedString
                 dateLabel.text = Helpers.shared.convertDate(date: source.publishedAt) 
             }
         }
@@ -44,7 +49,7 @@ class NewsDetailCell: UICollectionViewCell {
     let descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
-        textView.font = .systemFont(ofSize: 20)
+        textView.font = .systemFont(ofSize: 18)
         textView.textColor = .darkGray
         textView.textAlignment = .justified
         return textView

@@ -6,46 +6,33 @@
 //
 
 import UIKit
+import KeychainAccess
 
 class TodayController: UIViewController {
-
     private var todayCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var results = [Articles]()
     private let activityIndicator: UIActivityIndicatorView = {
-        let aiv = UIActivityIndicatorView(style: .large)
+        let aiv = UIActivityIndicatorView(style: .medium)
         aiv.color = .darkGray
         aiv.hidesWhenStopped = true
         return aiv
     }()
 
+    private let refreshControl = UIRefreshControl()
+    private var timer: Timer?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .label
         fetchTodayNews()
+
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        todayCollectionView.refreshControl = refreshControl
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.alpha = 1
-    }
-
-    private func fetchTodayNews() {
-        let dispatchGroup = DispatchGroup()
-
-        dispatchGroup.enter()
-        activityIndicator.startAnimating()
-        NetworkService.shared.fetchTodayNews { (results, error) in
-            if let err = error {
-                print("Can't fetch today news", err)
-            }
-            self.results = results?.articles ?? []
-            dispatchGroup.leave()
-        }
-
-        dispatchGroup.notify(queue: .main) {
-            self.activityIndicator.stopAnimating()
-            self.todayCollectionView.reloadData()
-        }
     }
 
     override func loadView() {
@@ -62,10 +49,6 @@ class TodayController: UIViewController {
         activityIndicator.centerInSuperview()
     }
 
-    @objc func refreshButonPressed() {
-        fetchTodayNews()
-    }
-
     private func setupCollectinView() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -77,6 +60,43 @@ class TodayController: UIViewController {
         todayCollectionView.delegate = self
 
         view.addSubview(todayCollectionView)
+    }
+
+    private func fetchTodayNews(isTrue: Bool = true) {
+        let dispatchGroup = DispatchGroup()
+
+        let country = UserDefaults.standard.value(forKey: "chosenCountry") as? String ?? "us"
+
+        if isTrue {
+            activityIndicator.startAnimating()
+        }
+
+        dispatchGroup.enter()
+        NetworkService.shared.fetchTodayNews(preferredCountry: country) { (results, error) in
+            if let err = error {
+                print("Can't fetch today news", err)
+            }
+            self.results = results?.articles ?? []
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            self.activityIndicator.stopAnimating()
+            self.todayCollectionView.reloadData()
+        }
+    }
+
+    @objc func refreshButonPressed() {
+        fetchTodayNews()
+    }
+
+
+    @objc func refresh() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
+            self.refreshControl.endRefreshing()
+        })
+        self.fetchTodayNews(isTrue: false)
     }
 }
 

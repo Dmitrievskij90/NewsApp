@@ -8,5 +8,6 @@ target 'NewsApp' do
   # Pods for NewsApp
 
 pod 'SDWebImage'
+pod 'KeychainAccess'
 
 end

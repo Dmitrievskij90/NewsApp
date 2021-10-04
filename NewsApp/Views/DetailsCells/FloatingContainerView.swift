@@ -9,7 +9,7 @@ import UIKit
 
 class FloatingContainerView: UIView {
 
-    var transitionHandler: (()->())?
+    var transitionHandler: (()->())? = nil
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -24,20 +24,24 @@ class FloatingContainerView: UIView {
         let label = UILabel()
         label.text = "Do you want more information?"
         label.numberOfLines = 2
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
         return label
     }()
 
-    let getButton: UIButton = {
+    let goButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitle("GO", for: .normal)
         button.contentMode = .center
-        button.backgroundColor = .darkGray
+        button.backgroundColor = .init(hex: 0xBE1FBB)
         button.layer.cornerRadius = 16
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
         button.constrainWidth(constant: 90)
         button.constrainHeight(constant: 40)
         button.addTarget(self, action: #selector(goToWebController), for: .touchUpInside)
@@ -54,7 +58,7 @@ class FloatingContainerView: UIView {
         let stackVIew = UIStackView(arrangedSubviews: [
             imageView,
             label,
-            getButton
+            goButton
         ])
         stackVIew.spacing = 16
         stackVIew.alignment = .center
@@ -68,6 +72,6 @@ class FloatingContainerView: UIView {
     }
 
     @objc func goToWebController() {
-        transitionHandler!()
+        transitionHandler?()
     }
 }
