@@ -13,12 +13,12 @@ class CategoryManager {
 
     private var documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent("New test folder")
 
-    func saveCategories(with set: Set<String>) {
+    func saveCategoriesSet(with set: Set<String>) {
         let folderPath = documentDirectorypath
         guard let pass = folderPath else {
             return
         }
-        //        print(pass)
+                print(pass)
 
         try? FileManager.default.createDirectory(at: pass, withIntermediateDirectories: false, attributes: nil)
         let data = try? JSONEncoder().encode(set)
