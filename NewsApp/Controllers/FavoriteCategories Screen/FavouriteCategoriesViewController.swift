@@ -18,7 +18,6 @@ class FavouriteCategoriesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         set = CategoryManager.shared.loadCategoriesSet()
-
         DispatchQueue.main.async {
             self.categoryCollectionView.reloadData()
         }
@@ -56,19 +55,26 @@ extension FavouriteCategoriesViewController: UICollectionViewDataSource, UIColle
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCategoriesCell.identifier, for: indexPath) as? FavoriteCategoriesCell else {
             return UICollectionViewCell()
         }
-
         let text = set.sorted()
 
         cell.layer.cornerRadius = 15
         cell.categoryLabel.text = text[indexPath.item]
+        cell.categoryImageView.image = UIImage(named: text[indexPath.item])
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 32
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width  - 30, height: (view.frame.width / 4) - 30)
+        return .init(width: view.frame.width - 48, height: 300)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        return .init(top: 16, left: 10, bottom: 16, right: 10)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     }
 }
