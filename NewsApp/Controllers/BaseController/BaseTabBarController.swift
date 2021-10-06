@@ -9,7 +9,16 @@ import UIKit
 
 class BaseTabBarController: UITabBarController {
 
-    private var categoriesSet:Set = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
+    private var categoriesSet:Set = ["Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
+    private var categoriesStruct = [
+        Categories(name: "Business", isFavorited: true),
+        Categories(name: "Entertainment", isFavorited: true),
+        Categories(name: "General", isFavorited: true),
+        Categories(name: "Health", isFavorited: true),
+        Categories(name: "Science", isFavorited: true),
+        Categories(name: "Sports", isFavorited: true),
+        Categories(name: "Technology", isFavorited: true),
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,12 +46,12 @@ class BaseTabBarController: UITabBarController {
     }
 
     private func loadCategories() {
-        let notFirsAppLaunch = UserDefaults.standard.bool(forKey: "isrue")
-        print(notFirsAppLaunch)
+        let notFirsAppLaunch = UserDefaults.standard.bool(forKey: "isFirstLaunch")
 
         if !notFirsAppLaunch {
-            CategoryManager.shared.saveCategories(with: categoriesSet)
-            UserDefaults.standard.setValue(true, forKey: "isrue")
+            CategoryManager.shared.saveCategoriesSet(with: categoriesSet)
+            CategoryManager.shared.saveCategoriesStruct(with: categoriesStruct)
+            UserDefaults.standard.setValue(true, forKey: "isFirstLaunch")
         }
     }
 }
