@@ -10,15 +10,7 @@ import UIKit
 class CategoriesViewController: UIViewController {
     private var categoryCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var categoriesSet = Set<String>()
-    private var categoriesStruct = [
-        Categories(name: "business", isFavorited: true),
-        Categories(name: "entertainment", isFavorited: true),
-        Categories(name: "general", isFavorited: true),
-        Categories(name: "health", isFavorited: true),
-        Categories(name: "science", isFavorited: true),
-        Categories(name: "sports", isFavorited: true),
-        Categories(name: "technology", isFavorited: true),
-    ]
+    private var categoriesStruct = [Categories]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
