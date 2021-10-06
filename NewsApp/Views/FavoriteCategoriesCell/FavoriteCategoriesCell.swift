@@ -13,12 +13,19 @@ class FavoriteCategoriesCell: BaseCell {
 
     let categoryLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .boldSystemFont(ofSize: 30)
         label.textColor = .black
         label.textAlignment = .center
         return label
     }()
 
+    let categoryImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 16
+        return imageView
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,8 +33,10 @@ class FavoriteCategoriesCell: BaseCell {
         backgroundColor = .white
 
         addSubview(categoryLabel)
-        categoryLabel.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
+        categoryLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 0))
 
+        addSubview(categoryImageView)
+        categoryImageView.anchor(top: categoryLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 5, bottom: 5, right: 5))
     }
 
     required init?(coder: NSCoder) {
