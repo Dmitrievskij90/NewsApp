@@ -9,11 +9,10 @@ import UIKit
 
 class BaseTabBarController: UITabBarController {
 
-    private var categoriesSet:Set = ["Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"]
+    private var categoriesSet:Set = ["Business", "Entertainment", "Health", "Science", "Sports", "Technology"]
     private var categoriesStruct = [
         Categories(name: "Business", isFavorited: true),
         Categories(name: "Entertainment", isFavorited: true),
-        Categories(name: "General", isFavorited: true),
         Categories(name: "Health", isFavorited: true),
         Categories(name: "Science", isFavorited: true),
         Categories(name: "Sports", isFavorited: true),

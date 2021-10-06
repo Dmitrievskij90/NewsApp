@@ -12,9 +12,10 @@ class CategoriesCell: BaseCell {
     static let identifier = "CategoriesCell"
     let categoryLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .black
         label.textAlignment = .center
+        label.constrainHeight(constant: 50)
         return label
     }()
 
@@ -23,7 +24,8 @@ class CategoriesCell: BaseCell {
         imageView.image = UIImage(systemName: "star.fill")
         imageView.tintColor = .red
         imageView.contentMode = .scaleAspectFit
-        imageView.constrainWidth(constant: 50)
+        imageView.constrainWidth(constant: 30)
+        imageView.constrainHeight(constant: 30)
         return imageView
     }()
 
@@ -33,16 +35,11 @@ class CategoriesCell: BaseCell {
         layer.cornerRadius = 16
         backgroundColor = .white
 
-        let stackVIew = UIStackView(arrangedSubviews: [
-            categoryLabel,
-            starImageView
-        ])
-        stackVIew.spacing = 16
-        stackVIew.alignment = .center
+        addSubview(categoryLabel)
+        categoryLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 0))
 
-        addSubview(stackVIew)
-        stackVIew.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
-
+        addSubview(starImageView)
+        starImageView.centerInSuperview()
     }
 
     required init?(coder: NSCoder) {

@@ -18,7 +18,6 @@ class CategoryManager {
         guard let pass = folderPath else {
             return
         }
-                print(pass)
 
         try? FileManager.default.createDirectory(at: pass, withIntermediateDirectories: false, attributes: nil)
         let data = try? JSONEncoder().encode(set)
