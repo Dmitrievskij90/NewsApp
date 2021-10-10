@@ -25,7 +25,9 @@ class FullScreenController: UIViewController {
         tableView.allowsSelection = false
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLine
+        tableView.register(AppFullscreenHeaderCell.self, forCellReuseIdentifier: AppFullscreenHeaderCell.identifier)
+        tableView.register(NewsCategoryCell.self, forCellReuseIdentifier: NewsCategoryCell.identifier)
         return tableView
     }()
 
@@ -72,7 +74,9 @@ extension FullScreenController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            let cell = AppFullscreenHeaderCell()
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AppFullscreenHeaderCell.identifier, for: indexPath) as? AppFullscreenHeaderCell else {
+                return UITableViewCell()
+            }
             cell.favoriteCell.dataSourse = dataSourse
             cell.favoriteCell.layer.cornerRadius = 0
             cell.clipsToBounds = true
@@ -80,7 +84,9 @@ extension FullScreenController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
 
-        let cell = UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCategoryCell.identifier, for: indexPath) as? NewsCategoryCell else {
+            return UITableViewCell()
+        }
         return cell
     }
 

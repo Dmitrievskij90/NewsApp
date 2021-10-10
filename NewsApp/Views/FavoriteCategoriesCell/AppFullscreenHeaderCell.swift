@@ -10,6 +10,7 @@ import UIKit
 class AppFullscreenHeaderCell: UITableViewCell {
 
     let favoriteCell = FavoriteCategoriesCell()
+    static let identifier = "AppFullscreenHeaderCell"
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
