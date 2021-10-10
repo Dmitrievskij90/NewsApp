@@ -24,7 +24,7 @@ class FavoriteCategoriesCell: BaseCell {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 30)
         label.textColor = .black
-        label.textAlignment = .center
+        label.textAlignment = .left
         //        label.alpha = 0.5
         label.layer.cornerRadius = 16
         label.clipsToBounds = true
@@ -46,15 +46,15 @@ class FavoriteCategoriesCell: BaseCell {
         layer.cornerRadius = 16
         backgroundColor = .white
 
-        //        addSubview(categoryLabel)
-        //        categoryLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 0))
+                addSubview(categoryLabel)
+                categoryLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 0))
 
         addSubview(categoryImageView)
-        //        categoryImageView.anchor(top: categoryLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 5, bottom: 5, right: 5))
-        categoryImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 5, bottom: 5, right: 5))
+                categoryImageView.anchor(top: categoryLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 5, bottom: 5, right: 5))
+//        categoryImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 5, bottom: 5, right: 5))
 
-        addSubview(categoryLabel)
-        categoryLabel.fillSuperview(padding: .init(top: 10, left: 10, bottom: 10, right: 10))
+//        addSubview(categoryLabel)
+//        categoryLabel.fillSuperview(padding: .init(top: 10, left: 10, bottom: 10, right: 10))
     }
 
     required init?(coder: NSCoder) {
