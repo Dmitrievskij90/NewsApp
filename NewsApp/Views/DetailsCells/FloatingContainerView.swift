@@ -9,7 +9,7 @@ import UIKit
 
 class FloatingContainerView: UIView {
 
-    var transitionHandler: (()->())? = nil
+    var transitionHandler: (()->())?
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
