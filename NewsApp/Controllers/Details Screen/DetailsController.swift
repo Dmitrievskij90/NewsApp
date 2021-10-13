@@ -9,7 +9,7 @@ import UIKit
 
 class DetailsController: UIViewController {
 
-    private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     var dataSource: Articles?
     private let floatingContainerView = FloatingContainerView()
     private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
@@ -18,8 +18,9 @@ class DetailsController: UIViewController {
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDismissFloatinContainerView))
-        view.addGestureRecognizer(tapGestureRecognizer)
+        
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(moveFloatinContainerView))
+//        view.addGestureRecognizer(tapGestureRecognizer)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -44,7 +45,7 @@ class DetailsController: UIViewController {
         self.view = view
         navigationController?.navigationBar.tintColor = .label
         setupCollectinView()
-        setupFloatingContainerView()
+//        setupFloatingContainerView()
     }
 
     private func setupCollectinView() {
