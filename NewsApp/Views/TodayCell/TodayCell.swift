@@ -48,9 +48,8 @@ class TodayCell: BaseCell {
 
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 16
         imageView.constrainHeight(constant: 200)
         return imageView
     }()
@@ -61,7 +60,8 @@ class TodayCell: BaseCell {
         label.font = .boldSystemFont(ofSize: 15)
         label.textColor = .black
         label.textAlignment = .center
-        label.text = "Владимир Путин об Олимпиаде: «Не могу не вспомнить далекие от спорта политизированные решения в отношении наше - Sports.ru"
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 8
         return label
     }()
 
