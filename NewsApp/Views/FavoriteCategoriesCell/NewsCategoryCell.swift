@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewsCategoryCell: UITableViewCell {
+class NewsCategoryCell: UICollectionViewCell {
 
     static let identifier = "NewsCategoryCell"
 
@@ -27,8 +27,6 @@ class NewsCategoryCell: UITableViewCell {
 
     let newsImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.constrainWidth(constant: 50)
-        imageView.constrainHeight(constant: 50)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
@@ -53,29 +51,36 @@ class NewsCategoryCell: UITableViewCell {
         return label
     }()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .white
+    let separatorView: UIView = {
+        let view =  UIView()
+        view.backgroundColor =  UIColor(white: 0, alpha: 0.3)
+        return view
+    }()
 
-        let verticalStackView = UIStackView(arrangedSubviews: [
-            authorLabel,
-            titleLabel
-        ])
-        verticalStackView.axis = .vertical
-        verticalStackView.spacing = 0
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        newsImageView.constrainWidth(constant: 64)
+        newsImageView.constrainHeight(constant: 64)
 
-        let stackVIew = UIStackView(arrangedSubviews: [
-            newsImageView,
-            verticalStackView
-        ])
-        stackVIew.spacing = 16
-        stackVIew.alignment = .center
+        let labelsStackView = UIStackView(arrangedSubviews: [authorLabel, titleLabel])
+        labelsStackView.axis = .vertical
+        labelsStackView.spacing = 4
 
-        addSubview(stackVIew)
-        stackVIew.fillSuperview(padding: .init(top: 5, left: 10, bottom: 5, right: 10))
+        let stackView = UIStackView(arrangedSubviews: [newsImageView, labelsStackView])
+        stackView.spacing = 16
+        stackView.alignment = .center
+
+        addSubview(stackView)
+        stackView.fillSuperview()
+
+        addSubview(separatorView)
+        separatorView.anchor(top: nil, leading: authorLabel.leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: -8, right: 0), size: .init(width: 0, height: 0.5))
+
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }
