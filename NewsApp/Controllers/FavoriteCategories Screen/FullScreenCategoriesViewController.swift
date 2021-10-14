@@ -7,18 +7,27 @@
 
 import UIKit
 
-class FullScreenController: UIViewController {
+class FullScreenCategoriesViewController: UIViewController {
+    var preferredCategoty: String?
+    private var results = [Articles]()
     private var categoryCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private let closeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        button.tintColor = .init(hex: 0xBE1FBB)
-        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
-        return button
+    private let activityIndicator: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(style: .medium)
+        aiv.color = .darkGray
+        aiv.hidesWhenStopped = true
+        return aiv
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchCategoryNews()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        title = preferredCategoty
+        tabBarController?.tabBar.alpha = 1
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
 
     override func loadView() {
@@ -28,7 +37,9 @@ class FullScreenController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
 
         setupCollectinView()
-        setupCloseButton()
+
+        view.addSubview(activityIndicator)
+        activityIndicator.centerInSuperview()
     }
 
     private func setupCollectinView() {
@@ -44,32 +55,40 @@ class FullScreenController: UIViewController {
         view.addSubview(categoryCollectionView)
     }
 
-    @objc func handleDismiss() {
-        dismiss(animated: true, completion: nil)
+    private func fetchCategoryNews() {
+
+        let dispatchGroup = DispatchGroup()
+
+        let country = UserDefaults.standard.value(forKey: "chosenCountry") as? String ?? "us"
+        dispatchGroup.enter()
+        activityIndicator.startAnimating()
+        NetworkService.shared.fetchCategoriesNews(preferredCountry: country, preferredCategoty: preferredCategoty ?? "") { (results, error) in
+            if let err = error {
+                print("Failed to fetch apps:", err)
+                return
+            }
+            self.results = results?.articles ?? []
+            dispatchGroup.leave()
+
+            dispatchGroup.notify(queue: .main) {
+                self.activityIndicator.stopAnimating()
+                self.categoryCollectionView.reloadData()
+            }
+        }
     }
-
-    private func setupCloseButton() {
-        view.addSubview(closeButton)
-        closeButton.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 16), size: .init(width: 44, height: 44))
-    }
-
-
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-
 }
 
-extension FullScreenController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension FullScreenCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return results.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsCategoryCell.identifier, for: indexPath) as? NewsCategoryCell else {
             return UICollectionViewCell()
         }
+        cell.results = results[indexPath.item]
         return cell
     }
 
@@ -87,8 +106,9 @@ extension FullScreenController: UICollectionViewDataSource, UICollectionViewDele
     }
 
      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let appId = self.apps[indexPath.item].id
-//        let appDetailController = AppDetailController(appId: appId)
-//        navigationController?.pushViewController(appDetailController, animated: true)
+        let res = results[indexPath.item]
+        let appDetailController = DetailsController()
+        appDetailController.dataSource = res
+        navigationController?.pushViewController(appDetailController, animated: true)
     }
 }

@@ -50,6 +50,7 @@ class FavouriteCategoriesViewController: UIViewController {
 }
 
 extension FavouriteCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return set.count
     }
@@ -77,12 +78,10 @@ extension FavouriteCategoriesViewController: UICollectionViewDataSource, UIColle
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let res = categories[indexPath.item]
-        let fullScreenController = FullScreenController()
-        fullScreenController.modalPresentationStyle = .fullScreen
-//        appDetailController.dataSource = res
-        present(fullScreenController, animated: true, completion: nil)
-//        navigationController?.pushViewController(appDetailController, animated: true)
+        let category = categories[indexPath.item]
+        let fullScreenController = FullScreenCategoriesViewController()
+        fullScreenController.preferredCategoty = category
+        navigationController?.pushViewController(fullScreenController, animated: true)
     }
 }
 
