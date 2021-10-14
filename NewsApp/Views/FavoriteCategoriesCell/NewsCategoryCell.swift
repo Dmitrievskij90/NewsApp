@@ -29,7 +29,7 @@ class NewsCategoryCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 16
+        imageView.layer.cornerRadius = 8
         imageView.image = UIImage(named: "news_image")
         return imageView
     }()
@@ -47,7 +47,9 @@ class NewsCategoryCell: UICollectionViewCell {
         label.text = "A Field Guide for Nature-Resistant Nerds"
         label.font = .systemFont(ofSize: 16)
         label.textColor = .black
-        label.numberOfLines = 2
+        label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.8
         return label
     }()
 
@@ -82,5 +84,4 @@ class NewsCategoryCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
