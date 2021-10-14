@@ -47,8 +47,7 @@ class TodayController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: false)
-        tabBarController?.tabBar.alpha = 1
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
     override func loadView() {

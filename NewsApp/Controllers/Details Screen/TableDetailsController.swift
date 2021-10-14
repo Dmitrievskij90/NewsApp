@@ -26,8 +26,7 @@ class TableDetailsController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.separatorStyle = .none
-        tableView.isUserInteractionEnabled = true
-        tableView.contentInsetAdjustmentBehavior = .automatic
+        tableView.isUserInteractionEnabled = false
         tableView.isScrollEnabled = true
         tableView.register(ImageHeaderTableCell.self, forCellReuseIdentifier: ImageHeaderTableCell.identifier)
         tableView.register(NewsDetailTableCell.self, forCellReuseIdentifier: NewsDetailTableCell.identifier)
