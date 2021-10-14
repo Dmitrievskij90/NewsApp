@@ -7,10 +7,10 @@
 
 import UIKit
 
-class FavoriteCategoriesCell: BaseCell {
+class FavoriteCategoriesCell: UICollectionViewCell {
 
     static let identifier = "FavoriteCategoriesCell"
-
+    
     var dataSourse: String? {
         didSet {
             if let text = dataSourse {
@@ -20,24 +20,18 @@ class FavoriteCategoriesCell: BaseCell {
         }
     }
 
-    private let categoryLabel: UILabel = {
+     let categoryLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 30)
         label.textColor = .black
         label.textAlignment = .center
-        //        label.alpha = 0.5
         label.layer.cornerRadius = 16
         label.clipsToBounds = true
         label.backgroundColor = UIColor(white: 1, alpha: 0.3)
-
-        label.layer.shadowOpacity = 0.5
-        label.layer.shadowRadius = 5
-        label.layer.shadowOffset = .init(width: 0, height: 10)
-        label.layer.shadowColor = UIColor.init(hex: 0xBE1FBB).cgColor
         return label
     }()
 
-    private let categoryImageView: UIImageView = {
+     let categoryImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -50,6 +44,11 @@ class FavoriteCategoriesCell: BaseCell {
         super.init(frame: frame)
         layer.cornerRadius = 16
         backgroundColor = .white
+
+        layer.shadowOpacity = 0.5
+        layer.shadowRadius = 10
+        layer.shadowOffset = .init(width: 0, height: 10)
+        layer.shadowColor = UIColor.darkGray.cgColor
 
         addSubview(categoryImageView)
         categoryImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 10, right: 10))
