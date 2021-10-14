@@ -94,11 +94,11 @@ extension FullScreenCategoriesViewController: UICollectionViewDataSource, UIColl
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height: CGFloat = 68
-        return .init(width: view.frame.width - 48, height: height)
+        return .init(width: view.frame.width - 26, height: height)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return .init(top: 12, left: 24, bottom: 12, right: 24)
+            return .init(top: 12, left: 13, bottom: 12, right: 13)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
