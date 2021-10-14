@@ -19,8 +19,8 @@ class DetailsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(moveFloatinContainerView))
-//        view.addGestureRecognizer(tapGestureRecognizer)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDismissFloatinContainerView))
+        view.addGestureRecognizer(tapGestureRecognizer)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -31,7 +31,7 @@ class DetailsController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if floatingContainerView.transform == .identity {
-            UIView.animate(withDuration: 0.7, delay: 5, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+            UIView.animate(withDuration: 0.7, delay: 3, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
                 self.floatingContainerView.transform = .init(translationX: 0, y: -100 - self.bottomPadding)
             }
         }
@@ -45,7 +45,7 @@ class DetailsController: UIViewController {
         self.view = view
         navigationController?.navigationBar.tintColor = .label
         setupCollectinView()
-//        setupFloatingContainerView()
+        setupFloatingContainerView()
     }
 
     private func setupCollectinView() {
