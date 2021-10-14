@@ -21,30 +21,22 @@ class WelcomeController: UIViewController {
         return label
     }()
 
-    let registerButton: UIButton = {
-        let button = UIButton(type: .system)
+    let registerButton: BaseButton = {
+        let button = BaseButton(type: .system)
         button.setTitle("REGISTER", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.setTitleColor(.white, for: .normal)
-        button.contentMode = .center
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
         button.backgroundColor = .init(hex: 0xBE1FBB)
-        button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(registerButtopnTapped), for: .touchUpInside)
         return button
     }()
 
-    let signInButton: UIButton = {
-        let button = UIButton(type: .system)
+    let signInButton: BaseButton = {
+        let button = BaseButton(type: .system)
         button.setTitle("SIGN IN", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.setTitleColor(.darkGray, for: .normal)
-        button.contentMode = .center
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
         button.backgroundColor = .white
-        button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(signinButtonTapped), for: .touchUpInside)
         return button
     }()

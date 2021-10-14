@@ -27,6 +27,12 @@ class BaseButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        contentMode = .center
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.lightGray.cgColor
+        layer.cornerRadius = 16
+
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 10
         layer.shadowOffset = .init(width: 0, height: 10)
