@@ -45,11 +45,11 @@ class NewsCategoryCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "A Field Guide for Nature-Resistant Nerds"
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 13)
         label.textColor = .black
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.8
+        label.minimumScaleFactor = 0.5
         return label
     }()
 
@@ -66,7 +66,7 @@ class NewsCategoryCell: UICollectionViewCell {
 
         let labelsStackView = UIStackView(arrangedSubviews: [authorLabel, titleLabel])
         labelsStackView.axis = .vertical
-        labelsStackView.spacing = 4
+        labelsStackView.spacing = 1
 
         let stackView = UIStackView(arrangedSubviews: [newsImageView, labelsStackView])
         stackView.spacing = 16
