@@ -14,7 +14,7 @@ class CountryCell: UITableViewCell {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
-        label.textAlignment = .right
+        label.textAlignment = .left
         return label
     }()
 
@@ -28,19 +28,33 @@ class CountryCell: UITableViewCell {
         return imageView
     }()
 
+    let bottomView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.constrainHeight(constant: 1)
+        return view
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         let stackView = UIStackView(arrangedSubviews: [
-            countryLabel,
-            countryImageView
+            countryImageView,
+            countryLabel
         ])
         stackView.alignment = .center
         stackView.spacing = 5
-        stackView.backgroundColor = .init(hex: 0xF1EFF1)
-        stackView.layer.cornerRadius = 10
 
-        addSubview(stackView)
-        stackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 5, left: 10, bottom: 5, right: 10))
+        let vStackView = UIStackView(arrangedSubviews: [
+           stackView,
+            bottomView
+        ])
+        vStackView.axis = .vertical
+
+        addSubview(vStackView)
+        vStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 5, left: 15, bottom: 5, right: 15))
+
+//        countryLabel.addSubview(bottomView)
+//        bottomView.anchor(top: nil, leading: stackView.leadingAnchor, bottom: bottomAnchor, trailing: stackView.trailingAnchor)
     }
 
     required init?(coder: NSCoder) {
