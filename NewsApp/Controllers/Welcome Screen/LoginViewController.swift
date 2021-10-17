@@ -130,11 +130,10 @@ class LoginViewController: UIViewController {
             fatalError("Wrong password")
         }
 
-        if rememberSwitch.isOn {
-            KeychainManager.shared.keepUserSignedIn()
-        }
-
         if KeychainManager.shared.userLogin == login, KeychainManager.shared.userPassword == password {
+            if rememberSwitch.isOn {
+                     KeychainManager.shared.keepUserSignedIn()
+                 }
             presentBaseTabBarController()
         } else {
             presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
