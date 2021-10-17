@@ -14,7 +14,6 @@ class BaseCell: UICollectionViewCell {
             if isHighlighted {
                 UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
                     self.transform = .init(scaleX: 0.9, y: 0.9)
-//                    self.backgroundColor = .purple
                     self.layer.shadowColor = UIColor.purple.cgColor
                 }
             } else {

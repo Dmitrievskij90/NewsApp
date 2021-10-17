@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewsCategoryCell: UICollectionViewCell {
+class NewsCell: UICollectionViewCell {
 
     static let identifier = "NewsCategoryCell"
 
