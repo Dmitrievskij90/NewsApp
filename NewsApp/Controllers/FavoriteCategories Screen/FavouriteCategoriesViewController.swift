@@ -18,7 +18,7 @@ class FavouriteCategoriesViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
+//        navigationController?.setNavigationBarHidden(true, animated: false)
         set = CategoryManager.shared.loadCategoriesSet()
         categories = set.sorted()
         DispatchQueue.main.async {

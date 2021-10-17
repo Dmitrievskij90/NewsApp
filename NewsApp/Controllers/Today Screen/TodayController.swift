@@ -47,7 +47,7 @@ class TodayController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
+//        navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
     override func loadView() {
@@ -163,7 +163,6 @@ class TodayController: UIViewController {
 
     @objc func handleDrag(gesture: UIPanGestureRecognizer) {
         if gesture.state == .began {
-            self.appFullscreenController.tableView.isScrollEnabled = false
             appFullscreenBeginOffset = appFullscreenController.tableView.contentOffset.y
         }
         if appFullscreenController.tableView.contentOffset.y > 0 {

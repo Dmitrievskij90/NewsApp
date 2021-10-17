@@ -14,7 +14,7 @@ class BaseButton: UIButton {
             if isHighlighted {
                 UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
                     self.transform = .init(scaleX: 0.9, y: 0.9)
-                    self.layer.shadowColor = UIColor.purple.cgColor
+                    self.layer.shadowColor = UIColor.init(hex: 0xDB6400).cgColor
                 }
             } else {
                 UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {

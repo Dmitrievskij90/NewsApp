@@ -62,7 +62,7 @@ extension CategoriesViewController: UICollectionViewDataSource, UICollectionView
 
         cell.layer.cornerRadius = 15
         cell.categoryLabel.text = text
-        cell.layer.shadowColor = favorire ? UIColor.purple.cgColor : UIColor.darkGray.cgColor
+        cell.layer.shadowColor = favorire ? UIColor.init(hex: 0xDB6400).cgColor : UIColor.darkGray.cgColor
         cell.starImageView.tintColor = favorire ? .init(hex: 0xF1A820) : .gray
 
         return cell

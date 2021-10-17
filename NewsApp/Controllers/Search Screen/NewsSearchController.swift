@@ -109,9 +109,10 @@ extension NewsSearchController: UISearchBarDelegate {
         timer?.invalidate()
 
         let term = searchText.replacingOccurrences(of: " ", with: "")
+        let country = UserDefaults.standard.value(forKey: "chosenCountry") as? String ?? "en"
         
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-            NetworkService.shared.fetchNews(searchTerm: term) { (results, error) in
+            NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: country) { (results, error) in
                 if let err = error {
                     print("Failed to fetch apps:", err)
                     return

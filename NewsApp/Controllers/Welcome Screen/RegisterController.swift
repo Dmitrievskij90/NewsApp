@@ -67,7 +67,7 @@ class RegisterController: UIViewController {
     private let rememberSwitch: UISwitch = {
         let rememberSwitch = UISwitch()
         rememberSwitch.isOn = false
-        rememberSwitch.onTintColor = .init(hex: 0xBE1FBB)
+        rememberSwitch.onTintColor = .init(hex: 0xDB6400)
         rememberSwitch.thumbTintColor = .white
         rememberSwitch.isUserInteractionEnabled = false
         return rememberSwitch
@@ -81,16 +81,12 @@ class RegisterController: UIViewController {
         return label
     }()
     
-    let doneButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+    let doneButton: BaseButton = {
+        let button = BaseButton(type: .system)
         button.setTitle("Done", for: .normal)
-        button.contentMode = .center
-        button.backgroundColor = .init(hex: 0xBE1FBB)
-        button.layer.cornerRadius = 16
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
+        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .init(hex: 0x16697A)
         button.addTarget(self, action: #selector(doneButonPressed), for: .touchUpInside)
         return button
     }()

@@ -15,7 +15,7 @@ class TableDetailsController: UIViewController {
     let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        button.tintColor = .init(hex: 0xBE1FBB)
+        button.tintColor = .init(hex: 0x16697A)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         return button
     }()

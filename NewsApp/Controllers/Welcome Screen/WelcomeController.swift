@@ -26,7 +26,7 @@ class WelcomeController: UIViewController {
         button.setTitle("REGISTER", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .init(hex: 0xBE1FBB)
+        button.backgroundColor = .init(hex: 0x16697A)
         button.addTarget(self, action: #selector(registerButtopnTapped), for: .touchUpInside)
         return button
     }()
