@@ -23,16 +23,12 @@ class ProfileViewController: UIViewController {
         tableView.backgroundColor = .white
         return tableView
     }()
-    private let logOutButton: UIButton = {
-        let button = UIButton(type: .system)
+    private let logOutButton: BaseButton = {
+        let button = BaseButton(type: .system)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitle("LOG OUT", for: .normal)
-        button.contentMode = .center
-        button.backgroundColor = .init(hex: 0xBE1FBB)
-        button.layer.cornerRadius = 16
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
+        button.backgroundColor = .init(hex: 0x16697A)
         button.addTarget(self, action: #selector(exitButonPressed), for: .touchUpInside)
         return button
     }()
