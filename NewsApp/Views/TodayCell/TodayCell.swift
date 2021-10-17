@@ -61,7 +61,8 @@ class TodayCell: BaseCell {
         label.textColor = .black
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 8
+        label.minimumScaleFactor = 10
+        label.constrainWidth(constant: 250)
         return label
     }()
 

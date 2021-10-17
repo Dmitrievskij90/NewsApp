@@ -58,13 +58,13 @@ class ImageHeaderTableCell: UITableViewCell {
 
     let titleLabel: UILabel = {
         let label = UILabel()
+        label.constrainWidth(constant: 250)
         label.numberOfLines = 0
         label.font = .boldSystemFont(ofSize: 15)
         label.textColor = .black
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 10
-        label.text = "Владимир Путин об Олимпиаде: «Не могу не вспомнить далекие от спорта политизированные решения в отношении наше - Sports.ru"
         return label
     }()
 
