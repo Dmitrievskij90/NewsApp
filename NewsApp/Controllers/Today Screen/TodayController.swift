@@ -9,7 +9,6 @@ import UIKit
 import KeychainAccess
 
 class TodayController: UIViewController {
-
     private var appFullscreenController = TableDetailsController()
     private var topConstraint: NSLayoutConstraint?
     private var leadingConstraint: NSLayoutConstraint?

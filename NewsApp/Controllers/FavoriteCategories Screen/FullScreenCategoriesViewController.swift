@@ -18,9 +18,15 @@ class FullScreenCategoriesViewController: UIViewController {
         return aiv
     }()
 
+    private let refreshControl = UIRefreshControl()
+    private var timer: Timer?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchCategoryNews()
+
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        categoryCollectionView.refreshControl = refreshControl
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -55,13 +61,15 @@ class FullScreenCategoriesViewController: UIViewController {
         view.addSubview(categoryCollectionView)
     }
 
-    private func fetchCategoryNews() {
+    private func fetchCategoryNews(isTrue: Bool = true) {
+        if isTrue {
+            activityIndicator.startAnimating()
+        }
 
         let dispatchGroup = DispatchGroup()
 
         let country = UserDefaults.standard.value(forKey: "chosenCountry") as? String ?? "us"
         dispatchGroup.enter()
-        activityIndicator.startAnimating()
         NetworkService.shared.fetchCategoriesNews(preferredCountry: country, preferredCategoty: preferredCategoty ?? "") { (results, error) in
             if let err = error {
                 print("Failed to fetch apps:", err)
@@ -75,6 +83,14 @@ class FullScreenCategoriesViewController: UIViewController {
                 self.categoryCollectionView.reloadData()
             }
         }
+    }
+
+    @objc func refresh() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
+            self.refreshControl.endRefreshing()
+        })
+        self.fetchCategoryNews(isTrue: false)
     }
 }
 

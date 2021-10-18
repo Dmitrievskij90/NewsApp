@@ -52,9 +52,6 @@ class CountryCell: UITableViewCell {
 
         addSubview(vStackView)
         vStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 5, left: 15, bottom: 5, right: 15))
-
-//        countryLabel.addSubview(bottomView)
-//        bottomView.anchor(top: nil, leading: stackView.leadingAnchor, bottom: bottomAnchor, trailing: stackView.trailingAnchor)
     }
 
     required init?(coder: NSCoder) {
