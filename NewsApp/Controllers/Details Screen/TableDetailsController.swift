@@ -12,7 +12,7 @@ class TableDetailsController: UIViewController {
     var dataSource: Articles?
     private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     let floatingContainerView = FloatingContainerView()
-    
+
     let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)

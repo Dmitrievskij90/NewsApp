@@ -67,10 +67,8 @@ class FullScreenCategoriesViewController: UIViewController {
         }
 
         let dispatchGroup = DispatchGroup()
-
-        let country = UserDefaults.standard.value(forKey: "chosenCountry") as? String ?? "us"
         dispatchGroup.enter()
-        NetworkService.shared.fetchCategoriesNews(preferredCountry: country, preferredCategoty: preferredCategoty ?? "") { (results, error) in
+        NetworkService.shared.fetchCategoriesNews(preferredCountry: AppSettingsManager.shared.country, preferredCategoty: preferredCategoty ?? "") { (results, error) in
             if let err = error {
                 print("Failed to fetch apps:", err)
                 return

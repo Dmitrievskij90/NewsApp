@@ -9,7 +9,6 @@ import UIKit
 import KeychainAccess
 
 class RegisterController: UIViewController {
-
     private let loginTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
@@ -153,7 +152,7 @@ class RegisterController: UIViewController {
         }
         
         if rememberSwitch.isOn {
-            KeychainManager.shared.keepUserSignedIn()
+            AppSettingsManager.shared.keepUserSignedIn()
         }
         
         if login.isEmpty || password.isEmpty {
@@ -161,7 +160,7 @@ class RegisterController: UIViewController {
         } else if password != repeatPassword {
             presentOneButtonAlert(withTitle: "Passwords don't match", message: "Please check the spelling and try again")
         } else {
-            KeychainManager.shared.setUserCredentials(login: login, password: password)
+            AppSettingsManager.shared.setUserCredentials(login: login, password: password)
             presentBaseTabBarController()
         }
     }

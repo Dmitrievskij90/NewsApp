@@ -10,7 +10,7 @@ import KeychainAccess
 
 class ProfileViewController: UIViewController {
     private let fileManager = FileManager.default
-    private let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(KeychainManager.shared.userLogin)
+    private let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
     private let keychain = Keychain()
     
     private let tableView: UITableView = {
@@ -189,7 +189,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileTableHeader.identifier) as? ProfileTableHeader else {
             return UIView()
         }
-        header.helloLabel.text = "Hello,\(KeychainManager.shared.userLogin)!"
+        header.helloLabel.text = "Hello,\(AppSettingsManager.shared.userLogin)!"
         header.userImageView.image = image
         header.imageTapHandler = { [unowned self] in
             self.displayImagePickerController()

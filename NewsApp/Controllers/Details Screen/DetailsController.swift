@@ -8,7 +8,6 @@
 import UIKit
 
 class DetailsController: UIViewController {
-
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     var dataSource: Articles?
     private let floatingContainerView = FloatingContainerView()

@@ -9,7 +9,6 @@ import UIKit
 import SDWebImage
 
 class NewsSearchController: UIViewController {
-
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var results = [Articles]()
     private var timer: Timer?
@@ -109,10 +108,8 @@ extension NewsSearchController: UISearchBarDelegate {
         timer?.invalidate()
 
         let term = searchText.replacingOccurrences(of: " ", with: "")
-        let country = UserDefaults.standard.value(forKey: "chosenCountry") as? String ?? "en"
-        
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-            NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: country) { (results, error) in
+            NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: AppSettingsManager.shared.country) { (results, error) in
                 if let err = error {
                     print("Failed to fetch apps:", err)
                     return

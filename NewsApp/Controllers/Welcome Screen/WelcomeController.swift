@@ -58,9 +58,7 @@ class WelcomeController: UIViewController {
     }
 
     private func validateIsItFirstAppLaunch() {
-        let notFirsAppLaunch = defaults.bool(forKey: "isTrue")
-
-        if !notFirsAppLaunch {
+        if !AppSettingsManager.shared.notFirsAppLaunch {
             keychain["remember"] = nil
             defaults.setValue(true, forKey: "isTrue")
         }
@@ -88,7 +86,7 @@ class WelcomeController: UIViewController {
     }
 
     @objc func signinButtonTapped() {
-        if !KeychainManager.shared.isUserSignedIn.isEmpty {
+        if !AppSettingsManager.shared.isUserSignedIn.isEmpty {
             presentBaseTabBarController()
         } else {
             let destinationVC = LoginViewController()

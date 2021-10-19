@@ -74,14 +74,12 @@ class TodayController: UIViewController {
     private func fetchTodayNews(isTrue: Bool = true) {
         let dispatchGroup = DispatchGroup()
 
-        let country = UserDefaults.standard.value(forKey: "chosenCountry") as? String ?? "us"
-
         if isTrue {
             activityIndicator.startAnimating()
         }
 
         dispatchGroup.enter()
-        NetworkService.shared.fetchTodayNews(preferredCountry: country) { (results, error) in
+        NetworkService.shared.fetchTodayNews(preferredCountry: AppSettingsManager.shared.country) { (results, error) in
             if let err = error {
                 print("Can't fetch today news", err)
             }
