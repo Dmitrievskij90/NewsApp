@@ -12,11 +12,20 @@ class TableDetailsController: UIViewController {
     var dataSource: Articles?
     private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     let floatingContainerView = FloatingContainerView()
+    
     let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
         button.tintColor = .init(hex: 0x16697A)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+
+    let shareButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -32,7 +41,6 @@ class TableDetailsController: UIViewController {
         tableView.register(NewsDetailTableCell.self, forCellReuseIdentifier: NewsDetailTableCell.identifier)
         return tableView
     }()
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +67,7 @@ class TableDetailsController: UIViewController {
 
         setupTableView()
         setupCloseButton()
+        setupShareButton()
         setupFloatingContainerView()
     }
 
@@ -74,6 +83,11 @@ class TableDetailsController: UIViewController {
     private func setupCloseButton() {
         view.addSubview(closeButton)
         closeButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
+    }
+
+    private func setupShareButton() {
+        view.addSubview(shareButton)
+        shareButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
     }
 
     private func setupFloatingContainerView() {
@@ -98,6 +112,11 @@ class TableDetailsController: UIViewController {
                 self.floatingContainerView.transform = .identity
             }
         }
+    }
+
+    @objc func shareButtonTapped() {
+        let aiv = UIActivityViewController(activityItems: [dataSource?.url ?? ""], applicationActivities: nil)
+        present(aiv, animated: true, completion: nil)
     }
 
     @objc func handleDismiss(button: UIButton) {
@@ -136,9 +155,5 @@ extension TableDetailsController: UITableViewDelegate, UITableViewDataSource {
             return 400
         }
         return view.frame.height / 2
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
     }
 }

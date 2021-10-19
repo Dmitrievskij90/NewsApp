@@ -59,6 +59,11 @@ class ProfileViewController: UIViewController {
         self.view = view
         view.backgroundColor = .gray
 
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(exitButonPressed))
+        cancelButton.tintColor = .black
+        navigationItem.rightBarButtonItem = cancelButton
+        navigationController?.navigationBar.tintColor = .black
+
         setupTableView()
         setupFooterForTableView()
         setupLogOutButton()

@@ -25,7 +25,7 @@ class FullScreenCategoriesViewController: UIViewController {
         super.viewDidLoad()
         fetchCategoryNews()
 
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
         categoryCollectionView.refreshControl = refreshControl
     }
 
@@ -85,7 +85,7 @@ class FullScreenCategoriesViewController: UIViewController {
         }
     }
 
-    @objc func refresh() {
+    @objc func refreshHandler() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
             self.refreshControl.endRefreshing()

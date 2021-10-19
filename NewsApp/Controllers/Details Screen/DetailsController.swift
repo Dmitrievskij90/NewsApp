@@ -9,7 +9,7 @@ import UIKit
 
 class DetailsController: UIViewController {
 
-     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+    var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     var dataSource: Articles?
     private let floatingContainerView = FloatingContainerView()
     private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
@@ -18,6 +18,10 @@ class DetailsController: UIViewController {
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
+        let logOutButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareButtonTapped))
+        logOutButton.tintColor = .black
+        navigationItem.rightBarButtonItem = logOutButton
+        navigationController?.navigationBar.tintColor = .label
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDismissFloatinContainerView))
         view.addGestureRecognizer(tapGestureRecognizer)
@@ -90,6 +94,11 @@ class DetailsController: UIViewController {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
             self.floatingContainerView.transform = .identity
         }
+    }
+
+    @objc func shareButtonTapped() {
+        let aiv = UIActivityViewController(activityItems: [dataSource?.url ?? ""], applicationActivities: nil)
+        present(aiv, animated: true, completion: nil)
     }
 }
 

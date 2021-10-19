@@ -40,13 +40,12 @@ class TodayController: UIViewController {
         navigationController?.navigationBar.tintColor = .label
         fetchTodayNews()
 
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
         todayCollectionView.refreshControl = refreshControl
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
     override func loadView() {
@@ -96,14 +95,13 @@ class TodayController: UIViewController {
         }
     }
 
-    @objc func refresh() {
+    @objc func refreshHandler() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
             self.refreshControl.endRefreshing()
         })
         self.fetchTodayNews(isTrue: false)
     }
-
 
     func handleRemoveView() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
@@ -131,6 +129,7 @@ class TodayController: UIViewController {
                 }
 
                 self.appFullscreenController.closeButton.alpha = 0
+                self.appFullscreenController.shareButton.alpha = 0
                 self.appFullscreenController.floatingContainerView.alpha = 0
                 cell.layoutIfNeeded()
             }
@@ -240,7 +239,6 @@ class TodayController: UIViewController {
             guard let cell = self.appFullscreenController.tableView.cellForRow(at: [0,0]) as? ImageHeaderTableCell else {
                 return
             }
-//            cell.topConstaraint?.constant = 48
             cell.layoutIfNeeded()
         }
     }
@@ -284,10 +282,6 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let res = results[indexPath.item]
-//        let appDetailController = DetailsController()
-//        appDetailController.dataSource = res
-//        navigationController?.pushViewController(appDetailController, animated: true)
         showSingleAppFullScreen(indexPath)
     }
 }
