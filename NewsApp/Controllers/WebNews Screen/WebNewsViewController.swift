@@ -14,6 +14,7 @@ class WebNewsViewController: UIViewController, WKNavigationDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(false, animated: false)
         guard let url = URL(string: urlString) else {
             return
         }

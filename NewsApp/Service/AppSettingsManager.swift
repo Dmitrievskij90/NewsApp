@@ -8,8 +8,16 @@
 import Foundation
 import KeychainAccess
 
-class KeychainManager {
-    static let shared = KeychainManager()
+class AppSettingsManager {
+    static let shared = AppSettingsManager()
+    private let defaults = UserDefaults.standard
+
+    var notFirsAppLaunch = UserDefaults.standard.bool(forKey: "isTrue")
+
+    var country: String {
+        let country = defaults.value(forKey: "chosenCountry") as? String ?? "us"
+        return country
+    }
 
     var userLogin: String {
         guard let userPassword = try? keychain.get("login") else {

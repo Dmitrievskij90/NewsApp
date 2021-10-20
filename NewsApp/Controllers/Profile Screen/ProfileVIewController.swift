@@ -10,7 +10,7 @@ import KeychainAccess
 
 class ProfileViewController: UIViewController {
     private let fileManager = FileManager.default
-    private let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(KeychainManager.shared.userLogin)
+    private let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
     private let keychain = Keychain()
     
     private let tableView: UITableView = {
@@ -23,16 +23,12 @@ class ProfileViewController: UIViewController {
         tableView.backgroundColor = .white
         return tableView
     }()
-    private let logOutButton: UIButton = {
-        let button = UIButton(type: .system)
+    private let logOutButton: BaseButton = {
+        let button = BaseButton(type: .system)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitle("LOG OUT", for: .normal)
-        button.contentMode = .center
-        button.backgroundColor = .init(hex: 0xBE1FBB)
-        button.layer.cornerRadius = 16
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
+        button.backgroundColor = .init(hex: 0x16697A)
         button.addTarget(self, action: #selector(exitButonPressed), for: .touchUpInside)
         return button
     }()
@@ -62,6 +58,11 @@ class ProfileViewController: UIViewController {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
         view.backgroundColor = .gray
+
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(exitButonPressed))
+        cancelButton.tintColor = .black
+        navigationItem.rightBarButtonItem = cancelButton
+        navigationController?.navigationBar.tintColor = .black
 
         setupTableView()
         setupFooterForTableView()
@@ -188,7 +189,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileTableHeader.identifier) as? ProfileTableHeader else {
             return UIView()
         }
-        header.helloLabel.text = "Hello,\(KeychainManager.shared.userLogin)!"
+        header.helloLabel.text = "Hello,\(AppSettingsManager.shared.userLogin)!"
         header.userImageView.image = image
         header.imageTapHandler = { [unowned self] in
             self.displayImagePickerController()

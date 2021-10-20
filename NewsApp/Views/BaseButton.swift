@@ -1,13 +1,13 @@
 //
-//  BaseCell.swift
+//  BaseButton.swift
 //  NewsApp
 //
-//  Created by Konstantin Dmitrievskiy on 06.09.2021.
+//  Created by Konstantin Dmitrievskiy on 14.10.2021.
 //
 
 import UIKit
 
-class BaseCell: UICollectionViewCell {
+class BaseButton: UIButton {
 
     override var isHighlighted: Bool {
         didSet {
@@ -19,7 +19,6 @@ class BaseCell: UICollectionViewCell {
             } else {
                 UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
                     self.transform = .identity
-                    self.backgroundColor = .white
                     self.layer.shadowColor = UIColor.darkGray.cgColor
                 }
             }
@@ -28,6 +27,12 @@ class BaseCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        contentMode = .center
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.lightGray.cgColor
+        layer.cornerRadius = 16
+
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 10
         layer.shadowOffset = .init(width: 0, height: 10)
@@ -37,5 +42,4 @@ class BaseCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

@@ -10,15 +10,7 @@ import UIKit
 class CategoriesViewController: UIViewController {
     private var categoryCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var categoriesSet = Set<String>()
-    private var categoriesStruct = [
-        Categories(name: "business", isFavorited: true),
-        Categories(name: "entertainment", isFavorited: true),
-        Categories(name: "general", isFavorited: true),
-        Categories(name: "health", isFavorited: true),
-        Categories(name: "science", isFavorited: true),
-        Categories(name: "sports", isFavorited: true),
-        Categories(name: "technology", isFavorited: true),
-    ]
+    private var categoriesStruct = [Categories]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,18 +62,22 @@ extension CategoriesViewController: UICollectionViewDataSource, UICollectionView
 
         cell.layer.cornerRadius = 15
         cell.categoryLabel.text = text
-        cell.layer.shadowColor = favorire ? UIColor.purple.cgColor : UIColor.darkGray.cgColor
-        cell.starImageView.tintColor = favorire ? UIColor.red : .gray
+        cell.layer.shadowColor = favorire ? UIColor.init(hex: 0xDB6400).cgColor : UIColor.darkGray.cgColor
+        cell.starImageView.tintColor = favorire ? .init(hex: 0xF1A820) : .gray
 
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width  - 30, height: (view.frame.width / 4) - 30)
+        return CGSize(width: (view.frame.width / 2) - 20, height: (view.frame.width / 2) - 20)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 15
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        return UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -94,10 +90,10 @@ extension CategoriesViewController: UICollectionViewDataSource, UICollectionView
         let item = categoriesStruct[indexPath.item].name
         if categoriesSet.contains(item) {
             categoriesSet.remove(item)
-            CategoryManager.shared.saveCategories(with: categoriesSet)
+            CategoryManager.shared.saveCategoriesSet(with: categoriesSet)
         } else {
             categoriesSet.insert(item)
-            CategoryManager.shared.saveCategories(with: categoriesSet)
+            CategoryManager.shared.saveCategoriesSet(with: categoriesSet)
         }
     }
 }

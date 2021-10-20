@@ -10,15 +10,21 @@ import Foundation
 class NetworkService {
     static let shared = NetworkService()
 
-    func fetchNews(searchTerm: String, completion: @escaping (NewsData?, Error?) -> ()) {
+    func fetchNews(searchTerm: String, preferredCountry: String, completion: @escaping (NewsData?, Error?) -> ()) {
 
-        let urlString = "https://newsapi.org/v2/everything?q=\(searchTerm)&sortBy=publishedAt&pageSize=100&apiKey=61bba430f9444209af20b7856ae3d12e"
+        let urlString =  "https://newsapi.org/v2/everything?q=\(searchTerm)&language=\(preferredCountry)&sortBy=publishedAt&pageSize=100&apiKey=61bba430f9444209af20b7856ae3d12e"
 
         fetchData(with: urlString, completion: completion)
     }
 
     func fetchTodayNews(preferredCountry: String, completion: @escaping (NewsData?, Error?) -> ()) {
         let urlString = "https://newsapi.org/v2/top-headlines?country=\(preferredCountry)&pageSize=100&apiKey=61bba430f9444209af20b7856ae3d12e"
+
+        fetchData(with: urlString, completion: completion)
+    }
+
+    func fetchCategoriesNews(preferredCountry: String, preferredCategoty: String, completion: @escaping (NewsData?, Error?) -> ()) {
+        let urlString = "https://newsapi.org/v2/top-headlines?country=\(preferredCountry)&category=\(preferredCategoty)&pageSize=100&apiKey=61bba430f9444209af20b7856ae3d12e"
 
         fetchData(with: urlString, completion: completion)
     }

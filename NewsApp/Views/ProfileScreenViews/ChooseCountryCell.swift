@@ -31,7 +31,7 @@ class ChooseCountryCell: UITableViewCell {
     private let accessoryImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "iphone")
-        imageView.tintColor = .init(hex: 0xBE1FBB)
+        imageView.tintColor = .init(hex: 0xDB6400)
         return imageView
     }()
 
@@ -42,7 +42,6 @@ class ChooseCountryCell: UITableViewCell {
         accessoryImageView.anchor(top: nil, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 19, bottom: 0, right: 19) ,size: .init(width: 25, height: 25))
         accessoryImageView.centerYInSuperview()
 
-        layer.cornerRadius = 16
         clipsToBounds = true
         addSubview(countryLabel)
         countryLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor,padding: .init(top: 5, left: 15, bottom: 5, right: 15))

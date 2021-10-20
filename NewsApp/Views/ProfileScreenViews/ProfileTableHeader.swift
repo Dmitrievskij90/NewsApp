@@ -22,7 +22,7 @@ class ProfileTableHeader: UITableViewHeaderFooterView {
 
     let profileView: UIView = {
         let view = UIView()
-        view.backgroundColor = .init(hex: 0xBE1FBB)
+        view.backgroundColor = .init(hex: 0x16697A)
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
         view.alpha = 0.5

@@ -8,8 +8,9 @@
 import UIKit
 
 class FavouriteCategoriesViewController: UIViewController {
-    private var categoryCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+    private var favouriteCategoriesCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var set = Set<String>()
+    private var categories = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,9 +19,9 @@ class FavouriteCategoriesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         set = CategoryManager.shared.loadCategoriesSet()
-
+        categories = set.sorted()
         DispatchQueue.main.async {
-            self.categoryCollectionView.reloadData()
+            self.favouriteCategoriesCollectionView.reloadData()
         }
     }
 
@@ -37,17 +38,18 @@ class FavouriteCategoriesViewController: UIViewController {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
 
-        categoryCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        categoryCollectionView.register(FavoriteCategoriesCell.self, forCellWithReuseIdentifier: FavoriteCategoriesCell.identifier)
-        categoryCollectionView.backgroundColor = UIColor.white
-        categoryCollectionView.dataSource = self
-        categoryCollectionView.delegate = self
+        favouriteCategoriesCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        favouriteCategoriesCollectionView.register(FavoriteCategoriesCell.self, forCellWithReuseIdentifier: FavoriteCategoriesCell.identifier)
+        favouriteCategoriesCollectionView.backgroundColor = UIColor.white
+        favouriteCategoriesCollectionView.dataSource = self
+        favouriteCategoriesCollectionView.delegate = self
 
-        view.addSubview(categoryCollectionView)
+        view.addSubview(favouriteCategoriesCollectionView)
     }
 }
 
 extension FavouriteCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return set.count
     }
@@ -57,18 +59,28 @@ extension FavouriteCategoriesViewController: UICollectionViewDataSource, UIColle
             return UICollectionViewCell()
         }
 
-        let text = set.sorted()
-
         cell.layer.cornerRadius = 15
-        cell.categoryLabel.text = text[indexPath.item]
+        cell.dataSourse = categories[indexPath.item]
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 24
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width  - 30, height: (view.frame.width / 4) - 30)
+        return .init(width: view.frame.width - 48, height: 300)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        return .init(top: 24, left: 0, bottom: 24, right: 0)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let category = categories[indexPath.item]
+        let fullScreenController = FullScreenCategoriesViewController()
+        fullScreenController.preferredCategoty = category
+        navigationController?.pushViewController(fullScreenController, animated: true)
     }
 }
+

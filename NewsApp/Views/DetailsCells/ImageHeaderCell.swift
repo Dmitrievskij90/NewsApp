@@ -15,20 +15,19 @@ class ImageHeaderCell: UICollectionViewCell {
             if let source = dataSource {
                 sourceLabel.text = source.source.name.uppercased()
                 if let image = source.urlToImage, source.urlToImage != "" {
-                    headerImagView.sd_setImage(with: URL(string: image))
+                    headerImageView.sd_setImage(with: URL(string: image))
                 } else {
-                    headerImagView.image = UIImage(named: "news_image")
+                    headerImageView.image = UIImage(named: "news_image")
                 }
             }
         }
     }
 
-    let headerImagView: UIImageView = {
+    let headerImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "news_image")
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 16
         return imageView
     }()
 
@@ -48,7 +47,7 @@ class ImageHeaderCell: UICollectionViewCell {
 
         let verticalStackView = UIStackView(arrangedSubviews: [
             sourceLabel,
-            headerImagView
+            headerImageView
         ])
         verticalStackView.axis = .vertical
 

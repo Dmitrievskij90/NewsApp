@@ -47,7 +47,7 @@ class LoginViewController: UIViewController {
     private let rememberSwitch: UISwitch = {
         let rememberSwitch = UISwitch()
         rememberSwitch.isOn = false
-        rememberSwitch.onTintColor = .init(hex: 0xBE1FBB)
+        rememberSwitch.onTintColor = .init(hex: 0xDB6400)
         rememberSwitch.thumbTintColor = .white
         rememberSwitch.isUserInteractionEnabled = false
         return rememberSwitch
@@ -62,15 +62,11 @@ class LoginViewController: UIViewController {
     }()
 
     let letsGoButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        let button = BaseButton(type: .system)
         button.setTitle("Let's go", for: .normal)
-        button.contentMode = .center
-        button.backgroundColor = .init(hex: 0xBE1FBB)
-        button.layer.cornerRadius = 16
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
+        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .init(hex: 0x16697A)
         button.addTarget(self, action: #selector(doneButonPressed), for: .touchUpInside)
         return button
     }()
@@ -130,11 +126,10 @@ class LoginViewController: UIViewController {
             fatalError("Wrong password")
         }
 
-        if rememberSwitch.isOn {
-            KeychainManager.shared.keepUserSignedIn()
-        }
-
-        if KeychainManager.shared.userLogin == login, KeychainManager.shared.userPassword == password {
+        if AppSettingsManager.shared.userLogin == login, AppSettingsManager.shared.userPassword == password {
+            if rememberSwitch.isOn {
+                     AppSettingsManager.shared.keepUserSignedIn()
+                 }
             presentBaseTabBarController()
         } else {
             presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")

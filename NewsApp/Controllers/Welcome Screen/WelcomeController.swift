@@ -21,30 +21,22 @@ class WelcomeController: UIViewController {
         return label
     }()
 
-    let registerButton: UIButton = {
-        let button = UIButton(type: .system)
+    let registerButton: BaseButton = {
+        let button = BaseButton(type: .system)
         button.setTitle("REGISTER", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.setTitleColor(.white, for: .normal)
-        button.contentMode = .center
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
-        button.backgroundColor = .init(hex: 0xBE1FBB)
-        button.layer.cornerRadius = 16
+        button.backgroundColor = .init(hex: 0x16697A)
         button.addTarget(self, action: #selector(registerButtopnTapped), for: .touchUpInside)
         return button
     }()
 
-    let signInButton: UIButton = {
-        let button = UIButton(type: .system)
+    let signInButton: BaseButton = {
+        let button = BaseButton(type: .system)
         button.setTitle("SIGN IN", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.setTitleColor(.darkGray, for: .normal)
-        button.contentMode = .center
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
         button.backgroundColor = .white
-        button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(signinButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -66,9 +58,7 @@ class WelcomeController: UIViewController {
     }
 
     private func validateIsItFirstAppLaunch() {
-        let notFirsAppLaunch = defaults.bool(forKey: "isTrue")
-
-        if !notFirsAppLaunch {
+        if !AppSettingsManager.shared.notFirsAppLaunch {
             keychain["remember"] = nil
             defaults.setValue(true, forKey: "isTrue")
         }
@@ -96,7 +86,7 @@ class WelcomeController: UIViewController {
     }
 
     @objc func signinButtonTapped() {
-        if !KeychainManager.shared.isUserSignedIn.isEmpty {
+        if !AppSettingsManager.shared.isUserSignedIn.isEmpty {
             presentBaseTabBarController()
         } else {
             let destinationVC = LoginViewController()

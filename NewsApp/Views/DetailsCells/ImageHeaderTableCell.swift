@@ -1,25 +1,27 @@
 //
-//  TodayCell.swift
+//  ImageHeaderTableCell.swift
 //  NewsApp
 //
-//  Created by Konstantin Dmitrievskiy on 11.09.2021.
+//  Created by Konstantin Dmitrievskiy on 10.10.2021.
 //
 
 import UIKit
 
-class TodayCell: BaseCell {
-    static let identifier = "TodayCell"
-    private var topConstaraint: NSLayoutConstraint?
-    var results: Articles? {
+class ImageHeaderTableCell: UITableViewCell {
+
+    static let identifier = "ImageHeaderTableCell"
+
+     var topConstaraint: NSLayoutConstraint?
+    var dataSource: Articles? {
         didSet {
-            if let source = results {
+            if let source = dataSource {
                 sourceLabel.text = source.source.name.uppercased()
                 dateLabel.text = Helpers.shared.convertDate(date: source.publishedAt)
                 titleLabel.text = source.title
                 if let image = source.urlToImage, source.urlToImage != "" {
-                    imageView.sd_setImage(with: URL(string: image))
+                    newsImageView.sd_setImage(with: URL(string: image))
                 } else {
-                    imageView.image = UIImage(named: "news_image")
+                    newsImageView.image = UIImage(named: "news_image")
                 }
             }
         }
@@ -46,7 +48,7 @@ class TodayCell: BaseCell {
         return label
     }()
 
-    let imageView: UIImageView = {
+    let newsImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -56,18 +58,21 @@ class TodayCell: BaseCell {
 
     let titleLabel: UILabel = {
         let label = UILabel()
+        label.constrainWidth(constant: 250)
         label.numberOfLines = 0
         label.font = .boldSystemFont(ofSize: 15)
         label.textColor = .black
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 10
-        label.constrainWidth(constant: 250)
         return label
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        clipsToBounds = true
+
         layer.cornerRadius = 16
         backgroundColor = .white
 
@@ -83,7 +88,7 @@ class TodayCell: BaseCell {
 
         let verticalStackView = UIStackView(arrangedSubviews: [
            topVerticalStackView,
-            imageView,
+            newsImageView,
             titleLabel
         ])
         verticalStackView.axis = .vertical
@@ -99,5 +104,7 @@ class TodayCell: BaseCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    
 }
 

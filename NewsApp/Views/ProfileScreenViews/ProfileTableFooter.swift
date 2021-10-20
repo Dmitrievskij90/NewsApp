@@ -31,7 +31,7 @@ class ProfileTableFooter: UIView {
     private let accessoryImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "star")
-        imageView.tintColor = .init(hex: 0xBE1FBB)
+        imageView.tintColor = .init(hex: 0xDB6400)
         return imageView
     }()
 
