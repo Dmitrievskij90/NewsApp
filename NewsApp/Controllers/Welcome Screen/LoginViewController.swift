@@ -8,20 +8,19 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-
     private let loginTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white
+            .foregroundColor: UIColor.black
         ]
         let attributedString = NSAttributedString(string: "Login", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
         textField.borderStyle = .roundedRect
         textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .init(hex: 0xEBEBEB)
         textField.textAlignment = .center
-        textField.autocapitalizationType = .none
+        textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
         return textField
     }()
@@ -29,14 +28,14 @@ class LoginViewController: UIViewController {
     private let passwordTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white
+            .foregroundColor: UIColor.black
         ]
         let attributedString = NSAttributedString(string: "Password", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
         textField.borderStyle = .roundedRect
         textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .init(hex: 0xEBEBEB)
         textField.textAlignment = .center
         textField.autocapitalizationType = .none
         textField.returnKeyType = .continue
@@ -61,7 +60,7 @@ class LoginViewController: UIViewController {
         return label
     }()
 
-    let letsGoButton: UIButton = {
+    private let letsGoButton: UIButton = {
         let button = BaseButton(type: .system)
         button.setTitle("Let's go", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
@@ -128,8 +127,8 @@ class LoginViewController: UIViewController {
 
         if AppSettingsManager.shared.userLogin == login, AppSettingsManager.shared.userPassword == password {
             if rememberSwitch.isOn {
-                     AppSettingsManager.shared.keepUserSignedIn()
-                 }
+                AppSettingsManager.shared.keepUserSignedIn()
+            }
             presentBaseTabBarController()
         } else {
             presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")

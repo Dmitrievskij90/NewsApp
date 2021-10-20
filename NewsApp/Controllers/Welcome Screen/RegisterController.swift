@@ -12,14 +12,14 @@ class RegisterController: UIViewController {
     private let loginTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white
+            .foregroundColor: UIColor.black
         ]
         let attributedString = NSAttributedString(string: "Login", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
         textField.borderStyle = .roundedRect
         textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .init(hex: 0xEBEBEB)
         textField.textAlignment = .center
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
@@ -29,14 +29,14 @@ class RegisterController: UIViewController {
     private let passwordTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white
+            .foregroundColor: UIColor.black
         ]
         let attributedString = NSAttributedString(string: "Password", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
         textField.borderStyle = .roundedRect
         textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .init(hex: 0xEBEBEB)
         textField.textAlignment = .center
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
@@ -48,14 +48,14 @@ class RegisterController: UIViewController {
         let textField = UITextField()
         
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white
+            .foregroundColor: UIColor.black
         ]
         let attributedString = NSAttributedString(string: "Repeat password", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
         textField.borderStyle = .roundedRect
         textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .lightGray
+        textField.backgroundColor = .init(hex: 0xEBEBEB)
         textField.textAlignment = .center
         textField.autocapitalizationType = .none
         textField.returnKeyType = .done
@@ -80,7 +80,7 @@ class RegisterController: UIViewController {
         return label
     }()
     
-    let doneButton: BaseButton = {
+    private let doneButton: BaseButton = {
         let button = BaseButton(type: .system)
         button.setTitle("Done", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
