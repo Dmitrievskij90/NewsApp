@@ -32,6 +32,7 @@ class StockHeaderHorizontalController: UIViewController {
         stockCollectionView.dataSource = self
         stockCollectionView.delegate = self
         stockCollectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+        stockCollectionView.showsHorizontalScrollIndicator = false
 
         view.addSubview(stockCollectionView)
         stockCollectionView.fillSuperview()

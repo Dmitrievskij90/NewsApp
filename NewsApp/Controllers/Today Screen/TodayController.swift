@@ -284,6 +284,10 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
         showSingleAppFullScreen(indexPath)
     }
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 16, left: 0, bottom: 0, right: 0)
+    }
+
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: StockPageHeader.identifier, for: indexPath) as? StockPageHeader else {
             return UICollectionReusableView()
@@ -292,6 +296,6 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: 100)
+        return .init(width: view.frame.width, height: 50)
     }
 }
