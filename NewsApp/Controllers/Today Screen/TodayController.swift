@@ -63,6 +63,7 @@ class TodayController: UIViewController {
 
         todayCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         todayCollectionView.register(TodayCell.self, forCellWithReuseIdentifier: TodayCell.identifier)
+        todayCollectionView.register(StockPageHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: StockPageHeader.identifier)
         todayCollectionView.backgroundColor = UIColor.white
         todayCollectionView.dataSource = self
         todayCollectionView.delegate = self
@@ -281,5 +282,16 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         showSingleAppFullScreen(indexPath)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: StockPageHeader.identifier, for: indexPath) as? StockPageHeader else {
+            return UICollectionReusableView()
+        }
+        return header
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .init(width: view.frame.width, height: 100)
     }
 }
