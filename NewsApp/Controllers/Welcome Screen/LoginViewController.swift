@@ -8,17 +8,28 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    private let sigInLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Sign in to your account"
+        label.font = .boldSystemFont(ofSize: 25)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        return label
+    }()
+
     private let loginTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.black
+            .foregroundColor: UIColor.darkGray
         ]
         let attributedString = NSAttributedString(string: "Login", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
-        textField.borderStyle = .roundedRect
+        textField.borderStyle = .bezel
         textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .init(hex: 0xEBEBEB)
+        textField.backgroundColor = .white
         textField.textAlignment = .center
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
@@ -28,14 +39,14 @@ class LoginViewController: UIViewController {
     private let passwordTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.black
+            .foregroundColor: UIColor.darkGray
         ]
         let attributedString = NSAttributedString(string: "Password", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
-        textField.borderStyle = .roundedRect
+        textField.borderStyle = .bezel
         textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .init(hex: 0xEBEBEB)
+        textField.backgroundColor = .white
         textField.textAlignment = .center
         textField.autocapitalizationType = .none
         textField.returnKeyType = .continue
@@ -93,6 +104,7 @@ class LoginViewController: UIViewController {
         keepMeSignedInStackView.spacing = 4
 
         let stackView = UIStackView(arrangedSubviews: [
+            sigInLabel,
             loginTextField,
             passwordTextField,
             keepMeSignedInStackView
