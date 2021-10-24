@@ -8,16 +8,11 @@
 import UIKit
 
 class StockHeaderHorizontalController: UIViewController {
-    private var stockCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private let cellID = "cellID"
-//    var socialApps = [SocialApp]()
+    var stockCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+    var stockData = [StockData]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        stockCollectionView.backgroundColor = .white
-//        stockCollectionView.register(StockHeaderCell.self, forCellWithReuseIdentifier: StockHeaderCell.identifier)
-//        stockCollectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
-
         setupCollectinView()
     }
 
@@ -41,14 +36,15 @@ class StockHeaderHorizontalController: UIViewController {
 
 extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10//socialApps.count
+        return stockData.count
+
     }
 
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StockHeaderCell.identifier, for: indexPath) as? StockHeaderCell else {
             return UICollectionViewCell()
         }
-
+        cell.titleLabel.text = stockData[indexPath.item].symbol
         return cell
     }
 
