@@ -83,16 +83,16 @@ class TodayController: UIViewController {
             activityIndicator.startAnimating()
         }
 
-        dispatchGroup.enter()
-        NetworkService.shared.fetchStockData { (result, error) in
-            if let err = error {
-                print("Can't fetch today news", err)
-            }
-            dispatchGroup.leave()
-            if let res = result {
-                stockResults = res
-            }
-        }
+//        dispatchGroup.enter()
+//        NetworkService.shared.fetchStockData { (result, error) in
+//            if let err = error {
+//                print("Can't fetch today news", err)
+//            }
+//            dispatchGroup.leave()
+//            if let res = result {
+//                stockResults = res
+//            }
+//        }
 
         dispatchGroup.enter()
         NetworkService.shared.fetchTodayNews(preferredCountry: AppSettingsManager.shared.country) { (results, error) in

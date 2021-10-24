@@ -10,6 +10,7 @@ import UIKit
 class StockHeaderHorizontalController: UIViewController {
     var stockCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     var stockData = [StockData]()
+    let arr = ["Amazon", "Apple", "Coca-Cola", "Facebook", "Google", "IBM", "Intel", "McDonald’s", "Microsoft", "Netflix", "Nike", "Pepsi", "Starbucks", "Tesla", "Visa"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,8 @@ class StockHeaderHorizontalController: UIViewController {
 
 extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return stockData.count
+//        return stockData.count
+        return 15
 
     }
 
@@ -44,11 +46,13 @@ extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollect
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StockHeaderCell.identifier, for: indexPath) as? StockHeaderCell else {
             return UICollectionViewCell()
         }
-        cell.titleLabel.text = stockData[indexPath.item].symbol
+//        cell.titleLabel.text = stockData[indexPath.item].symbol
+        cell.logoImageView.image = UIImage(named:arr[indexPath.item])
+        cell.logoLabel.text = arr[indexPath.item]
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width / 4, height: view.frame.height)
+        return .init(width: view.frame.width / 3, height: view.frame.height)
     }
 }
