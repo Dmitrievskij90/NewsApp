@@ -19,7 +19,8 @@ class TodayController: UIViewController {
     private var startingFrame: CGRect?
 
     private var todayCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private var results = [Articles]()
+    private var newsData = [Articles]()
+    private var stockData = [StockData]()
     private let activityIndicator: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .medium)
         aiv.color = .darkGray
@@ -32,16 +33,16 @@ class TodayController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = .label
 
         view.addSubview(blurVisualEffectView)
         blurVisualEffectView.fillSuperview()
         blurVisualEffectView.alpha = 0
 
-        navigationController?.navigationBar.tintColor = .label
-        fetchTodayNews()
-
         refreshControl.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
         todayCollectionView.refreshControl = refreshControl
+
+        fetchTodayNews()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +74,9 @@ class TodayController: UIViewController {
     }
 
     private func fetchTodayNews(isTrue: Bool = true) {
+        var stockResults = [StockData]()
+        var todayResults = [Articles]()
+
         let dispatchGroup = DispatchGroup()
 
         if isTrue {
@@ -80,25 +84,44 @@ class TodayController: UIViewController {
         }
 
         dispatchGroup.enter()
+        NetworkService.shared.fetchStockData { (result, error) in
+            if let err = error {
+                print("Can't fetch today news", err)
+            }
+            dispatchGroup.leave()
+            if let res = result {
+                stockResults = res
+            }
+        }
+
+        dispatchGroup.enter()
         NetworkService.shared.fetchTodayNews(preferredCountry: AppSettingsManager.shared.country) { (results, error) in
             if let err = error {
                 print("Can't fetch today news", err)
             }
-            self.results = results?.articles ?? []
             dispatchGroup.leave()
+            if let res = results {
+                todayResults = res.articles
+            }
         }
 
         dispatchGroup.notify(queue: .main) {
+            self.stockData = stockResults
+            self.newsData = todayResults
             self.activityIndicator.stopAnimating()
             self.todayCollectionView.reloadData()
         }
     }
+
+    var i = 0
 
     @objc func refreshHandler() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
             self.refreshControl.endRefreshing()
         })
+        i += 1
+//        print(i)
         self.fetchTodayNews(isTrue: false)
     }
 
@@ -144,7 +167,7 @@ class TodayController: UIViewController {
     private func setupAppSingleFullscreenController(_ indexPath: IndexPath) {
         let appFullscreenController = TableDetailsController()
 
-        appFullscreenController.dataSource = results[indexPath.item]
+        appFullscreenController.dataSource = newsData[indexPath.item]
 
         appFullscreenController.dismissHandler = {
             self.handleRemoveView()
@@ -258,7 +281,7 @@ extension TodayController: UIGestureRecognizerDelegate {
 
 extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return results.count
+        return newsData.count        
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -266,7 +289,7 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
             return UICollectionViewCell()
         }
 
-        let res = results[indexPath.item]
+        let res = newsData[indexPath.item]
 
         cell.results = res
         return cell
@@ -292,6 +315,8 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: StockPageHeader.identifier, for: indexPath) as? StockPageHeader else {
             return UICollectionReusableView()
         }
+        header.stockHeaderHorizontalController.stockData = self.stockData
+        header.stockHeaderHorizontalController.stockCollectionView.reloadData()
         return header
     }
 
