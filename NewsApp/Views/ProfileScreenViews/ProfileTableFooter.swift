@@ -11,28 +11,17 @@ class ProfileTableFooter: UIView {
 
     var transitionHandler: (()->())? = nil
 
-    let bottomView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.constrainHeight(constant: 1)
-        return view
-    }()
-
-    private let button: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.setTitle("Favourite categories", for: .normal)
-        button.contentHorizontalAlignment = .left
+    private let logOutButton: BaseButton = {
+        let button = BaseButton(type: .system)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.setTitle("LOG OUT", for: .normal)
+        button.backgroundColor = .init(hex: 0x16697A)
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        return button
-    }()
+        button.constrainWidth(constant: 100)
+        button.constrainHeight(constant: 50)
 
-    private let accessoryImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "star")
-        imageView.tintColor = .init(hex: 0xDB6400)
-        return imageView
+        return button
     }()
 
     override init(frame: CGRect) {
@@ -40,15 +29,9 @@ class ProfileTableFooter: UIView {
         backgroundColor = .white
         clipsToBounds = true
 
-        addSubview(accessoryImageView)
-        accessoryImageView.anchor(top: nil, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 19, bottom: 0, right: 19) ,size: .init(width: 25, height: 25))
-        accessoryImageView.centerYInSuperview()
+        addSubview(logOutButton)
+        logOutButton.centerInSuperview()
 
-        addSubview(button)
-        button.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 19, bottom: 0, right: 19))
-
-        addSubview(bottomView)
-        bottomView.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
     }
 
     required init?(coder: NSCoder) {

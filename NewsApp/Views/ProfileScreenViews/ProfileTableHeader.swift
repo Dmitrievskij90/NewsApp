@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileTableHeader: UITableViewHeaderFooterView {
+class ProfileTableHeader: UIView {
 
     static let identifier = "ProfileTableHeader"
     private let countryImageName = UserDefaults.standard.value(forKey: "countryImage") as? String ?? "usa_image"
@@ -76,8 +76,10 @@ class ProfileTableHeader: UITableViewHeaderFooterView {
         return imageView
     }()
 
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+
         addSubview(bcgView)
         bcgView.fillSuperview()
 
@@ -109,6 +111,40 @@ class ProfileTableHeader: UITableViewHeaderFooterView {
 
         countryImageView.image = UIImage(named: countryImageName)
     }
+
+//    override init(reuseIdentifier: String?) {
+//        super.init(reuseIdentifier: reuseIdentifier)
+//        addSubview(bcgView)
+//        bcgView.fillSuperview()
+//
+//        addSubview(profileView)
+//        profileView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 10, right: 10))
+//
+//
+//        let verticalStackVIew = UIStackView(arrangedSubviews: [
+//            helloLabel,
+//            countrylabel,
+//            countryImageView
+//        ])
+//        verticalStackVIew.axis = .vertical
+//        verticalStackVIew.spacing = 6
+//        verticalStackVIew.alignment = .leading
+//
+//        let stackVIew = UIStackView(arrangedSubviews: [
+//            verticalStackVIew,
+//            userImageView
+//        ])
+//        stackVIew.spacing = 16
+//        stackVIew.alignment = .center
+//
+//        addSubview(stackVIew)
+//        stackVIew.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
+//
+//        let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
+//        userImageView.addGestureRecognizer(tapGestureregognizer)
+//
+//        countryImageView.image = UIImage(named: countryImageName)
+//    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
