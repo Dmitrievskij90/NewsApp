@@ -19,7 +19,6 @@ class ProfileViewController: UIViewController {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
         tableView.register(CountryCell.self, forCellReuseIdentifier: CountryCell.identifier)
         tableView.register(ChooseCountryCell.self, forCellReuseIdentifier: ChooseCountryCell.identifier)
         tableView.register(FavouriteCategoriesCell.self, forCellReuseIdentifier: FavouriteCategoriesCell.identifier)
@@ -43,7 +42,6 @@ class ProfileViewController: UIViewController {
 
         loadUserImage()
         setupHeaderForTableView()
-//        print(documentsPath)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -191,7 +189,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             viewController.modalPresentationStyle = .fullScreen
             self.navigationController?.pushViewController(viewController, animated: true)
         } else {
-            let viewController = CategoriesViewController()
+            let viewController = StockCompaniesViewController()
             viewController.modalPresentationStyle = .fullScreen
             self.navigationController?.pushViewController(viewController, animated: true)
         }
