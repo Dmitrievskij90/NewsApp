@@ -20,10 +20,10 @@ class AppSettingsManager {
     }
 
     var userLogin: String {
-        guard let userPassword = try? keychain.get("login") else {
+        guard let userLogin = try? keychain.get("login") else {
             fatalError("the user's login is not set")
         }
-        return userPassword
+        return userLogin
     }
 
     var userPassword: String {
