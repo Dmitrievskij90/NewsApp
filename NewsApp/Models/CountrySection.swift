@@ -8,8 +8,7 @@
 import Foundation
 
 struct CountrySection {
-    let title: String
-    let countries: [String]
+    let options: [String]
     let countriesImages: [String]
     var isOpened = false
 }
