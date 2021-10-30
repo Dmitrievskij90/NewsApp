@@ -30,8 +30,9 @@ class NetworkService {
     }
 
 
-    func fetchStockData(completion: @escaping ([StockData]?, Error?) -> ()) {
-        let urlString = "https://api.finage.co.uk/last/trade/stocks?symbols=AAPL,TSLA,GOGL,AMZN,MSFT,KO,IBM,INTC,MCD,FB,NFLX,V,NKE,SBUX,PEP&apikey=API_KEY44UIHMO0PMWXR4Y325YXXZIE5ZOQBA74"
+    func fetchStockData(searchedStockCompanies: String, completion: @escaping ([StockData]?, Error?) -> ()) {
+        let urlString = "https://api.finage.co.uk/last/trade/stocks?symbols=\(searchedStockCompanies)&apikey=API_KEY44UIHMO0PMWXR4Y325YXXZIE5ZOQBA74"
+
         fetchData(with: urlString, completion: completion)
     }
 

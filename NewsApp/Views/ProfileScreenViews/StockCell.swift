@@ -35,7 +35,7 @@ class StockCell: UITableViewCell {
         label.font = .boldSystemFont(ofSize: 15)
         label.textColor = .darkGray
         label.textAlignment = .right
-        label.text = "238.24$"
+//        label.text = "238.24$"
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         return label
@@ -50,6 +50,8 @@ class StockCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        tintColor = .label
+
         let stackView = UIStackView(arrangedSubviews: [
             stockImageView,
             stockLabel,
