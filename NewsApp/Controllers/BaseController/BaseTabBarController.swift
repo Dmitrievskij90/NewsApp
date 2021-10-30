@@ -8,7 +8,6 @@
 import UIKit
 
 class BaseTabBarController: UITabBarController {
-
     private var categoriesSet:Set = ["Business", "Entertainment", "Health", "Science", "Sports", "Technology"]
     private var categoriesStruct = [
         Categories(name: "Business", isFavorited: true),
@@ -17,6 +16,24 @@ class BaseTabBarController: UITabBarController {
         Categories(name: "Science", isFavorited: true),
         Categories(name: "Sports", isFavorited: true),
         Categories(name: "Technology", isFavorited: true),
+    ]
+    private var stockCompaniesSet:Set  = ["AMZN", "AAPL", "KO", "FB", "GOGL", "IBM", "INTC", "MCD", "MSFT", "NFLX", "NKE", "PEP", "SBUX", "TSLA", "V"]
+    private var stockCompaniesStruct = [
+        StockCompanies(name: "Apple", symbol: "AAPL", isFavorited: true),
+        StockCompanies(name: "Amazon", symbol: "AMZN", isFavorited: true),
+        StockCompanies(name: "Facebook", symbol: "FB", isFavorited: true),
+        StockCompanies(name: "Google", symbol: "GOGL", isFavorited: true),
+        StockCompanies(name: "IBM", symbol: "IBM", isFavorited: true),
+        StockCompanies(name: "Intel", symbol: "INTC", isFavorited: true),
+        StockCompanies(name: "Coca-Cola", symbol: "KO", isFavorited: true),
+        StockCompanies(name: "McDonald’s", symbol: "MCD", isFavorited: true),
+        StockCompanies(name: "Microsoft", symbol: "MSFT", isFavorited: true),
+        StockCompanies(name: "Netflix", symbol: "NFLX", isFavorited: true),
+        StockCompanies(name: "Nike", symbol: "NKE", isFavorited: true),
+        StockCompanies(name: "Pepsi", symbol: "PEP", isFavorited: true),
+        StockCompanies(name: "Starbucks", symbol: "SBUX", isFavorited: true),
+        StockCompanies(name: "Tesla", symbol: "TSLA", isFavorited: true),
+        StockCompanies(name: "Visa", symbol: "V", isFavorited: true),
     ]
 
     override func viewDidLoad() {
@@ -50,6 +67,8 @@ class BaseTabBarController: UITabBarController {
         if !notFirsAppLaunch {
             CategoryManager.shared.saveCategoriesSet(with: categoriesSet)
             CategoryManager.shared.saveCategoriesStruct(with: categoriesStruct)
+            CategoryManager.shared.saveStockCompaniesSet(with: stockCompaniesSet)
+            CategoryManager.shared.saveStockCompaniesStruct(with: stockCompaniesStruct)
             UserDefaults.standard.setValue(true, forKey: "isFirstLaunch")
         }
     }
