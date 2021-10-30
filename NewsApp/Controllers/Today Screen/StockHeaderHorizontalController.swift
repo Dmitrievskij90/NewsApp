@@ -10,11 +10,21 @@ import UIKit
 class StockHeaderHorizontalController: UIViewController {
     var stockCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     var stockData = [StockData]()
-    let arr = ["Amazon", "Apple", "Coca-Cola", "Facebook", "Google", "IBM", "Intel", "McDonald’s", "Microsoft", "Netflix", "Nike", "Pepsi", "Starbucks", "Tesla", "Visa"]
+    private var companyName = ""
+
+    private var stockCompaniesSet = Set<String>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectinView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
+        DispatchQueue.main.async {
+            self.stockCollectionView.reloadData()
+        }
     }
 
     private func setupCollectinView() {
@@ -37,8 +47,7 @@ class StockHeaderHorizontalController: UIViewController {
 
 extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return stockData.count
-        return 15
+        return stockData.count
 
     }
 
@@ -46,9 +55,30 @@ extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollect
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StockHeaderCell.identifier, for: indexPath) as? StockHeaderCell else {
             return UICollectionViewCell()
         }
-//        cell.titleLabel.text = stockData[indexPath.item].symbol
-        cell.logoImageView.image = UIImage(named:arr[indexPath.item])
-        cell.logoLabel.text = arr[indexPath.item]
+
+        let companyLabel = stockData[indexPath.item].symbol
+        switch companyLabel {
+                    case "AAPL" : companyName = "Apple"
+                    case "AMZN" : companyName = "Amazon"
+                    case "FB" : companyName = "Facebook"
+                    case "GOGL" : companyName = "Google"
+                    case "IBM" : companyName = "IBM"
+                    case "INTC" : companyName = "Intel"
+                    case "KO" : companyName = "Coca-Cola"
+                    case "MCD" : companyName = "McDonald’s"
+                    case "MSFT" : companyName = "Microsoft"
+                    case "NFLX" : companyName = "Netflix"
+                    case "NKE" : companyName = "Nike"
+                    case "PEP" : companyName = "Pepsi"
+                    case "SBUX" : companyName = "Starbucks"
+                    case "TSLA" : companyName = "Tesla"
+                    case "V" : companyName = "Visa"
+                    default: break
+        }
+
+        cell.logoLabel.text = companyName
+        cell.logoImageView.image = UIImage(named:stockData[indexPath.item].symbol)
+        cell.priceLabel.text = String(stockData[indexPath.item].price) + "$"
         return cell
     }
 

@@ -18,9 +18,12 @@ class TodayController: UIViewController {
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private var startingFrame: CGRect?
 
-    private var todayCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var newsData = [Articles]()
     private var stockData = [StockData]()
+    private var stockCompaniesSet = Set<String>()
+    private var urlString = ""
+
+    private var todayCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private let activityIndicator: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .medium)
         aiv.color = .darkGray
@@ -42,11 +45,16 @@ class TodayController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
         todayCollectionView.refreshControl = refreshControl
 
+        stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
+        urlString = stockCompaniesSet.sorted().joined(separator: ",")
+
         fetchTodayNews()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
+        urlString = stockCompaniesSet.sorted().joined(separator: ",")
     }
 
     override func loadView() {
@@ -83,16 +91,16 @@ class TodayController: UIViewController {
             activityIndicator.startAnimating()
         }
 
-//        dispatchGroup.enter()
-//        NetworkService.shared.fetchStockData { (result, error) in
-//            if let err = error {
-//                print("Can't fetch today news", err)
-//            }
-//            dispatchGroup.leave()
-//            if let res = result {
-//                stockResults = res
-//            }
-//        }
+        dispatchGroup.enter()
+        NetworkService.shared.fetchStockData(searchedStockCompanies: urlString) { (result, error) in
+            if let err = error {
+                print("Can't fetch stock data", err)
+            }
+            dispatchGroup.leave()
+            if let res = result {
+                stockResults = res
+            }
+        }
 
         dispatchGroup.enter()
         NetworkService.shared.fetchTodayNews(preferredCountry: AppSettingsManager.shared.country) { (results, error) in
@@ -113,15 +121,11 @@ class TodayController: UIViewController {
         }
     }
 
-    var i = 0
-
     @objc func refreshHandler() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
             self.refreshControl.endRefreshing()
         })
-        i += 1
-//        print(i)
         self.fetchTodayNews(isTrue: false)
     }
 
@@ -163,7 +167,6 @@ class TodayController: UIViewController {
     }
 
     //MARK: - Методы анимации ячейки для одного приложения
-
     private func setupAppSingleFullscreenController(_ indexPath: IndexPath) {
         let appFullscreenController = TableDetailsController()
 
