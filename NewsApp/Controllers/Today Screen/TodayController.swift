@@ -18,8 +18,12 @@ class TodayController: UIViewController {
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private var startingFrame: CGRect?
 
+    private var newsData = [Articles]()
+    private var stockData = [StockData]()
+    private var stockCompaniesSet = Set<String>()
+    private var urlString = ""
+
     private var todayCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private var results = [Articles]()
     private let activityIndicator: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .medium)
         aiv.color = .darkGray
@@ -32,20 +36,25 @@ class TodayController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = .label
 
         view.addSubview(blurVisualEffectView)
         blurVisualEffectView.fillSuperview()
         blurVisualEffectView.alpha = 0
 
-        navigationController?.navigationBar.tintColor = .label
-        fetchTodayNews()
-
         refreshControl.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
         todayCollectionView.refreshControl = refreshControl
+
+        stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
+        urlString = stockCompaniesSet.sorted().joined(separator: ",")
+
+        fetchTodayNews()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
+        urlString = stockCompaniesSet.sorted().joined(separator: ",")
     }
 
     override func loadView() {
@@ -63,6 +72,7 @@ class TodayController: UIViewController {
 
         todayCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         todayCollectionView.register(TodayCell.self, forCellWithReuseIdentifier: TodayCell.identifier)
+        todayCollectionView.register(StockPageHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: StockPageHeader.identifier)
         todayCollectionView.backgroundColor = UIColor.white
         todayCollectionView.dataSource = self
         todayCollectionView.delegate = self
@@ -72,6 +82,9 @@ class TodayController: UIViewController {
     }
 
     private func fetchTodayNews(isTrue: Bool = true) {
+        var stockResults = [StockData]()
+        var todayResults = [Articles]()
+
         let dispatchGroup = DispatchGroup()
 
         if isTrue {
@@ -79,15 +92,30 @@ class TodayController: UIViewController {
         }
 
         dispatchGroup.enter()
+        NetworkService.shared.fetchStockData(searchedStockCompanies: urlString) { (result, error) in
+            if let err = error {
+                print("Can't fetch stock data", err)
+            }
+            dispatchGroup.leave()
+            if let res = result {
+                stockResults = res
+            }
+        }
+
+        dispatchGroup.enter()
         NetworkService.shared.fetchTodayNews(preferredCountry: AppSettingsManager.shared.country) { (results, error) in
             if let err = error {
                 print("Can't fetch today news", err)
             }
-            self.results = results?.articles ?? []
             dispatchGroup.leave()
+            if let res = results {
+                todayResults = res.articles
+            }
         }
 
         dispatchGroup.notify(queue: .main) {
+            self.stockData = stockResults
+            self.newsData = todayResults
             self.activityIndicator.stopAnimating()
             self.todayCollectionView.reloadData()
         }
@@ -139,11 +167,10 @@ class TodayController: UIViewController {
     }
 
     //MARK: - Методы анимации ячейки для одного приложения
-
     private func setupAppSingleFullscreenController(_ indexPath: IndexPath) {
         let appFullscreenController = TableDetailsController()
 
-        appFullscreenController.dataSource = results[indexPath.item]
+        appFullscreenController.dataSource = newsData[indexPath.item]
 
         appFullscreenController.dismissHandler = {
             self.handleRemoveView()
@@ -257,7 +284,7 @@ extension TodayController: UIGestureRecognizerDelegate {
 
 extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return results.count
+        return newsData.count        
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -265,7 +292,7 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
             return UICollectionViewCell()
         }
 
-        let res = results[indexPath.item]
+        let res = newsData[indexPath.item]
 
         cell.results = res
         return cell
@@ -281,5 +308,22 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         showSingleAppFullScreen(indexPath)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 16, left: 0, bottom: 0, right: 0)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: StockPageHeader.identifier, for: indexPath) as? StockPageHeader else {
+            return UICollectionReusableView()
+        }
+        header.stockHeaderHorizontalController.stockData = self.stockData
+        header.stockHeaderHorizontalController.stockCollectionView.reloadData()
+        return header
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .init(width: view.frame.width, height: 50)
     }
 }

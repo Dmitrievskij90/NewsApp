@@ -8,18 +8,20 @@
 import UIKit
 
 class CategoryManager {
-
     static let shared = CategoryManager()
+    private var documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent("Data structures")
 
-    private var documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent("New test folder")
-
+    //MARK: - categories set data manipulation methods
+    //MARK: -
     func saveCategoriesSet(with set: Set<String>) {
         let folderPath = documentDirectorypath
-        guard let pass = folderPath else {
+        guard let path = folderPath else {
             return
         }
 
-        try? FileManager.default.createDirectory(at: pass, withIntermediateDirectories: false, attributes: nil)
+        print(path)
+
+        try? FileManager.default.createDirectory(at: path, withIntermediateDirectories: false, attributes: nil)
         let data = try? JSONEncoder().encode(set)
         let dataPath = folderPath?.appendingPathComponent("categoriesSet.json")
         FileManager.default.createFile(atPath: dataPath!.path, contents: data, attributes: nil)
@@ -36,13 +38,15 @@ class CategoryManager {
         return categorySet
     }
 
+    //MARK: - categories struct data manipulation methods
+    //MARK: -
     func saveCategoriesStruct(with categories: [Categories]) {
         let folderPath = documentDirectorypath
-        guard let pass = folderPath else {
+        guard let path = folderPath else {
             return
         }
 
-        try? FileManager.default.createDirectory(at: pass, withIntermediateDirectories: false, attributes: nil)
+        try? FileManager.default.createDirectory(at: path, withIntermediateDirectories: false, attributes: nil)
         let data = try? JSONEncoder().encode(categories)
         let dataPath = folderPath?.appendingPathComponent("categoriesStruct.json")
         FileManager.default.createFile(atPath: dataPath!.path, contents: data, attributes: nil)
@@ -54,6 +58,55 @@ class CategoryManager {
         let dataPath = folderPath?.appendingPathComponent("categoriesStruct.json")
         if let newData = FileManager.default.contents(atPath: dataPath!.path) {
             categories = try! JSONDecoder().decode([Categories].self, from: newData)
+        }
+        return categories
+    }
+
+    //MARK: - stock companies set data manipulation methods
+    //MARK: -
+    func saveStockCompaniesSet(with set: Set<String>) {
+        let folderPath = documentDirectorypath
+        guard let path = folderPath else {
+            return
+        }
+
+        try? FileManager.default.createDirectory(at: path, withIntermediateDirectories: false, attributes: nil)
+        let data = try? JSONEncoder().encode(set)
+        let dataPath = folderPath?.appendingPathComponent("stockSet.json")
+        FileManager.default.createFile(atPath: dataPath!.path, contents: data, attributes: nil)
+
+    }
+
+    func loadStockCompaniesSet() -> Set<String>{
+        var stockSet = Set<String>()
+        let folderPath = documentDirectorypath
+        let dataPath = folderPath?.appendingPathComponent("stockSet.json")
+        if let newData = FileManager.default.contents(atPath: dataPath!.path) {
+            stockSet = try! JSONDecoder().decode(Set<String>.self, from: newData)
+        }
+        return stockSet
+    }
+
+    //MARK: - stock companies struct data manipulation methods
+    //MARK: -
+    func saveStockCompaniesStruct(with categories: [StockCompanies]) {
+        let folderPath = documentDirectorypath
+        guard let path = folderPath else {
+            return
+        }
+
+        try? FileManager.default.createDirectory(at: path, withIntermediateDirectories: false, attributes: nil)
+        let data = try? JSONEncoder().encode(categories)
+        let dataPath = folderPath?.appendingPathComponent("stockStruct.json")
+        FileManager.default.createFile(atPath: dataPath!.path, contents: data, attributes: nil)
+    }
+
+    func loadStockCompaniesStruct() -> [StockCompanies]{
+        var categories = [StockCompanies]()
+        let folderPath = documentDirectorypath
+        let dataPath = folderPath?.appendingPathComponent("stockStruct.json")
+        if let newData = FileManager.default.contents(atPath: dataPath!.path) {
+            categories = try! JSONDecoder().decode([StockCompanies].self, from: newData)
         }
         return categories
     }

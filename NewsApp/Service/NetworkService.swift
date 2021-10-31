@@ -29,6 +29,13 @@ class NetworkService {
         fetchData(with: urlString, completion: completion)
     }
 
+
+    func fetchStockData(searchedStockCompanies: String, completion: @escaping ([StockData]?, Error?) -> ()) {
+        let urlString = "https://api.finage.co.uk/last/trade/stocks?symbols=\(searchedStockCompanies)&apikey=API_KEY44UIHMO0PMWXR4Y325YXXZIE5ZOQBA74"
+
+        fetchData(with: urlString, completion: completion)
+    }
+
     func fetchData<T: Codable>(with urlString: String, completion: @escaping (T?, Error?) -> ()) {
                                                     
         guard let url = URL(string: urlString) else {
@@ -54,6 +61,5 @@ class NetworkService {
             }
         }.resume()
     }
-
     
 }
