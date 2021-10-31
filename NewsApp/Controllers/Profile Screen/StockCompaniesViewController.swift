@@ -76,11 +76,9 @@ extension StockCompaniesViewController: UITableViewDelegate, UITableViewDataSour
 
         let name = stockCompaniesStruct[indexPath.row].symbol
         if stockCompaniesSet.contains(name) {
-            print(name)
             stockCompaniesSet.remove(name)
             CategoryManager.shared.saveStockCompaniesSet(with: stockCompaniesSet)
         } else {
-            print(name)
             stockCompaniesSet.insert(name)
             CategoryManager.shared.saveStockCompaniesSet(with: stockCompaniesSet)
         }

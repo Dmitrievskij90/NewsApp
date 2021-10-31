@@ -10,7 +10,6 @@ import UIKit
 class StockHeaderHorizontalController: UIViewController {
     var stockCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     var stockData = [StockData]()
-    private var companyName = ""
 
     private var stockCompaniesSet = Set<String>()
 
@@ -55,30 +54,7 @@ extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollect
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StockHeaderCell.identifier, for: indexPath) as? StockHeaderCell else {
             return UICollectionViewCell()
         }
-
-        let companyLabel = stockData[indexPath.item].symbol
-        switch companyLabel {
-                    case "AAPL" : companyName = "Apple"
-                    case "AMZN" : companyName = "Amazon"
-                    case "FB" : companyName = "Facebook"
-                    case "GOGL" : companyName = "Google"
-                    case "IBM" : companyName = "IBM"
-                    case "INTC" : companyName = "Intel"
-                    case "KO" : companyName = "Coca-Cola"
-                    case "MCD" : companyName = "McDonald’s"
-                    case "MSFT" : companyName = "Microsoft"
-                    case "NFLX" : companyName = "Netflix"
-                    case "NKE" : companyName = "Nike"
-                    case "PEP" : companyName = "Pepsi"
-                    case "SBUX" : companyName = "Starbucks"
-                    case "TSLA" : companyName = "Tesla"
-                    case "V" : companyName = "Visa"
-                    default: break
-        }
-
-        cell.logoLabel.text = companyName
-        cell.logoImageView.image = UIImage(named:stockData[indexPath.item].symbol)
-        cell.priceLabel.text = String(stockData[indexPath.item].price) + "$"
+        cell.data = stockData[indexPath.item]
         return cell
     }
 
