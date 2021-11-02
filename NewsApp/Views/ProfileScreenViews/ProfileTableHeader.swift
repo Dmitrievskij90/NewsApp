@@ -25,13 +25,15 @@ class ProfileTableHeader: UIView {
         view.backgroundColor = .init(hex: 0x16697A)
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
-        view.alpha = 0.5
+        view.layer.borderWidth = 2
+        view.layer.borderColor = UIColor.init(hex: 0xDB6400).cgColor
+//        view.alpha = 0.5
         return view
     }()
 
     let helloLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .white
         label.textAlignment = .left
         label.font = .boldSystemFont(ofSize: 20)
         label.numberOfLines = 1
@@ -43,7 +45,7 @@ class ProfileTableHeader: UIView {
 
     let countrylabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .white
         label.textAlignment = .left
         label.font = .boldSystemFont(ofSize: 15)
         label.numberOfLines = 1
@@ -68,7 +70,7 @@ class ProfileTableHeader: UIView {
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.borderColor = UIColor.init(hex: 0xDB6400).cgColor
         imageView.image = UIImage(named: "news_image")
         imageView.constrainHeight(constant: 100)
         imageView.constrainWidth(constant: 100)
