@@ -22,6 +22,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     private let companyLogoImageView: UIImageView = {
         let companyLogo = UIImageView()
         companyLogo.image = UIImage(named: "AMZN")
+        companyLogo.contentMode = .scaleAspectFit
         companyLogo.constrainWidth(constant: 100)
         companyLogo.constrainHeight(constant: 100)
         return companyLogo
@@ -30,7 +31,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     private let companyLabel: UILabel = {
         let companyLabel = UILabel()
         companyLabel.text = "AMAZON"
-        companyLabel.font = .systemFont(ofSize: 25)
+        companyLabel.font = UIFont(name: "ScopeOne-Regular", size: 25)
         companyLabel.textColor = .black
         companyLabel.constrainHeight(constant: 50)
         return companyLabel
@@ -39,7 +40,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     private let dateLabel: UILabel = {
         let dateLabel = UILabel()
         dateLabel.text = "2021-10-31"
-        dateLabel.font = .systemFont(ofSize: 15)
+        dateLabel.font = UIFont(name: "ScopeOne-Regular", size: 20)
         dateLabel.textColor = .black
         return dateLabel
     }()
@@ -47,7 +48,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     private let priceLabel: UILabel = {
         let priceLabel = UILabel()
         priceLabel.text = "3450,44 $"
-        priceLabel.font = .systemFont(ofSize: 45)
+        priceLabel.font = UIFont(name: "ScopeOne-Regular", size: 45)
         priceLabel.textColor = .black
         return priceLabel
     }()
@@ -57,7 +58,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         differenceLabel.text = "(63,89)"
         differenceLabel.textAlignment = .center
         differenceLabel.textColor = .green
-        differenceLabel.font = .systemFont(ofSize: 20)
+        differenceLabel.font = UIFont(name: "ScopeOne-Regular", size: 25)
         return differenceLabel
     }()
 
