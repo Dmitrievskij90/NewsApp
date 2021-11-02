@@ -15,7 +15,6 @@ class StockHeaderHorizontalController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectinView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -24,6 +23,12 @@ class StockHeaderHorizontalController: UIViewController {
         DispatchQueue.main.async {
             self.stockCollectionView.reloadData()
         }
+    }
+
+    override func loadView() {
+        let view = UIView(frame: UIScreen.main.bounds)
+        self.view = view
+        setupCollectinView()
     }
 
     private func setupCollectinView() {
@@ -47,6 +52,7 @@ class StockHeaderHorizontalController: UIViewController {
 extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return stockData.count
+//        return 15
 
     }
 
@@ -60,5 +66,12 @@ extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollect
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width / 3, height: view.frame.height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let viewControllerToPresent = StockChartViewController()
+        viewControllerToPresent.currentStockCompanyData = stockData[indexPath.item]
+        viewControllerToPresent.modalPresentationStyle = .pageSheet
+        present(viewControllerToPresent, animated: true, completion: nil)
     }
 }
