@@ -12,6 +12,14 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     var currentStockCompanyData: StockData?
 
+    let closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        button.tintColor = .init(hex: 0xDB6400)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+
     private let halfView: UIView = {
         let halfView = UIView()
         halfView.backgroundColor = .init(hex: 0x16697A)
@@ -109,8 +117,14 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
         setupHalfView()
         setupStackView()
+        setupCloseButton()
         setupLabelsData()
 
+    }
+
+    private func setupCloseButton() {
+        view.addSubview(closeButton)
+        closeButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
     }
 
     private func setupHalfView() {
@@ -185,7 +199,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         set.mode = .linear
         set.lineWidth = 3
         set.setColor(.white)
-        set.fill = Fill(color: .init(hex: 0x16697A))
+        set.fill = Fill(color: .init(hex: 0xDB6400))
         set.fillAlpha = 0.5
         set.drawFilledEnabled = true
         set.drawHorizontalHighlightIndicatorEnabled = false
@@ -193,5 +207,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         let data = LineChartData(dataSet: set)
         data.setDrawValues(false)
         lineChartView.data = data
+    }
+
+    @objc func handleDismiss() {
+        dismiss(animated: true, completion: nil)
     }
 }
