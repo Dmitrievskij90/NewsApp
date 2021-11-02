@@ -23,4 +23,10 @@ class Helpers {
 
         return dateFormatter.string(from: convertedDate)
     }
+
+     func getCurrentDate() -> String {
+        dateFormatter.dateFormat = "dd MMMM yyyy, HH:mm"
+        let dataString = dateFormatter.string(from: Date())
+        return dataString
+    }
 }
