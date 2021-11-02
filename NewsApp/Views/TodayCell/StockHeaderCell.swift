@@ -11,6 +11,23 @@ class StockHeaderCell: UICollectionViewCell {
     static let identifier = "StockHeaderCell"
     private var companyName = ""
 
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
+                    self.transform = .init(scaleX: 0.9, y: 0.9)
+                    self.layer.shadowColor = UIColor.init(hex: 0xDB6400).cgColor
+                }
+            } else {
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
+                    self.transform = .identity
+                    self.backgroundColor = .white
+                    self.layer.shadowColor = UIColor.darkGray.cgColor
+                }
+            }
+        }
+    }
+
     var data: StockData? {
         didSet {
             if let stockData = data {
@@ -89,8 +106,9 @@ class StockHeaderCell: UICollectionViewCell {
         stackView.fillSuperview(padding: .init(top: 5, left: 5, bottom: 5, right: 5))
         stackView.layer.shadowOpacity = 0.6
         stackView.layer.shadowRadius = 10
-        stackView.layer.shadowOffset = .init(width: 0, height: 20)
+        stackView.layer.shadowOffset = .init(width: 0, height: 10)
         stackView.layer.shadowColor = UIColor.darkGray.cgColor
+        
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
