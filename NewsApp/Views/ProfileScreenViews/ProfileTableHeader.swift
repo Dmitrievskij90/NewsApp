@@ -66,7 +66,7 @@ class ProfileTableHeader: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 50
+        imageView.layer.cornerRadius = 16
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.image = UIImage(named: "news_image")
@@ -78,8 +78,6 @@ class ProfileTableHeader: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-
         addSubview(bcgView)
         bcgView.fillSuperview()
 
@@ -96,55 +94,17 @@ class ProfileTableHeader: UIView {
         verticalStackVIew.spacing = 6
         verticalStackVIew.alignment = .leading
 
-        let stackVIew = UIStackView(arrangedSubviews: [
-            verticalStackVIew,
-            userImageView
-        ])
-        stackVIew.spacing = 16
-        stackVIew.alignment = .center
+        addSubview(userImageView)
+        userImageView.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 20))
 
-        addSubview(stackVIew)
-        stackVIew.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
+        addSubview(verticalStackVIew)
+        verticalStackVIew.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: userImageView.leadingAnchor, padding: .init(top: 16, left: 16, bottom: 16, right: 0))
 
         let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         userImageView.addGestureRecognizer(tapGestureregognizer)
 
         countryImageView.image = UIImage(named: countryImageName)
     }
-
-//    override init(reuseIdentifier: String?) {
-//        super.init(reuseIdentifier: reuseIdentifier)
-//        addSubview(bcgView)
-//        bcgView.fillSuperview()
-//
-//        addSubview(profileView)
-//        profileView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 10, right: 10))
-//
-//
-//        let verticalStackVIew = UIStackView(arrangedSubviews: [
-//            helloLabel,
-//            countrylabel,
-//            countryImageView
-//        ])
-//        verticalStackVIew.axis = .vertical
-//        verticalStackVIew.spacing = 6
-//        verticalStackVIew.alignment = .leading
-//
-//        let stackVIew = UIStackView(arrangedSubviews: [
-//            verticalStackVIew,
-//            userImageView
-//        ])
-//        stackVIew.spacing = 16
-//        stackVIew.alignment = .center
-//
-//        addSubview(stackVIew)
-//        stackVIew.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
-//
-//        let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
-//        userImageView.addGestureRecognizer(tapGestureregognizer)
-//
-//        countryImageView.image = UIImage(named: countryImageName)
-//    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
