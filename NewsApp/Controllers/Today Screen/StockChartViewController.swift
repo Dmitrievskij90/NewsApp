@@ -61,13 +61,14 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return priceLabel
     }()
 
-    private let differenceLabel: UILabel = {
-        let differenceLabel = UILabel()
-        differenceLabel.text = "(63,89)"
-        differenceLabel.textAlignment = .center
-        differenceLabel.textColor = .green
-        differenceLabel.font = UIFont(name: "ScopeOne-Regular", size: 25)
-        return differenceLabel
+    private let differenceButton: UIButton = {
+        let differenceButton = UIButton()
+        differenceButton.setImage(UIImage(systemName: "info.circle.fill"), for: .normal)
+        differenceButton.tintColor = .init(hex: 0xDB6400)
+        differenceButton.titleLabel?.font = UIFont(name: "ScopeOne-Regular", size: 25)
+        differenceButton.semanticContentAttribute = .forceRightToLeft
+        differenceButton.addTarget(self, action: #selector(differenceButtonTapped), for: .touchUpInside)
+        return differenceButton
     }()
 
     private var lineChartView: LineChartView = {
@@ -119,7 +120,6 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         setupStackView()
         setupCloseButton()
         setupLabelsData()
-
     }
 
     private func setupCloseButton() {
@@ -135,7 +135,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     }
 
     private func setupStackView() {
-        let stackView = UIStackView(arrangedSubviews: [companyLogoImageView, companyLabel, dateLabel, priceLabel, differenceLabel])
+        let stackView = UIStackView(arrangedSubviews: [companyLogoImageView, companyLabel, dateLabel, priceLabel, differenceButton])
         stackView.axis = .vertical
         stackView.spacing = 10
         stackView.alignment = .center
@@ -185,11 +185,11 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         let diffrience = currnetValue - closeValue
         let price = String(format: "%.2f", diffrience)
         if diffrience > 0 {
-            differenceLabel.textColor = .green
-            differenceLabel.text = "(+\(price))"
+            differenceButton.setTitleColor(.green, for: .normal)
+            differenceButton.setTitle("(+\(price))", for: .normal)
         } else {
-            differenceLabel.text = "(\(price))"
-            differenceLabel.textColor = .red
+            differenceButton.setTitle("(\(price))", for: .normal)
+            differenceButton.setTitleColor(.red, for: .normal)
         }
     }
 
@@ -211,5 +211,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
     @objc func handleDismiss() {
         dismiss(animated: true, completion: nil)
+    }
+
+    @objc func differenceButtonTapped() {
+        presentOneButtonAlert(withTitle: "", message: "The difference between the current price and yesterday's closing price")
     }
 }
