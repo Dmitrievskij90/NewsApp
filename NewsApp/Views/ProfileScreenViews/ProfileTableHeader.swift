@@ -56,7 +56,7 @@ class ProfileTableHeader: UIView {
     let countryImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
-        imageView.constrainHeight(constant: 40)
+        imageView.constrainHeight(constant: 50)
         imageView.constrainWidth(constant: 50)
         imageView.isUserInteractionEnabled = true
         return imageView
