@@ -36,6 +36,12 @@ class NetworkService {
         fetchData(with: urlString, completion: completion)
     }
 
+    func fetchStockChartData(searchedStockCompany: String, completion: @escaping (StockHistoryData?, Error?) -> ()) {
+        let urlString = "https://api.twelvedata.com/time_series?symbol=\(searchedStockCompany)&interval=1day&apikey=d907af5f4dd84e25ad29b6387819d146"
+
+        fetchData(with: urlString, completion: completion)
+    }
+
     func fetchData<T: Codable>(with urlString: String, completion: @escaping (T?, Error?) -> ()) {
                                                     
         guard let url = URL(string: urlString) else {
