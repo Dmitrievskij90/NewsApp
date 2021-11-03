@@ -14,7 +14,7 @@ class FloatingContainerView: UIView {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.constrainWidth(constant: 80)
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         return imageView
