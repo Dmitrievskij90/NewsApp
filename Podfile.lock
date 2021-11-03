@@ -1,22 +1,28 @@
 PODS:
+  - Charts (3.6.0):
+    - Charts/Core (= 3.6.0)
+  - Charts/Core (3.6.0)
   - KeychainAccess (4.2.2)
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
   - SDWebImage/Core (5.10.0)
 
 DEPENDENCIES:
+  - Charts
   - KeychainAccess
   - SDWebImage
 
 SPEC REPOS:
   trunk:
+    - Charts
     - KeychainAccess
     - SDWebImage
 
 SPEC CHECKSUMS:
+  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
 
-PODFILE CHECKSUM: ffbc79243badcf9c148e84f48ece8388ccca9d7e
+PODFILE CHECKSUM: 5fc62fbc0b91b194c971353ad413e6581d90a343
 
 COCOAPODS: 1.9.3

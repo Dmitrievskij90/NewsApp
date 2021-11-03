@@ -27,7 +27,6 @@ class BaseButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         contentMode = .center
         layer.borderWidth = 0.5
         layer.borderColor = UIColor.lightGray.cgColor

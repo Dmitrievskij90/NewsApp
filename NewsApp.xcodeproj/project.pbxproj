@@ -11,9 +11,11 @@
 		5C141CEA26ECEFBD0052028E /* TodayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C141CE926ECEFBD0052028E /* TodayController.swift */; };
 		5C148E9626FDDAC500F465AC /* ProfileTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */; };
 		5C24EEB3271899B100F302D0 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24EEB2271899B100F302D0 /* BaseButton.swift */; };
+		5C28A10A2731476500C100A4 /* StockHistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C28A1092731476500C100A4 /* StockHistoryData.swift */; };
 		5C2DF30B27024B6B00D51EEE /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2DF30A27024B6B00D51EEE /* CategoriesViewController.swift */; };
 		5C307CA32702DEA1004BAF0D /* CategoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C307CA22702DEA1004BAF0D /* CategoriesCell.swift */; };
 		5C31FF6627286B7E0001E714 /* StockCompaniesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C31FF6527286B7E0001E714 /* StockCompaniesCell.swift */; };
+		5C38A806272ED5F7009B1535 /* StockChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C38A805272ED5F7009B1535 /* StockChartViewController.swift */; };
 		5C43A92E26E50BB5005FDD7B /* NewsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C43A92D26E50BB5005FDD7B /* NewsData.swift */; };
 		5C43A93326E51185005FDD7B /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C43A93226E51185005FDD7B /* NetworkService.swift */; };
 		5C4867052709A0B20087A708 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4867042709A0B20087A708 /* CategoryManager.swift */; };
@@ -72,9 +74,11 @@
 		5C141CE926ECEFBD0052028E /* TodayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayController.swift; sourceTree = "<group>"; };
 		5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeader.swift; sourceTree = "<group>"; };
 		5C24EEB2271899B100F302D0 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
+		5C28A1092731476500C100A4 /* StockHistoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHistoryData.swift; sourceTree = "<group>"; };
 		5C2DF30A27024B6B00D51EEE /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		5C307CA22702DEA1004BAF0D /* CategoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCell.swift; sourceTree = "<group>"; };
 		5C31FF6527286B7E0001E714 /* StockCompaniesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCompaniesCell.swift; sourceTree = "<group>"; };
+		5C38A805272ED5F7009B1535 /* StockChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockChartViewController.swift; sourceTree = "<group>"; };
 		5C43A92D26E50BB5005FDD7B /* NewsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsData.swift; sourceTree = "<group>"; };
 		5C43A93226E51185005FDD7B /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		5C4867042709A0B20087A708 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 			children = (
 				5C141CE926ECEFBD0052028E /* TodayController.swift */,
 				5C61F62E2721C4A100C6D369 /* StockHeaderHorizontalController.swift */,
+				5C38A805272ED5F7009B1535 /* StockChartViewController.swift */,
 			);
 			path = "Today Screen";
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 				5C007448270B534900E92C66 /* Categories.swift */,
 				5C8B22E127232962005ABD88 /* StockData.swift */,
 				5C7C3D3F272D676A00FD0453 /* StockCompanies.swift */,
+				5C28A1092731476500C100A4 /* StockHistoryData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -515,6 +521,7 @@
 				5C55A52126F101ED004B148F /* ProfileViewController.swift in Sources */,
 				5C007449270B534900E92C66 /* Categories.swift in Sources */,
 				5CB501E226E6716700246670 /* DetailsController.swift in Sources */,
+				5C38A806272ED5F7009B1535 /* StockChartViewController.swift in Sources */,
 				5CA46F0A26E377A70031A540 /* BaseTabBarController.swift in Sources */,
 				5C24EEB3271899B100F302D0 /* BaseButton.swift in Sources */,
 				5CBF2FE726EE411E00DB1D89 /* WelcomeController.swift in Sources */,
@@ -537,6 +544,7 @@
 				5C61F62C2721C3B200C6D369 /* StockPageHeader.swift in Sources */,
 				5CA46EF326E36DDC0031A540 /* AppDelegate.swift in Sources */,
 				5CB501EA26E675DF00246670 /* NewsDetailCell.swift in Sources */,
+				5C28A10A2731476500C100A4 /* StockHistoryData.swift in Sources */,
 				5CFB9F5026E3AFF90095D548 /* UIView+Layout.swift in Sources */,
 				5CE2D6C62703939900362909 /* FavoriteCategoriesCell.swift in Sources */,
 				5C7C3D40272D676A00FD0453 /* StockCompanies.swift in Sources */,

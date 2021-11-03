@@ -11,6 +11,10 @@ class NetworkService {
     static let shared = NetworkService()
 
     func fetchNews(searchTerm: String, preferredCountry: String, completion: @escaping (NewsData?, Error?) -> ()) {
+        if preferredCountry == "us" {
+            let urlString =  "https://newsapi.org/v2/everything?q=\(searchTerm)&language=en&sortBy=publishedAt&pageSize=100&apiKey=61bba430f9444209af20b7856ae3d12e"
+            fetchData(with: urlString, completion: completion)
+        }
 
         let urlString =  "https://newsapi.org/v2/everything?q=\(searchTerm)&language=\(preferredCountry)&sortBy=publishedAt&pageSize=100&apiKey=61bba430f9444209af20b7856ae3d12e"
 
@@ -32,6 +36,12 @@ class NetworkService {
 
     func fetchStockData(searchedStockCompanies: String, completion: @escaping ([StockData]?, Error?) -> ()) {
         let urlString = "https://api.finage.co.uk/last/trade/stocks?symbols=\(searchedStockCompanies)&apikey=API_KEY44UIHMO0PMWXR4Y325YXXZIE5ZOQBA74"
+
+        fetchData(with: urlString, completion: completion)
+    }
+
+    func fetchStockChartData(searchedStockCompany: String, completion: @escaping (StockHistoryData?, Error?) -> ()) {
+        let urlString = "https://api.twelvedata.com/time_series?symbol=\(searchedStockCompany)&interval=1day&apikey=d907af5f4dd84e25ad29b6387819d146"
 
         fetchData(with: urlString, completion: completion)
     }
