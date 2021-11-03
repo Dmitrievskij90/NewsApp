@@ -11,6 +11,10 @@ class NetworkService {
     static let shared = NetworkService()
 
     func fetchNews(searchTerm: String, preferredCountry: String, completion: @escaping (NewsData?, Error?) -> ()) {
+        if preferredCountry == "us" {
+            let urlString =  "https://newsapi.org/v2/everything?q=\(searchTerm)&language=en&sortBy=publishedAt&pageSize=100&apiKey=61bba430f9444209af20b7856ae3d12e"
+            fetchData(with: urlString, completion: completion)
+        }
 
         let urlString =  "https://newsapi.org/v2/everything?q=\(searchTerm)&language=\(preferredCountry)&sortBy=publishedAt&pageSize=100&apiKey=61bba430f9444209af20b7856ae3d12e"
 
