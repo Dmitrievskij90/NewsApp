@@ -7,6 +7,7 @@
 
 import UIKit
 import KeychainAccess
+import Firebase
 
 class RegisterController: UIViewController {
     private let registerLabel: UILabel = {
@@ -172,8 +173,16 @@ class RegisterController: UIViewController {
         } else if password != repeatPassword {
             presentOneButtonAlert(withTitle: "Passwords don't match", message: "Please check the spelling and try again")
         } else {
-            AppSettingsManager.shared.setUserCredentials(login: login, password: password)
-            presentBaseTabBarController()
+            Auth.auth().createUser(withEmail: login, password: password) { [weak self] (authDataResult, error) in
+                guard let strongSelf = self else {
+                    return
+                }
+                if error != nil {
+                    strongSelf.presentOneButtonAlert(withTitle: "Registration failed", message: "Please try later")
+                } else {
+                    strongSelf.presentBaseTabBarController()
+                }
+            }
         }
     }
     
