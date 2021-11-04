@@ -10,5 +10,7 @@ target 'NewsApp' do
 pod 'SDWebImage'
 pod 'KeychainAccess'
 pod 'Charts'
+pod 'Firebase/Auth'
+pod 'Firebase/Core'
 
 end
