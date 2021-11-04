@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
     private let sigInLabel: UILabel = {
@@ -137,13 +138,16 @@ class LoginViewController: UIViewController {
             fatalError("Wrong password")
         }
 
-        if AppSettingsManager.shared.userLogin == login, AppSettingsManager.shared.userPassword == password {
-            if rememberSwitch.isOn {
-                AppSettingsManager.shared.keepUserSignedIn()
+        Auth.auth().signIn(withEmail: login, password: password) { [weak self] authResult, error in
+            guard let strongSelf = self else { return }
+            if error != nil {
+                strongSelf.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
+            } else {
+                if strongSelf.rememberSwitch.isOn {
+                    AppSettingsManager.shared.keepUserSignedIn()
+                }
+                strongSelf.presentBaseTabBarController()
             }
-            presentBaseTabBarController()
-        } else {
-            presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
         }
     }
 
