@@ -101,7 +101,7 @@ class RegisterController: UIViewController {
         button.addTarget(self, action: #selector(doneButonPressed), for: .touchUpInside)
         return button
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         loginTextField.delegate = self
@@ -147,11 +147,25 @@ class RegisterController: UIViewController {
     @objc func cancelButonPressed() {
         dismiss(animated: true, completion: nil)
     }
-    
+
+
     @objc func doneButonPressed() {
         setUserData()
+
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        user.reload { error in
+            switch user.isEmailVerified {
+            case true:
+                print("user is veri")
+                self.presentBaseTabBarController()
+            case false:
+                self.presentRegisterAlert()
+            }
+        }
     }
-    
+
     private func setUserData() {
         guard let login = loginTextField.text else {
             fatalError("Wrong login")
@@ -177,15 +191,37 @@ class RegisterController: UIViewController {
                 guard let strongSelf = self else {
                     return
                 }
+
+                guard let user = Auth.auth().currentUser else {
+                    return
+                }
+                user.sendEmailVerification { error in
+                    if error != nil {
+                        print("we have problem \(String(describing: error))")
+                    }
+                }
+
                 if error != nil {
                     strongSelf.presentOneButtonAlert(withTitle: "Registration failed", message: "Please try later")
-                } else {
-                    strongSelf.presentBaseTabBarController()
                 }
             }
         }
     }
-    
+
+    func presentRegisterAlert() {
+        let alertController = UIAlertController(title: "Virify you account", message: "We sent verification email to you. Please verify and tap DONE button again", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
+
+            UIView.animate(withDuration: 0.7, delay: 0, options: []) {
+                self.doneButton.backgroundColor = .init(hex: 0xDB6400)
+                self.doneButton.setTitle("GO", for: .normal)
+            }
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     private func presentBaseTabBarController() {
         let dV = BaseTabBarController()
         dV.modalPresentationStyle = .fullScreen
@@ -210,5 +246,19 @@ extension RegisterController: UITextFieldDelegate {
         } else {
             rememberSwitch.isUserInteractionEnabled = true
         }
+
+        guard let email = textField.text else {
+            return
+        }
+
+        Auth.auth().fetchSignInMethods(forEmail: email, completion: {
+                    (providers, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    } else if let provider = providers {
+                        self.presentOneButtonAlert(withTitle: "User is alredy exists", message: "")
+                        self.doneButton.isUserInteractionEnabled = false
+                    }
+                })
     }
 }
