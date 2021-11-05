@@ -7,6 +7,7 @@
 
 import UIKit
 import KeychainAccess
+import Firebase
 
 class ProfileViewController: UIViewController {
     private let fileManager = FileManager.default
@@ -82,6 +83,12 @@ class ProfileViewController: UIViewController {
         let footer = ProfileTableFooter()
         footer.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 100 )
         footer.transitionHandler = {
+            let firebaseAuth = Auth.auth()
+            do {
+                try firebaseAuth.signOut()
+            } catch let signOutError as NSError {
+                print ("Error signing out: %@", signOutError)
+            }
             self.keychain["remember"] = nil
             let destinationVC = WelcomeController()
             destinationVC.modalPresentationStyle = .fullScreen
