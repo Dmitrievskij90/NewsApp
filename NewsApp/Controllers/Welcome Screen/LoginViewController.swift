@@ -86,6 +86,13 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         loginTextField.delegate = self
         passwordTextField.delegate = self
+
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+
+        user.reload { error in
+        }
     }
 
     override func loadView() {
@@ -127,10 +134,36 @@ class LoginViewController: UIViewController {
     }
 
     @objc func doneButonPressed() {
+//        guard let user = Auth.auth().currentUser else {
+//            return
+//        }
+//
+
+//
+//        user.reload { error in
+//            switch user.isEmailVerified {
+//            case true:
+//                self.validateCredentials()
+//            case false:
+//                self.presentRegisterAlert()
+//            }
+//        }
+
         validateCredentials()
     }
 
+    func presentRegisterAlert() {
+        let alertController = UIAlertController(title: "Virify you account", message: "We sent verification email to you. Please verify and tap DONE button again", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
+
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     private func validateCredentials() {
+
         guard let login = loginTextField.text else {
             fatalError("Wrong login")
         }
@@ -138,17 +171,41 @@ class LoginViewController: UIViewController {
             fatalError("Wrong password")
         }
 
-        Auth.auth().signIn(withEmail: login, password: password) { [weak self] authResult, error in
-            guard let strongSelf = self else { return }
-            if error != nil {
-                strongSelf.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
-            } else {
-                if strongSelf.rememberSwitch.isOn {
+        Auth.auth().signIn(withEmail: login, password: password) { (authResult, error) in
+          if let authResult = authResult {
+            let user = authResult.user
+            if user.isEmailVerified {
+                if self.rememberSwitch.isOn {
                     AppSettingsManager.shared.keepUserSignedIn()
                 }
-                strongSelf.presentBaseTabBarController()
+                self.presentBaseTabBarController()
+            } else {
+                self.presentRegisterAlert()
             }
+          }
+          if error != nil {
+            self.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
+          }
         }
+
+
+//        guard let login = loginTextField.text else {
+//            fatalError("Wrong login")
+//        }
+//        guard let password = passwordTextField.text else {
+//            fatalError("Wrong password")
+//        }
+//        Auth.auth().signIn(withEmail: login, password: password) { [weak self] authResult, error in
+//            guard let strongSelf = self else { return }
+//            if error != nil {
+//                strongSelf.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
+//            } else {
+//                if strongSelf.rememberSwitch.isOn {
+//                    AppSettingsManager.shared.keepUserSignedIn()
+//                }
+//                strongSelf.presentBaseTabBarController()
+//            }
+//        }
     }
 
     private func presentBaseTabBarController() {
