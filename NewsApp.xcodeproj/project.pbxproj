@@ -58,6 +58,7 @@
 		5CBF2FE726EE411E00DB1D89 /* WelcomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF2FE626EE411E00DB1D89 /* WelcomeController.swift */; };
 		5CBF2FEF26EE4DEF00DB1D89 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF2FEE26EE4DEF00DB1D89 /* RegisterController.swift */; };
 		5CC07476272876B00083D6B8 /* FavouriteCategoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC07475272876B00083D6B8 /* FavouriteCategoriesCell.swift */; };
+		5CCC7B372738189900F63437 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCC7B362738189900F63437 /* VerificationController.swift */; };
 		5CE00E2D26F78F1B00BAFAAE /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE00E2C26F78F1B00BAFAAE /* CountryCell.swift */; };
 		5CE2D6C2270392B300362909 /* FavouriteCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2D6C1270392B300362909 /* FavouriteCategoriesViewController.swift */; };
 		5CE2D6C62703939900362909 /* FavoriteCategoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2D6C52703939900362909 /* FavoriteCategoriesCell.swift */; };
@@ -124,6 +125,7 @@
 		5CBF2FE626EE411E00DB1D89 /* WelcomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeController.swift; sourceTree = "<group>"; };
 		5CBF2FEE26EE4DEF00DB1D89 /* RegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		5CC07475272876B00083D6B8 /* FavouriteCategoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCategoriesCell.swift; sourceTree = "<group>"; };
+		5CCC7B362738189900F63437 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
 		5CE00E2C26F78F1B00BAFAAE /* CountryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		5CE2D6C1270392B300362909 /* FavouriteCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCategoriesViewController.swift; sourceTree = "<group>"; };
 		5CE2D6C52703939900362909 /* FavoriteCategoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCategoriesCell.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				5CBF2FE626EE411E00DB1D89 /* WelcomeController.swift */,
 				5CBF2FEE26EE4DEF00DB1D89 /* RegisterController.swift */,
 				5C55A50F26F0EC79004B148F /* LoginViewController.swift */,
+				5CCC7B362738189900F63437 /* VerificationController.swift */,
 			);
 			path = "Welcome Screen";
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				5C83CBB52729AA3E001A42DF /* StockCell.swift in Sources */,
 				5C307CA32702DEA1004BAF0D /* CategoriesCell.swift in Sources */,
 				5CF9EFCA26EFAD2900655DD2 /* AppSettingsManager.swift in Sources */,
+				5CCC7B372738189900F63437 /* VerificationController.swift in Sources */,
 				5CC07476272876B00083D6B8 /* FavouriteCategoriesCell.swift in Sources */,
 				5CBA606626FA412300A81A53 /* CountrySection.swift in Sources */,
 				5C8B22E227232962005ABD88 /* StockData.swift in Sources */,

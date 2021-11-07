@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     private let sigInLabel: UILabel = {
@@ -90,7 +91,6 @@ class LoginViewController: UIViewController {
         guard let user = Auth.auth().currentUser else {
             return
         }
-
         user.reload { error in
         }
     }
@@ -134,32 +134,7 @@ class LoginViewController: UIViewController {
     }
 
     @objc func doneButonPressed() {
-//        guard let user = Auth.auth().currentUser else {
-//            return
-//        }
-//
-
-//
-//        user.reload { error in
-//            switch user.isEmailVerified {
-//            case true:
-//                self.validateCredentials()
-//            case false:
-//                self.presentRegisterAlert()
-//            }
-//        }
-
         validateCredentials()
-    }
-
-    func presentRegisterAlert() {
-        let alertController = UIAlertController(title: "Virify you account", message: "We sent verification email to you. Please verify and tap DONE button again", preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
-
-            alertController.dismiss(animated: true, completion: nil)
-        }
-        alertController.addAction(OKAction)
-        self.present(alertController, animated: true, completion: nil)
     }
 
     private func validateCredentials() {
@@ -187,25 +162,15 @@ class LoginViewController: UIViewController {
             self.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
           }
         }
+    }
 
-
-//        guard let login = loginTextField.text else {
-//            fatalError("Wrong login")
-//        }
-//        guard let password = passwordTextField.text else {
-//            fatalError("Wrong password")
-//        }
-//        Auth.auth().signIn(withEmail: login, password: password) { [weak self] authResult, error in
-//            guard let strongSelf = self else { return }
-//            if error != nil {
-//                strongSelf.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
-//            } else {
-//                if strongSelf.rememberSwitch.isOn {
-//                    AppSettingsManager.shared.keepUserSignedIn()
-//                }
-//                strongSelf.presentBaseTabBarController()
-//            }
-//        }
+    func presentRegisterAlert() {
+        let alertController = UIAlertController(title: "Virify you account", message: "We sent verification email to you. Please verify and tap DONE button again", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(OKAction)
+        present(alertController, animated: true, completion: nil)
     }
 
     private func presentBaseTabBarController() {

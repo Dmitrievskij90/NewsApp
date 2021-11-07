@@ -8,6 +8,7 @@
 import UIKit
 import KeychainAccess
 import Firebase
+import FirebaseAuth
 
 class RegisterController: UIViewController {
     private let registerLabel: UILabel = {
@@ -148,22 +149,8 @@ class RegisterController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-
     @objc func doneButonPressed() {
         setUserData()
-
-        guard let user = Auth.auth().currentUser else {
-            return
-        }
-        user.reload { error in
-            switch user.isEmailVerified {
-            case true:
-                print("user is veri")
-                self.presentBaseTabBarController()
-            case false:
-                self.presentRegisterAlert()
-            }
-        }
     }
 
     private func setUserData() {
@@ -187,45 +174,44 @@ class RegisterController: UIViewController {
         } else if password != repeatPassword {
             presentOneButtonAlert(withTitle: "Passwords don't match", message: "Please check the spelling and try again")
         } else {
-            Auth.auth().createUser(withEmail: login, password: password) { [weak self] (authDataResult, error) in
-                guard let strongSelf = self else {
-                    return
+            Auth.auth().fetchSignInMethods(forEmail: login, completion: {
+                (providers, error) in
+                if error != nil  {
+                    self.presentOneButtonAlert(withTitle: "Bad Email format", message: "")
+                } else if providers != nil {
+                    self.presentOneButtonAlert(withTitle: "User is alredy exists", message: "")
+                } else {
+                    self.createUser(with: login, password: password)
+                    self.presentVerificationController()
                 }
+            })
+        }
+    }
 
-                guard let user = Auth.auth().currentUser else {
-                    return
-                }
+    private func createUser(with login: String, password: String) {
+        Auth.auth().createUser(withEmail: login, password: password) { [weak self] (authDataResult, error) in
+            guard let strongSelf = self else {
+                return
+            }
+            if let authResult = authDataResult {
+                let user = authResult.user
                 user.sendEmailVerification { error in
                     if error != nil {
                         print("we have problem \(String(describing: error))")
                     }
                 }
-
-                if error != nil {
-                    strongSelf.presentOneButtonAlert(withTitle: "Registration failed", message: "Please try later")
-                }
+            }
+            if error != nil {
+                strongSelf.presentOneButtonAlert(withTitle: "Registration failed", message: "Please try later")
             }
         }
     }
 
-    func presentRegisterAlert() {
-        let alertController = UIAlertController(title: "Virify you account", message: "We sent verification email to you. Please verify and tap DONE button again", preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
-
-            UIView.animate(withDuration: 0.7, delay: 0, options: []) {
-                self.doneButton.backgroundColor = .init(hex: 0xDB6400)
-                self.doneButton.setTitle("GO", for: .normal)
-            }
-            alertController.dismiss(animated: true, completion: nil)
-        }
-        alertController.addAction(OKAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
-
-    private func presentBaseTabBarController() {
-        let dV = BaseTabBarController()
-        dV.modalPresentationStyle = .fullScreen
-        present(dV, animated: true, completion: nil)
+    private func presentVerificationController() {
+        let destinationVC = VerificationController()
+        let navVC = UINavigationController(rootViewController: destinationVC)
+        navVC.modalPresentationStyle = .fullScreen
+        present(navVC, animated: true, completion: nil)
     }
 }
 
@@ -246,19 +232,5 @@ extension RegisterController: UITextFieldDelegate {
         } else {
             rememberSwitch.isUserInteractionEnabled = true
         }
-
-        guard let email = textField.text else {
-            return
-        }
-
-        Auth.auth().fetchSignInMethods(forEmail: email, completion: {
-                    (providers, error) in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    } else if let provider = providers {
-                        self.presentOneButtonAlert(withTitle: "User is alredy exists", message: "")
-                        self.doneButton.isUserInteractionEnabled = false
-                    }
-                })
     }
 }
