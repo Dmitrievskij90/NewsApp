@@ -79,7 +79,7 @@ class LoginViewController: UIViewController {
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .init(hex: 0x16697A)
-        button.addTarget(self, action: #selector(doneButonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
         return button
     }()
 
@@ -133,7 +133,7 @@ class LoginViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    @objc func doneButonPressed() {
+    @objc func letsGoButonPressed() {
         validateCredentials()
     }
 
