@@ -30,12 +30,17 @@ class RegisterController: UIViewController {
         let attributedString = NSAttributedString(string: "Login", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
-        textField.borderStyle = .bezel
+        textField.borderStyle = .roundedRect
         textField.font = .systemFont(ofSize: 18)
         textField.backgroundColor = .white
         textField.textAlignment = .center
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
+
+        textField.layer.shadowOpacity = 0.5
+        textField.layer.shadowRadius = 10
+        textField.layer.shadowOffset = .init(width: 0, height: 10)
+        textField.layer.shadowColor = UIColor.darkGray.cgColor
         return textField
     }()
     
@@ -47,13 +52,18 @@ class RegisterController: UIViewController {
         let attributedString = NSAttributedString(string: "Password", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
-        textField.borderStyle = .bezel
+        textField.borderStyle = .roundedRect
         textField.font = .systemFont(ofSize: 18)
         textField.backgroundColor = .white
         textField.textAlignment = .center
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
         textField.isSecureTextEntry = true
+
+        textField.layer.shadowOpacity = 0.5
+        textField.layer.shadowRadius = 10
+        textField.layer.shadowOffset = .init(width: 0, height: 10)
+        textField.layer.shadowColor = UIColor.darkGray.cgColor
         return textField
     }()
     
@@ -66,13 +76,18 @@ class RegisterController: UIViewController {
         let attributedString = NSAttributedString(string: "Repeat password", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
-        textField.borderStyle = .bezel
+        textField.borderStyle = .roundedRect
         textField.font = .systemFont(ofSize: 18)
         textField.backgroundColor = .white
         textField.textAlignment = .center
         textField.autocapitalizationType = .none
         textField.returnKeyType = .done
         textField.isSecureTextEntry = true
+
+        textField.layer.shadowOpacity = 0.5
+        textField.layer.shadowRadius = 10
+        textField.layer.shadowOffset = .init(width: 0, height: 10)
+        textField.layer.shadowColor = UIColor.darkGray.cgColor
         return textField
     }()
     
@@ -127,7 +142,6 @@ class RegisterController: UIViewController {
         keepMeSignedInStackView.spacing = 4
         
         let stackView = UIStackView(arrangedSubviews: [
-            registerLabel,
             loginTextField,
             passwordTextField,
             repeatPasswordTextField,
@@ -136,13 +150,16 @@ class RegisterController: UIViewController {
         
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
-        
+
         view.addSubview(stackView)
-        stackView.centerInSuperview(size: .init(width: 300, height: 400), constantY: -50)
-        
+        stackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50), size: .init(width: 0, height: 300))
+        stackView.centerInSuperview()
+
+        view.addSubview(registerLabel)
+        registerLabel.anchor(top: nil, leading: view.leadingAnchor, bottom: stackView.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
+
         view.addSubview(doneButton)
-        doneButton.anchor(top: stackView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: 100, height: 50))
-        doneButton.centerXInSuperview()
+        doneButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
     }
     
     @objc func cancelButonPressed() {
