@@ -46,6 +46,10 @@ class AppSettingsManager {
         keychain["remember"] = "yes"
     }
 
+    func forgetUser() {
+        keychain["remember"] = nil
+    }
+
     func setUserCredentials(login: String, password: String) {
         keychain["login"] = login
         keychain["password"] = password

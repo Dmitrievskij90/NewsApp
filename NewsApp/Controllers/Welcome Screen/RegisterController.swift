@@ -222,6 +222,7 @@ class RegisterController: UIViewController {
     
     @objc func cancelButonPressed() {
         dismiss(animated: true, completion: nil)
+        AppSettingsManager.shared.forgetUser()
     }
 
     @objc func doneButonPressed() {

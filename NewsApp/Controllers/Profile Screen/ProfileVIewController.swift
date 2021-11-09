@@ -12,7 +12,6 @@ import Firebase
 class ProfileViewController: UIViewController {
     private let fileManager = FileManager.default
     private let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
-    private let keychain = Keychain()
     private var image = UIImage(named: "news_image")
     private var sections = [CountrySection]()
     private var header = ProfileTableHeader()
@@ -89,7 +88,7 @@ class ProfileViewController: UIViewController {
             } catch let signOutError as NSError {
                 print ("Error signing out: %@", signOutError)
             }
-            self.keychain["remember"] = nil
+            AppSettingsManager.shared.forgetUser()
             let destinationVC = WelcomeController()
             destinationVC.modalPresentationStyle = .fullScreen
             self.present(destinationVC, animated: true, completion: nil)
