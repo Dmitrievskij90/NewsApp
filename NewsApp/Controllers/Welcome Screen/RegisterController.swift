@@ -6,11 +6,14 @@
 //
 
 import UIKit
-import KeychainAccess
 import Firebase
 import FirebaseAuth
 
 class RegisterController: UIViewController {
+    private let emailLabel = UILabel()
+    private let passwordLabel = UILabel()
+    private let confirmLabel = UILabel()
+
     private let registerLabel: UILabel = {
         let label = UILabel()
         label.text = "Register your new account"
@@ -22,106 +25,24 @@ class RegisterController: UIViewController {
         return label
     }()
 
-    private let emailLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Email"
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .left
-        label.textColor = .darkGray
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        return label
-    }()
-
-    private let passwordLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Password"
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .left
-        label.textColor = .darkGray
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        return label
-    }()
-
-    private let confirmLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Confirm password"
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .left
-        label.textColor = .darkGray
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        return label
-    }()
-
     private let loginTextField: UITextField = {
         let textField = UITextField()
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.lightGray,
-            .font : UIFont.systemFont(ofSize: 10)
-        ]
-        let attributedString = NSAttributedString(string: "user@gmail.com", attributes: attributes)
-        textField.attributedPlaceholder = attributedString
-        textField.constrainHeight(constant: 50)
-        textField.borderStyle = .roundedRect
-        textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .white
-        textField.textAlignment = .center
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
-
-        textField.layer.shadowOpacity = 0.5
-        textField.layer.shadowRadius = 10
-        textField.layer.shadowOffset = .init(width: 0, height: 10)
-        textField.layer.shadowColor = UIColor.darkGray.cgColor
         return textField
     }()
     
     private let passwordTextField: UITextField = {
         let textField = UITextField()
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.lightGray
-        ]
-        let attributedString = NSAttributedString(string: "******", attributes: attributes)
-        textField.attributedPlaceholder = attributedString
-        textField.constrainHeight(constant: 50)
-        textField.borderStyle = .roundedRect
-        textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .white
-        textField.textAlignment = .center
-        textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
         textField.isSecureTextEntry = true
-
-        textField.layer.shadowOpacity = 0.5
-        textField.layer.shadowRadius = 10
-        textField.layer.shadowOffset = .init(width: 0, height: 10)
-        textField.layer.shadowColor = UIColor.darkGray.cgColor
         return textField
     }()
     
     private let repeatPasswordTextField: UITextField = {
         let textField = UITextField()
-        
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.lightGray
-        ]
-        let attributedString = NSAttributedString(string: "******", attributes: attributes)
-        textField.attributedPlaceholder = attributedString
-        textField.constrainHeight(constant: 50)
-        textField.borderStyle = .roundedRect
-        textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .white
-        textField.textAlignment = .center
-        textField.autocapitalizationType = .none
         textField.returnKeyType = .done
         textField.isSecureTextEntry = true
-
-        textField.layer.shadowOpacity = 0.5
-        textField.layer.shadowRadius = 10
-        textField.layer.shadowOffset = .init(width: 0, height: 10)
-        textField.layer.shadowColor = UIColor.darkGray.cgColor
         return textField
     }()
     
@@ -167,7 +88,51 @@ class RegisterController: UIViewController {
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButonPressed))
         navigationItem.leftBarButtonItem = cancelButton
         cancelButton.tintColor = .label
-        
+
+        setupTextFields(with: loginTextField, text: "user@gmail.com")
+        setupTextFields(with: passwordTextField, text: "******")
+        setupTextFields(with: repeatPasswordTextField, text: "******")
+
+        setupStackViewLabels(with: emailLabel, text: "Email")
+        setupStackViewLabels(with: passwordLabel, text: "Password")
+        setupStackViewLabels(with: confirmLabel, text: "Confirm password")
+
+        setupStackView()
+        setupDoneButton()
+    }
+
+    // MARK: - setup user interface methods
+    // MARK: -
+    private func setupTextFields(with textField: UITextField, text: String) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.lightGray,
+            .font : UIFont.systemFont(ofSize: 10)
+        ]
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        textField.attributedPlaceholder = attributedString
+        textField.constrainHeight(constant: 50)
+        textField.borderStyle = .roundedRect
+        textField.font = .systemFont(ofSize: 18)
+        textField.backgroundColor = .white
+        textField.textAlignment = .center
+        textField.autocapitalizationType = .words
+        textField.returnKeyType = .continue
+        textField.layer.shadowOpacity = 0.5
+        textField.layer.shadowRadius = 10
+        textField.layer.shadowOffset = .init(width: 0, height: 10)
+        textField.layer.shadowColor = UIColor.darkGray.cgColor
+    }
+
+    private func setupStackViewLabels(with label: UILabel, text: String) {
+        label.text = text
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
+        label.textColor = .darkGray
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+    }
+
+    private func setupStackView() {
         let keepMeSignedInStackView = UIStackView(arrangedSubviews: [
             rememberSwitch,
             keepMeSignedInLabel
@@ -189,7 +154,6 @@ class RegisterController: UIViewController {
         passwordStackView.axis = .vertical
         passwordStackView.spacing = 4
 
-
         let confirmPasswordStackView = UIStackView(arrangedSubviews: [
             confirmLabel,
             repeatPasswordTextField
@@ -198,14 +162,13 @@ class RegisterController: UIViewController {
         confirmPasswordStackView.spacing = 4
 
 
-        
         let stackView = UIStackView(arrangedSubviews: [
             emailStackView,
             passwordStackView,
             confirmPasswordStackView,
             keepMeSignedInStackView
         ])
-        
+
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
 
@@ -215,7 +178,9 @@ class RegisterController: UIViewController {
 
         view.addSubview(registerLabel)
         registerLabel.anchor(top: nil, leading: view.leadingAnchor, bottom: stackView.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
+    }
 
+    private func setupDoneButton() {
         view.addSubview(doneButton)
         doneButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
     }
