@@ -10,6 +10,10 @@ import Firebase
 import FirebaseAuth
 
 class LoginViewController: UIViewController {
+    private var topConstraint: NSLayoutConstraint?
+    private var bottomConstraint: NSLayoutConstraint?
+    private let alertView = VerificationAlertView()
+    private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private let sigInLabel: UILabel = {
         let label = UILabel()
         label.text = "Sign in to your account"
@@ -127,6 +131,34 @@ class LoginViewController: UIViewController {
         view.addSubview(letsGoButton)
         letsGoButton.anchor(top: stackView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: 100, height: 50))
         letsGoButton.centerXInSuperview()
+
+        view.addSubview(blurVisualEffectView)
+        blurVisualEffectView.fillSuperview()
+        blurVisualEffectView.alpha = 0
+
+        setupVerificationAlertView()
+    }
+
+    private func setupVerificationAlertView() {
+        view.addSubview(alertView)
+        alertView.translatesAutoresizingMaskIntoConstraints = false
+        topConstraint = alertView.topAnchor.constraint(equalTo: view.bottomAnchor)
+        topConstraint?.isActive = true
+        bottomConstraint = alertView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25)
+        bottomConstraint?.isActive = false
+        alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        alertView.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+
+        alertView.tapHandler = {
+            Auth.auth().currentUser?.reload()
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+                self.topConstraint?.isActive = true
+                self.bottomConstraint?.isActive = false
+                self.blurVisualEffectView.alpha = 0
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 
     @objc func cancelButonPressed() {
@@ -155,7 +187,7 @@ class LoginViewController: UIViewController {
                 }
                 self.presentBaseTabBarController()
             } else {
-                self.presentRegisterAlert()
+                self.showAlertView()
             }
           }
           if error != nil {
@@ -164,13 +196,13 @@ class LoginViewController: UIViewController {
         }
     }
 
-    func presentRegisterAlert() {
-        let alertController = UIAlertController(title: "Virify you account", message: "We sent verification email to you. Please verify and tap DONE button again", preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default) { _ in
-            alertController.dismiss(animated: true, completion: nil)
+    private func showAlertView() {
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+            self.topConstraint?.isActive = false
+            self.bottomConstraint?.isActive = true
+            self.blurVisualEffectView.alpha = 1
+            self.view.layoutIfNeeded()
         }
-        alertController.addAction(OKAction)
-        present(alertController, animated: true, completion: nil)
     }
 
     private func presentBaseTabBarController() {

@@ -35,7 +35,7 @@ class VerificationAlertView: UIView {
         let button = BaseButton(type: .system)
         button.setTitle("OK", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.darkGray, for: .normal)
+        button.setTitleColor(.init(hex: 0x494d4e), for: .normal)
         button.backgroundColor = .white
         button.addTarget(self, action: #selector(oKButonPressed), for: .touchUpInside)
         return button
@@ -43,7 +43,7 @@ class VerificationAlertView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .init(hex: 0xDB6400)
+        backgroundColor = .init(hex: 0x494d4e)
         layer.cornerRadius = 15
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 10

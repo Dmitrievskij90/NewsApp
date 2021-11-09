@@ -10,7 +10,10 @@ import Firebase
 import FirebaseAuth
 
 class VerificationController: UIViewController {
+    private var topConstraint: NSLayoutConstraint?
+    private var bottomConstraint: NSLayoutConstraint?
     private let alertView = VerificationAlertView()
+    private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private let letsGoButton: UIButton = {
         let button = BaseButton(type: .system)
         button.setTitle("Let's go", for: .normal)
@@ -39,23 +42,41 @@ class VerificationController: UIViewController {
         letsGoButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 50, right: 0), size: .init(width: 100, height: 50))
         letsGoButton.centerXInSuperview()
 
+        view.addSubview(blurVisualEffectView)
+        blurVisualEffectView.fillSuperview()
+        blurVisualEffectView.alpha = 0
+
         setupVerificationAlertView()
     }
 
     private func setupVerificationAlertView() {
         view.addSubview(alertView)
-        alertView.anchor(top: view.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16) ,size: .init(width: 0, height: view.frame.width))
+        alertView.translatesAutoresizingMaskIntoConstraints = false
+        topConstraint = alertView.topAnchor.constraint(equalTo: view.bottomAnchor)
+        topConstraint?.isActive = true
+        bottomConstraint = alertView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25)
+        bottomConstraint?.isActive = false
+        alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        alertView.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+
         alertView.tapHandler = {
             Auth.auth().currentUser?.reload()
             UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
-                self.alertView.frame.origin.y = self.view.frame.maxY
+                self.topConstraint?.isActive = true
+                self.bottomConstraint?.isActive = false
+                self.blurVisualEffectView.alpha = 0
+                self.view.layoutIfNeeded()
             }
         }
     }
 
     func showAlertView() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
-            self.alertView.frame.origin.y = self.view.frame.midY
+            self.topConstraint?.isActive = false
+            self.bottomConstraint?.isActive = true
+            self.blurVisualEffectView.alpha = 1
+            self.view.layoutIfNeeded()
         }
     }
 
