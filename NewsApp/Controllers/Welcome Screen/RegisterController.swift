@@ -22,12 +22,46 @@ class RegisterController: UIViewController {
         return label
     }()
 
+    private let emailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Email"
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
+        label.textColor = .darkGray
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        return label
+    }()
+
+    private let passwordLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Password"
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
+        label.textColor = .darkGray
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        return label
+    }()
+
+    private let confirmLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Confirm password"
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
+        label.textColor = .darkGray
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        return label
+    }()
+
     private let loginTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.darkGray
+            .foregroundColor: UIColor.lightGray,
+            .font : UIFont.systemFont(ofSize: 10)
         ]
-        let attributedString = NSAttributedString(string: "Login", attributes: attributes)
+        let attributedString = NSAttributedString(string: "user@gmail.com", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
         textField.borderStyle = .roundedRect
@@ -47,9 +81,9 @@ class RegisterController: UIViewController {
     private let passwordTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.darkGray
+            .foregroundColor: UIColor.lightGray
         ]
-        let attributedString = NSAttributedString(string: "Password", attributes: attributes)
+        let attributedString = NSAttributedString(string: "******", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
         textField.borderStyle = .roundedRect
@@ -71,9 +105,9 @@ class RegisterController: UIViewController {
         let textField = UITextField()
         
         let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.darkGray
+            .foregroundColor: UIColor.lightGray
         ]
-        let attributedString = NSAttributedString(string: "Repeat password", attributes: attributes)
+        let attributedString = NSAttributedString(string: "******", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
         textField.borderStyle = .roundedRect
@@ -112,8 +146,8 @@ class RegisterController: UIViewController {
         let button = BaseButton(type: .system)
         button.setTitle("Done", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .init(hex: 0x16697A)
+        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
+        button.backgroundColor = .init(hex: 0x494d4e)
         button.addTarget(self, action: #selector(doneButonPressed), for: .touchUpInside)
         return button
     }()
@@ -140,11 +174,35 @@ class RegisterController: UIViewController {
         ])
         keepMeSignedInStackView.axis = .vertical
         keepMeSignedInStackView.spacing = 4
+
+        let emailStackView = UIStackView(arrangedSubviews: [
+            emailLabel,
+            loginTextField
+        ])
+        emailStackView.axis = .vertical
+        emailStackView.spacing = 4
+
+        let passwordStackView = UIStackView(arrangedSubviews: [
+            passwordLabel,
+            passwordTextField
+        ])
+        passwordStackView.axis = .vertical
+        passwordStackView.spacing = 4
+
+
+        let confirmPasswordStackView = UIStackView(arrangedSubviews: [
+            confirmLabel,
+            repeatPasswordTextField
+        ])
+        confirmPasswordStackView.axis = .vertical
+        confirmPasswordStackView.spacing = 4
+
+
         
         let stackView = UIStackView(arrangedSubviews: [
-            loginTextField,
-            passwordTextField,
-            repeatPasswordTextField,
+            emailStackView,
+            passwordStackView,
+            confirmPasswordStackView,
             keepMeSignedInStackView
         ])
         
