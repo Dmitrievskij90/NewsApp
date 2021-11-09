@@ -53,6 +53,7 @@ class VerificationAlertView: UIView {
         let stackView = UIStackView(arrangedSubviews: [alertLabel,virificationImageView])
         stackView.axis = .vertical
         stackView.alignment = .center
+        stackView.distribution = .fillProportionally
 
         addSubview(oKButton)
         oKButton.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 25, bottom: 25, right: 25), size: .init(width: 0, height: 50))
