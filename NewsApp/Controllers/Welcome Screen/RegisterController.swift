@@ -115,8 +115,6 @@ class RegisterController: UIViewController {
         textField.font = .systemFont(ofSize: 18)
         textField.backgroundColor = .white
         textField.textAlignment = .center
-        textField.autocapitalizationType = .words
-        textField.returnKeyType = .continue
         textField.layer.shadowOpacity = 0.5
         textField.layer.shadowRadius = 10
         textField.layer.shadowOffset = .init(width: 0, height: 10)

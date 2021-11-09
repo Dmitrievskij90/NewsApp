@@ -14,6 +14,8 @@ class LoginViewController: UIViewController {
     private var bottomConstraint: NSLayoutConstraint?
     private let alertView = VerificationAlertView()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+    private let emailLabel = UILabel()
+    private let passwordLabel = UILabel()
     private let sigInLabel: UILabel = {
         let label = UILabel()
         label.text = "Sign in to your account"
@@ -27,16 +29,6 @@ class LoginViewController: UIViewController {
 
     private let loginTextField: UITextField = {
         let textField = UITextField()
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.darkGray
-        ]
-        let attributedString = NSAttributedString(string: "Login", attributes: attributes)
-        textField.attributedPlaceholder = attributedString
-        textField.constrainHeight(constant: 50)
-        textField.borderStyle = .bezel
-        textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .white
-        textField.textAlignment = .center
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
         return textField
@@ -44,18 +36,7 @@ class LoginViewController: UIViewController {
 
     private let passwordTextField: UITextField = {
         let textField = UITextField()
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.darkGray
-        ]
-        let attributedString = NSAttributedString(string: "Password", attributes: attributes)
-        textField.attributedPlaceholder = attributedString
-        textField.constrainHeight(constant: 50)
-        textField.borderStyle = .bezel
-        textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .white
-        textField.textAlignment = .center
-        textField.autocapitalizationType = .none
-        textField.returnKeyType = .continue
+        textField.returnKeyType = .done
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -81,8 +62,8 @@ class LoginViewController: UIViewController {
         let button = BaseButton(type: .system)
         button.setTitle("Let's go", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .init(hex: 0x16697A)
+        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
+        button.backgroundColor = .init(hex: 0x494d4e)
         button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
         return button
     }()
@@ -108,6 +89,52 @@ class LoginViewController: UIViewController {
         navigationItem.leftBarButtonItem = cancelButton
         cancelButton.tintColor = .label
 
+        setupTextFields(with: loginTextField, text: "user@gmail.com")
+        setupTextFields(with: passwordTextField, text: "******")
+
+        setupStackViewLabels(with: emailLabel, text: "Email")
+        setupStackViewLabels(with: passwordLabel, text: "Password")
+
+        setupStackView()
+        setupDoneButton()
+
+        view.addSubview(blurVisualEffectView)
+        blurVisualEffectView.fillSuperview()
+        blurVisualEffectView.alpha = 0
+
+        setupVerificationAlertView()
+    }
+
+    // MARK: - setup user interface methods
+    // MARK: -
+    private func setupTextFields(with textField: UITextField, text: String) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.lightGray,
+            .font : UIFont.systemFont(ofSize: 10)
+        ]
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        textField.attributedPlaceholder = attributedString
+        textField.constrainHeight(constant: 50)
+        textField.borderStyle = .roundedRect
+        textField.font = .systemFont(ofSize: 18)
+        textField.backgroundColor = .white
+        textField.textAlignment = .center
+        textField.layer.shadowOpacity = 0.5
+        textField.layer.shadowRadius = 10
+        textField.layer.shadowOffset = .init(width: 0, height: 10)
+        textField.layer.shadowColor = UIColor.darkGray.cgColor
+    }
+
+    private func setupStackViewLabels(with label: UILabel, text: String) {
+        label.text = text
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
+        label.textColor = .darkGray
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+    }
+
+    private func setupStackView() {
         let keepMeSignedInStackView = UIStackView(arrangedSubviews: [
             rememberSwitch,
             keepMeSignedInLabel
@@ -115,10 +142,23 @@ class LoginViewController: UIViewController {
         keepMeSignedInStackView.axis = .vertical
         keepMeSignedInStackView.spacing = 4
 
+        let emailStackView = UIStackView(arrangedSubviews: [
+            emailLabel,
+            loginTextField
+        ])
+        emailStackView.axis = .vertical
+        emailStackView.spacing = 4
+
+        let passwordStackView = UIStackView(arrangedSubviews: [
+            passwordLabel,
+            passwordTextField
+        ])
+        passwordStackView.axis = .vertical
+        passwordStackView.spacing = 4
+
         let stackView = UIStackView(arrangedSubviews: [
-            sigInLabel,
-            loginTextField,
-            passwordTextField,
+            emailStackView,
+            passwordStackView,
             keepMeSignedInStackView
         ])
 
@@ -126,17 +166,16 @@ class LoginViewController: UIViewController {
         stackView.distribution = .equalSpacing
 
         view.addSubview(stackView)
-        stackView.centerInSuperview(size: .init(width: 300, height: 400), constantY: -50)
+        stackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50), size: .init(width: 0, height: 300))
+        stackView.centerInSuperview()
 
+        view.addSubview(sigInLabel)
+        sigInLabel.anchor(top: nil, leading: view.leadingAnchor, bottom: stackView.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
+    }
+
+    private func setupDoneButton() {
         view.addSubview(letsGoButton)
-        letsGoButton.anchor(top: stackView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: 100, height: 50))
-        letsGoButton.centerXInSuperview()
-
-        view.addSubview(blurVisualEffectView)
-        blurVisualEffectView.fillSuperview()
-        blurVisualEffectView.alpha = 0
-
-        setupVerificationAlertView()
+        letsGoButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
     }
 
     private func setupVerificationAlertView() {
