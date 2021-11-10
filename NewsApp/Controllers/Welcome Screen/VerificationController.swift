@@ -24,6 +24,40 @@ class VerificationController: UIViewController {
         return button
     }()
 
+    private let setupProfileLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Set up profile"
+        label.font = .boldSystemFont(ofSize: 35)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        return label
+    }()
+
+    private let userImageView: CircularImageView = {
+        let imageView = CircularImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.init(hex: 0x494d4e).cgColor
+        imageView.isUserInteractionEnabled = true
+        imageView.image = UIImage(named: "avatar_image")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        imageView.tintColor = .init(hex: 0x494d4e)
+        imageView.constrainWidth(constant: 120)
+        imageView.constrainHeight(constant: 120)
+        return imageView
+    }()
+
+    private let plusButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        button.constrainWidth(constant: 50)
+        button.constrainHeight(constant: 50)
+        button.tintColor = .init(hex: 0x494d4e)
+        button.addTarget(self, action: #selector(plusButtonPressed), for: .touchUpInside)
+        return button
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         Auth.auth().currentUser?.reload()
