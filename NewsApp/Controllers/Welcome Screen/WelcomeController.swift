@@ -25,8 +25,8 @@ class WelcomeController: UIViewController {
         let button = BaseButton(type: .system)
         button.setTitle("REGISTER", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .init(hex: 0x16697A)
+        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
+        button.backgroundColor = .init(hex: 0x494d4e)
         button.addTarget(self, action: #selector(registerButtopnTapped), for: .touchUpInside)
         return button
     }()
@@ -37,6 +37,7 @@ class WelcomeController: UIViewController {
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.setTitleColor(.darkGray, for: .normal)
         button.backgroundColor = .white
+        button.layer.borderColor = UIColor.init(hex: 0x4EFDD).cgColor
         button.addTarget(self, action: #selector(signinButtonTapped), for: .touchUpInside)
         return button
     }()
