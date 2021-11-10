@@ -10,6 +10,8 @@ import Firebase
 import FirebaseAuth
 
 class VerificationController: UIViewController {
+    private let fileManager = FileManager.default
+    private let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
     private let alertView = VerificationAlertView()
@@ -58,9 +60,13 @@ class VerificationController: UIViewController {
         button.addTarget(self, action: #selector(plusButtonPressed), for: .touchUpInside)
         return button
     }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         Auth.auth().currentUser?.reload()
+
+        let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(userImageViewTapped))
+        userImageView.addGestureRecognizer(tapGestureregognizer)
     }
 
     override func loadView() {
@@ -72,8 +78,19 @@ class VerificationController: UIViewController {
         navigationItem.leftBarButtonItem = cancelButton
         cancelButton.tintColor = .label
 
+        view.addSubview(setupProfileLabel)
+        setupProfileLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 10, left: 50, bottom: 0, right: 50), size: .init(width: 0, height: 80))
+
+        view.addSubview(userImageView)
+        userImageView.anchor(top: setupProfileLabel.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0))
+        userImageView.centerXInSuperview()
+
+        view.addSubview(plusButton)
+        plusButton.anchor(top: nil, leading: nil, bottom: userImageView.topAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        plusButton.centerXInSuperview(constantX: 50)
+
         view.addSubview(letsGoButton)
-        letsGoButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 50, right: 0), size: .init(width: 100, height: 50))
+        letsGoButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
         letsGoButton.centerXInSuperview()
 
         view.addSubview(blurVisualEffectView)
@@ -132,9 +149,52 @@ class VerificationController: UIViewController {
         }
     }
 
+    @objc func userImageViewTapped() {
+        displayImagePickerController()
+    }
+
+    @objc func plusButtonPressed() {
+        displayImagePickerController()
+    }
+
+    private func displayImagePickerController() {
+        let imagePicerController = UIImagePickerController()
+        imagePicerController.delegate = self
+        imagePicerController.sourceType = .photoLibrary
+        present(imagePicerController, animated: true, completion: nil)
+    }
+
     private func presentBaseTabBarController() {
         let dV = BaseTabBarController()
         dV.modalPresentationStyle = .fullScreen
         present(dV, animated: true, completion: nil)
+    }
+}
+
+//MARK: - UIImagePickerControllerDelegate methods
+//MARK: -
+extension VerificationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let path = documentsPath?.path else {
+            fatalError("Can't find document path")
+        }
+        if let image = info[.originalImage] as? UIImage {
+            userImageView.image = image
+
+            if fileManager.fileExists(atPath: path) == false {
+                do {
+                    try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+                } catch {
+                    fatalError("Can't save image to directory")
+                }
+            }
+            let data = image.jpegData(compressionQuality: 0.5)
+            let imageName = "userImage.png"
+            fileManager.createFile(atPath: "\(path)/\(imageName)", contents: data, attributes: nil)
+
+        } else {
+            fatalError("Can't find image")
+        }
+        dismiss(animated: true, completion: nil)
     }
 }
