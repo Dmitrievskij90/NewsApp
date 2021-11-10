@@ -218,21 +218,25 @@ class LoginViewController: UIViewController {
             fatalError("Wrong password")
         }
 
-        Auth.auth().signIn(withEmail: login, password: password) { (authResult, error) in
-          if let authResult = authResult {
-            let user = authResult.user
-            if user.isEmailVerified {
-                if self.rememberSwitch.isOn {
-                    AppSettingsManager.shared.keepUserSignedIn()
+        if login.isEmpty || password.isEmpty {
+            presentOneButtonAlert(withTitle: "Empty field", message: "Please enter user data")
+        } else {
+            Auth.auth().signIn(withEmail: login, password: password) { (authResult, error) in
+                if let authResult = authResult {
+                    let user = authResult.user
+                    if user.isEmailVerified {
+                        if self.rememberSwitch.isOn {
+                            AppSettingsManager.shared.keepUserSignedIn()
+                        }
+                        self.presentBaseTabBarController()
+                    } else {
+                        self.showAlertView()
+                    }
                 }
-                self.presentBaseTabBarController()
-            } else {
-                self.showAlertView()
+                if error != nil {
+                    self.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
+                }
             }
-          }
-          if error != nil {
-            self.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
-          }
         }
     }
 
