@@ -13,12 +13,11 @@ class ProfileTableFooter: UIView {
 
     private let logOutButton: BaseButton = {
         let button = BaseButton(type: .system)
-        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitle("LOG OUT", for: .normal)
-        button.backgroundColor = .init(hex: 0x16697A)
+        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
+        button.backgroundColor = .init(hex: 0x494d4e)
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        button.constrainWidth(constant: 100)
         button.constrainHeight(constant: 50)
 
         return button
@@ -30,6 +29,7 @@ class ProfileTableFooter: UIView {
         clipsToBounds = true
 
         addSubview(logOutButton)
+        logOutButton.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
         logOutButton.centerInSuperview()
 
     }
