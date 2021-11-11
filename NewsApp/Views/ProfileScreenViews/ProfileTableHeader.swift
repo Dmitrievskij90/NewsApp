@@ -22,11 +22,11 @@ class ProfileTableHeader: UIView {
 
     let profileView: UIView = {
         let view = UIView()
-        view.backgroundColor = .init(hex: 0x16697A)
+        view.backgroundColor = .init(hex: 0x494d4e)
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
-        view.layer.borderWidth = 2
-        view.layer.borderColor = UIColor.init(hex: 0xDB6400).cgColor
+//        view.layer.borderWidth = 2
+//        view.layer.borderColor = UIColor.init(hex: 0x4EFDD).cgColor
 //        view.alpha = 0.5
         return view
     }()
@@ -35,7 +35,7 @@ class ProfileTableHeader: UIView {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .left
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 35)
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
@@ -64,13 +64,12 @@ class ProfileTableHeader: UIView {
         return imageView
     }()
 
-    let userImageView: UIImageView = {
-        let imageView = UIImageView()
+    let userImageView: CircularImageView = {
+        let imageView = CircularImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 16
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.init(hex: 0xDB6400).cgColor
+//        imageView.layer.borderWidth = 1
+//        imageView.layer.borderColor = UIColor.init(hex: 0xDB6400).cgColor
         imageView.image = UIImage(named: "news_image")
         imageView.constrainHeight(constant: 100)
         imageView.constrainWidth(constant: 100)
@@ -96,11 +95,11 @@ class ProfileTableHeader: UIView {
         verticalStackVIew.spacing = 6
         verticalStackVIew.alignment = .leading
 
-        addSubview(userImageView)
-        userImageView.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 0, bottom: 0, right: 20))
+        profileView.addSubview(userImageView)
+        userImageView.anchor(top: profileView.topAnchor, leading: nil, bottom: nil, trailing: profileView.trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 10))
 
-        addSubview(verticalStackVIew)
-        verticalStackVIew.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: userImageView.leadingAnchor, padding: .init(top: 16, left: 16, bottom: 16, right: 0))
+        profileView.addSubview(verticalStackVIew)
+        verticalStackVIew.anchor(top: profileView.topAnchor, leading: profileView.leadingAnchor, bottom: profileView.bottomAnchor, trailing: userImageView.leadingAnchor, padding: .init(top: 0, left: 10, bottom: 10, right: 0))
 
         let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         userImageView.addGestureRecognizer(tapGestureregognizer)
