@@ -175,22 +175,23 @@ class VerificationController: UIViewController {
 //MARK: -
 extension VerificationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        guard let path = documentsPath?.path else {
-            fatalError("Can't find document path")
+        guard let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
+            return
         }
-        if let image = info[.originalImage] as? UIImage {
-            userImageView.image = image
 
-            if fileManager.fileExists(atPath: path) == false {
+        if let image = info[.originalImage] as? UIImage {
+//            try? FileManager.default.createDirectory(at: documentsPath, withIntermediateDirectories: false, attributes: nil)
+            userImageView.image = image
+            if fileManager.fileExists(atPath: documentsPath.path) == false {
                 do {
-                    try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+                    try fileManager.createDirectory(atPath: documentsPath.path, withIntermediateDirectories: true, attributes: nil)
                 } catch {
                     fatalError("Can't save image to directory")
                 }
             }
             let data = image.jpegData(compressionQuality: 0.5)
             let imageName = "userImage.png"
-            fileManager.createFile(atPath: "\(path)/\(imageName)", contents: data, attributes: nil)
+            fileManager.createFile(atPath: "\(documentsPath.path)/\(imageName)", contents: data, attributes: nil)
 
         } else {
             fatalError("Can't find image")

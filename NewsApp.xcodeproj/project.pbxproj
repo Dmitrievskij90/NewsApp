@@ -54,6 +54,7 @@
 		5CB501E226E6716700246670 /* DetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB501E126E6716700246670 /* DetailsController.swift */; };
 		5CB501E626E674B700246670 /* ImageHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB501E526E674B700246670 /* ImageHeaderCell.swift */; };
 		5CB501EA26E675DF00246670 /* NewsDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB501E926E675DF00246670 /* NewsDetailCell.swift */; };
+		5CBA4EB6273C28B700FC2505 /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBA4EB5273C28B700FC2505 /* CircularImageView.swift */; };
 		5CBA606626FA412300A81A53 /* CountrySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBA606526FA412300A81A53 /* CountrySection.swift */; };
 		5CBA606926FA432B00A81A53 /* ChooseCountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBA606826FA432B00A81A53 /* ChooseCountryCell.swift */; };
 		5CBF2FE726EE411E00DB1D89 /* WelcomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF2FE626EE411E00DB1D89 /* WelcomeController.swift */; };
@@ -122,6 +123,7 @@
 		5CB501E126E6716700246670 /* DetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsController.swift; sourceTree = "<group>"; };
 		5CB501E526E674B700246670 /* ImageHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHeaderCell.swift; sourceTree = "<group>"; };
 		5CB501E926E675DF00246670 /* NewsDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailCell.swift; sourceTree = "<group>"; };
+		5CBA4EB5273C28B700FC2505 /* CircularImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
 		5CBA606526FA412300A81A53 /* CountrySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySection.swift; sourceTree = "<group>"; };
 		5CBA606826FA432B00A81A53 /* ChooseCountryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCountryCell.swift; sourceTree = "<group>"; };
 		5CBF2FE626EE411E00DB1D89 /* WelcomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeController.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				5CB501D826E6513900246670 /* BaseCell.swift */,
 				5C24EEB2271899B100F302D0 /* BaseButton.swift */,
 				5C89366827398A7F006A8ECD /* VerificationAlertView.swift */,
+				5CBA4EB5273C28B700FC2505 /* CircularImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 				5C28A10A2731476500C100A4 /* StockHistoryData.swift in Sources */,
 				5CFB9F5026E3AFF90095D548 /* UIView+Layout.swift in Sources */,
 				5CE2D6C62703939900362909 /* FavoriteCategoriesCell.swift in Sources */,
+				5CBA4EB6273C28B700FC2505 /* CircularImageView.swift in Sources */,
 				5C7C3D40272D676A00FD0453 /* StockCompanies.swift in Sources */,
 				5C83CBB52729AA3E001A42DF /* StockCell.swift in Sources */,
 				5C307CA32702DEA1004BAF0D /* CategoriesCell.swift in Sources */,
