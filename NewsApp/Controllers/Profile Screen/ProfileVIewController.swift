@@ -8,6 +8,7 @@
 import UIKit
 import KeychainAccess
 import Firebase
+import FirebaseAuth
 
 class ProfileViewController: UIViewController {
     private let fileManager = FileManager.default

@@ -9,26 +9,25 @@ import UIKit
 
 class CategoryManager {
     static let shared = CategoryManager()
-    private var documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent("Data structures")
+//    private var documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
+    private let fileManager = FileManager.default
 
     //MARK: - categories set data manipulation methods
     //MARK: -
     func saveCategoriesSet(with set: Set<String>) {
+        let documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
         let folderPath = documentDirectorypath
         guard let path = folderPath else {
             return
         }
-
-        print(path)
-
         try? FileManager.default.createDirectory(at: path, withIntermediateDirectories: false, attributes: nil)
         let data = try? JSONEncoder().encode(set)
         let dataPath = folderPath?.appendingPathComponent("categoriesSet.json")
         FileManager.default.createFile(atPath: dataPath!.path, contents: data, attributes: nil)
-        
     }
 
     func loadCategoriesSet() -> Set<String>{
+        let documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
         var categorySet = Set<String>()
         let folderPath = documentDirectorypath
         let dataPath = folderPath?.appendingPathComponent("categoriesSet.json")
@@ -41,6 +40,7 @@ class CategoryManager {
     //MARK: - categories struct data manipulation methods
     //MARK: -
     func saveCategoriesStruct(with categories: [Categories]) {
+         let documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
         let folderPath = documentDirectorypath
         guard let path = folderPath else {
             return
@@ -53,6 +53,7 @@ class CategoryManager {
     }
 
     func loadCategoriesStruct() -> [Categories]{
+        let documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
         var categories = [Categories]()
         let folderPath = documentDirectorypath
         let dataPath = folderPath?.appendingPathComponent("categoriesStruct.json")
@@ -65,6 +66,7 @@ class CategoryManager {
     //MARK: - stock companies set data manipulation methods
     //MARK: -
     func saveStockCompaniesSet(with set: Set<String>) {
+        let documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
         let folderPath = documentDirectorypath
         guard let path = folderPath else {
             return
@@ -78,6 +80,7 @@ class CategoryManager {
     }
 
     func loadStockCompaniesSet() -> Set<String>{
+        let documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
         var stockSet = Set<String>()
         let folderPath = documentDirectorypath
         let dataPath = folderPath?.appendingPathComponent("stockSet.json")
@@ -90,6 +93,7 @@ class CategoryManager {
     //MARK: - stock companies struct data manipulation methods
     //MARK: -
     func saveStockCompaniesStruct(with categories: [StockCompanies]) {
+        let documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
         let folderPath = documentDirectorypath
         guard let path = folderPath else {
             return
@@ -102,6 +106,7 @@ class CategoryManager {
     }
 
     func loadStockCompaniesStruct() -> [StockCompanies]{
+        let documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
         var categories = [StockCompanies]()
         let folderPath = documentDirectorypath
         let dataPath = folderPath?.appendingPathComponent("stockStruct.json")
