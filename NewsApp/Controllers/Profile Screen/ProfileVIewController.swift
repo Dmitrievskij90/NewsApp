@@ -11,8 +11,6 @@ import Firebase
 import FirebaseAuth
 
 class ProfileViewController: UIViewController {
-    private let fileManager = FileManager.default
-    private let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
     private var image = UIImage(named: "news_image")
     private var sections = [CountrySection]()
     private var header = ProfileTableHeader()
@@ -105,14 +103,7 @@ class ProfileViewController: UIViewController {
     }
 
     private func loadUserImage() {
-        guard let path = documentsPath?.path else {
-            fatalError("Can't find document path")
-        }
-        if let imageName = try? fileManager.contentsOfDirectory(atPath: "\(path)")[0] {
-            if let loadedImage = UIImage(contentsOfFile: "\(path)/\(imageName)") {
-                self.image = loadedImage
-            }
-        }
+        self.image = CategoryManager.shared.loadUserImage()
     }
 }
 
@@ -207,25 +198,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: -
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        guard let path = documentsPath?.path else {
-            fatalError("Can't find document path")
-        }
-
         if let image = info[.originalImage] as? UIImage {
             self.image = image
             tableView.reloadData()
-
-            if fileManager.fileExists(atPath: path) == false {
-                do {
-                    try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    fatalError("Can't save image to directory")
-                }
-            }
-            let data = image.jpegData(compressionQuality: 0.5)
-            let imageName = "userImage.png"
-            fileManager.createFile(atPath: "\(path)/\(imageName)", contents: data, attributes: nil)
-
+            CategoryManager.shared.saveUserImage(image: image)
         } else {
             fatalError("Can't find image")
         }

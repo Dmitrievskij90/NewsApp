@@ -168,12 +168,10 @@ class VerificationController: UIViewController {
 
     @objc func cancelButonPressed() {
         loadCategories()
-//        print(AppSettingsManager.shared.userLogin)
         dismiss(animated: true, completion: nil)
     }
 
     @objc func letsGoButonPressed() {
-//        print(AppSettingsManager.shared.userLogin)
         guard let user = Auth.auth().currentUser else {
             return
         }
@@ -222,26 +220,9 @@ class VerificationController: UIViewController {
 //MARK: -
 extension VerificationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        guard let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
-            return
-        }
-
-//        loadCategories()
-
         if let image = info[.originalImage] as? UIImage {
-//            try? FileManager.default.createDirectory(at: documentsPath, withIntermediateDirectories: false, attributes: nil)
             userImageView.image = image
-            if fileManager.fileExists(atPath: documentsPath.path) == false {
-                do {
-                    try fileManager.createDirectory(atPath: documentsPath.path, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    fatalError("Can't save image to directory")
-                }
-            }
-            let data = image.jpegData(compressionQuality: 0.5)
-            let imageName = "userImage.png"
-            fileManager.createFile(atPath: "\(documentsPath.path)/\(imageName)", contents: data, attributes: nil)
-
+            CategoryManager.shared.saveUserImage(image: image)
         } else {
             fatalError("Can't find image")
         }

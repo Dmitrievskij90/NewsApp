@@ -51,6 +51,35 @@ class CategoryManager {
         loadStruct(pathComponentName: "stockStruct.json")
     }
 
+    func saveUserImage(image: UIImage) {
+        guard let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
+            return
+        }
+        if FileManager.default.fileExists(atPath: documentsPath.path) == false {
+            do {
+                try FileManager.default.createDirectory(atPath: documentsPath.path, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                fatalError("Can't save image to directory")
+            }
+        }
+        let data = image.jpegData(compressionQuality: 0.5)
+        let imageName = "userImage.png"
+        FileManager.default.createFile(atPath: "\(documentsPath.path)/\(imageName)", contents: data, attributes: nil)
+    }
+
+     func loadUserImage() -> UIImage {
+        var image = UIImage()
+        guard let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
+            fatalError()
+        }
+        if let imageName = try? FileManager.default.contentsOfDirectory(atPath: "\(documentsPath.path)")[0] {
+            if let loadedImage = UIImage(contentsOfFile: "\(documentsPath.path)/\(imageName)") {
+                image = loadedImage
+            }
+        }
+        return image
+    }
+
     //MARK: - Generic methods
     //MARK: -
     func saveStruct<T:Codable>(with categories: [T], pathComponentName: String) {
