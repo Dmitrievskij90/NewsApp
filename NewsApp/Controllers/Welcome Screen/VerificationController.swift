@@ -18,8 +18,8 @@ class VerificationController: UIViewController {
         let button = BaseButton(type: .system)
         button.setTitle("Let's go", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .init(hex: 0x16697A)
+        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
+        button.backgroundColor = .init(hex: 0x494d4e)
         button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
         return button
     }()
