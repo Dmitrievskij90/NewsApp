@@ -80,6 +80,19 @@ class CategoryManager {
         return image
     }
 
+    func isFirstLoad(_ loadCategories: () -> ()) {
+        guard let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
+            return
+        }
+
+        if FileManager.default.fileExists(atPath: documentsPath.path) == false {
+            loadCategories()
+            print(false)
+        } else {
+            print(true)
+        }
+    }
+
     //MARK: - Generic methods
     //MARK: -
     func saveStruct<T:Codable>(with categories: [T], pathComponentName: String) {
