@@ -80,6 +80,11 @@ class LoginViewController: UIViewController {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        Auth.auth().currentUser?.reload()
+        print(AppSettingsManager.shared.userLogin)
+    }
+
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
@@ -225,9 +230,8 @@ class LoginViewController: UIViewController {
                 if let authResult = authResult {
                     let user = authResult.user
                     if user.isEmailVerified {
-                        if self.rememberSwitch.isOn {
-                            AppSettingsManager.shared.keepUserSignedIn()
-                        }
+                        self.keepUserSignedIn()
+                        self.saveUserSettings()
                         self.presentBaseTabBarController()
                     } else {
                         self.showAlertView()
@@ -237,6 +241,21 @@ class LoginViewController: UIViewController {
                     self.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
                 }
             }
+        }
+    }
+
+    private func keepUserSignedIn() {
+        if rememberSwitch.isOn {
+            AppSettingsManager.shared.keepUserSignedIn()
+        }
+    }
+
+    private func saveUserSettings() {
+        CategoryManager.shared.isFirstLoad {
+            CategoryManager.shared.saveCategoriesSet(with:  DefaultParameters.categoriesSet)
+            CategoryManager.shared.saveCategoriesStruct(with: DefaultParameters.categoriesStruct)
+            CategoryManager.shared.saveStockCompaniesSet(with: DefaultParameters.stockCompaniesSet)
+            CategoryManager.shared.saveStockCompaniesStruct(with: DefaultParameters.stockCompaniesStruct)
         }
     }
 
