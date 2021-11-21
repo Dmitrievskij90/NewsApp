@@ -6,9 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
 enum DefaultParameters {
-    
+
+    static private let view = UIScreen.main.bounds
+
+    static let  buttonHeight = view.height / 17
+    static let  buttonWidth = view.width * 0.75
+
      static var categoriesSet:Set = ["Business", "Entertainment", "Health", "Science", "Sports", "Technology"]
      static var categoriesStruct = [
         Categories(name: "Business", isFavorited: true),
