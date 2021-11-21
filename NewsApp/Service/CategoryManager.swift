@@ -51,6 +51,8 @@ class CategoryManager {
         loadStruct(pathComponentName: "stockStruct.json")
     }
 
+    //MARK: - User settings data manipulation methods
+    //MARK: -
     func saveUserImage(image: UIImage) {
         guard let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
             return
@@ -82,6 +84,24 @@ class CategoryManager {
         return image
     }
 
+    func saveUser(with user: User) {
+        guard let documentDirectoryPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else { return }
+        try? FileManager.default.createDirectory(at: documentDirectoryPath, withIntermediateDirectories: false, attributes: nil)
+        let data = try? JSONEncoder().encode(user)
+        let dataPath = documentDirectoryPath.appendingPathComponent("user.json")
+        FileManager.default.createFile(atPath: dataPath.path, contents: data, attributes: nil)
+    }
+
+    func loadUser() -> User {
+        guard let documentDirectoryPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else { fatalError()}
+        var user: User?
+        let dataPath = documentDirectoryPath.appendingPathComponent("user.json")
+        if let newData = FileManager.default.contents(atPath: dataPath.path) {
+            user = try! JSONDecoder().decode(User.self, from: newData)
+        }
+        return user!
+    }
+
     func isFirstLoad(_ loadCategories: () -> ()) {
         guard let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
             return
@@ -89,9 +109,7 @@ class CategoryManager {
 
         if FileManager.default.fileExists(atPath: documentsPath.path) == false {
             loadCategories()
-            print(false)
         } else {
-            print(true)
         }
     }
 
