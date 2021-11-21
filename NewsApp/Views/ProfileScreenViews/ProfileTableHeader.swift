@@ -68,6 +68,7 @@ class ProfileTableHeader: UIView {
         let imageView = CircularImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
+        imageView.backgroundColor = .white
 //        imageView.layer.borderWidth = 1
 //        imageView.layer.borderColor = UIColor.init(hex: 0xDB6400).cgColor
         imageView.image = UIImage(named: "news_image")
