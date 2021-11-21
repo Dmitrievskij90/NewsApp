@@ -42,4 +42,6 @@ enum DefaultParameters {
         StockCompanies(name: "Tesla", symbol: "TSLA", isFavorited: true),
         StockCompanies(name: "Visa", symbol: "V", isFavorited: true),
     ]
+
+    static var user = User(name: "User")
 }
