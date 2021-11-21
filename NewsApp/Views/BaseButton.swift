@@ -30,13 +30,18 @@ class BaseButton: UIButton {
         contentMode = .center
         layer.borderWidth = 0.5
         layer.borderColor = UIColor.lightGray.cgColor
-        layer.cornerRadius = 16
+        layer.cornerRadius = layer.frame.height / 3.3
 
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 10
         layer.shadowOffset = .init(width: 0, height: 10)
         layer.shadowColor = UIColor.darkGray.cgColor
     }
+
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            layer.cornerRadius = layer.frame.height / 3.3
+        }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
