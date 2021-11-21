@@ -29,6 +29,7 @@ class RegisterController: UIViewController {
         let textField = UITextField()
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
+        textField.constrainHeight(constant: DefaultParameters.buttonHeight)
         return textField
     }()
     
@@ -36,6 +37,7 @@ class RegisterController: UIViewController {
         let textField = UITextField()
         textField.returnKeyType = .continue
         textField.isSecureTextEntry = true
+        textField.constrainHeight(constant: DefaultParameters.buttonHeight)
         return textField
     }()
     
@@ -43,6 +45,7 @@ class RegisterController: UIViewController {
         let textField = UITextField()
         textField.returnKeyType = .done
         textField.isSecureTextEntry = true
+        textField.constrainHeight(constant: DefaultParameters.buttonHeight)
         return textField
     }()
     
@@ -171,7 +174,7 @@ class RegisterController: UIViewController {
         stackView.distribution = .equalSpacing
 
         view.addSubview(stackView)
-        stackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50), size: .init(width: 0, height: 300))
+        stackView.anchor(top: nil, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: 300))
         stackView.centerInSuperview()
 
         view.addSubview(registerLabel)
@@ -180,7 +183,8 @@ class RegisterController: UIViewController {
 
     private func setupDoneButton() {
         view.addSubview(doneButton)
-        doneButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
+        doneButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 50, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))
+        doneButton.centerXInSuperview()
     }
     
     @objc func cancelButonPressed() {

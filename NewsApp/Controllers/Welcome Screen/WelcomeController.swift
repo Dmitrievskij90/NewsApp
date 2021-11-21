@@ -11,7 +11,7 @@ import KeychainAccess
 class WelcomeController: UIViewController {
     private let keychain = Keychain()
     private let defaults = UserDefaults.standard
-    
+
     let appLabel: UILabel = {
         let label = UILabel()
         label.text = "JUST NEWS"
@@ -66,6 +66,7 @@ class WelcomeController: UIViewController {
     }
 
     private func setupStackView() {
+        let height = view.frame.height / 8
         let stackVIew = UIStackView(arrangedSubviews: [
             registerButton,
             signInButton,
@@ -75,7 +76,7 @@ class WelcomeController: UIViewController {
         stackVIew.alignment = .fill
         stackVIew.distribution = .fillEqually
         view.addSubview(stackVIew)
-        stackVIew.anchor(top: nil, leading: nil, bottom: view.bottomAnchor, trailing: nil,padding: .init(top: 0, left: 0, bottom: 150, right: 0) ,size: .init(width: 200, height: 100))
+        stackVIew.anchor(top: nil, leading: nil, bottom: view.bottomAnchor, trailing: nil,padding: .init(top: 0, left: 0, bottom: height, right: 0) ,size: .init(width: 200, height: height ))
         stackVIew.centerXInSuperview()
     }
 
@@ -84,6 +85,10 @@ class WelcomeController: UIViewController {
         let navVC = UINavigationController(rootViewController: destinationVC)
         navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true, completion: nil)
+//        let destinationVC = VerificationController()
+//        let navVC = UINavigationController(rootViewController: destinationVC)
+//        navVC.modalPresentationStyle = .fullScreen
+//        present(navVC, animated: true, completion: nil)
     }
 
     @objc func signinButtonTapped() {

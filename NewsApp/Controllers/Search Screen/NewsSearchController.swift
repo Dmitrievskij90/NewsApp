@@ -42,7 +42,8 @@ class NewsSearchController: UIViewController {
         setupSearchBar()
 
         collectionView.addSubview(enterSearchTermLabel)
-        enterSearchTermLabel.fillSuperview(padding: .init(top: 100, left: 100, bottom: 0, right: 100))
+        enterSearchTermLabel.fillSuperview(padding: .init(top: 100, left: 0, bottom: 0, right: 0))
+        enterSearchTermLabel.centerXInSuperview()
     }
 
     private func setupSearchBar() {

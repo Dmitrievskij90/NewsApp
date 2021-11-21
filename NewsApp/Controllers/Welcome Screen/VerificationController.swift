@@ -14,6 +14,19 @@ class VerificationController: UIViewController {
     private var bottomConstraint: NSLayoutConstraint?
     private let alertView = VerificationAlertView()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+
+//    var width: CGFloat {
+//        get {
+//            return view.frame.width * 0.85
+//        }
+//    }
+//
+//    var height: CGFloat {
+//        get {
+//            return view.frame.height / 17
+//        }
+//    }
+
     private let letsGoButton: UIButton = {
         let button = BaseButton(type: .system)
         button.setTitle("Let's go", for: .normal)
@@ -59,6 +72,28 @@ class VerificationController: UIViewController {
         return button
     }()
 
+    private let nameTextField: UITextField = {
+        let textField = UITextField()
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.lightGray,
+            .font : UIFont.systemFont(ofSize: 10)
+        ]
+        let attributedString = NSAttributedString(string: "USER", attributes: attributes)
+        textField.attributedPlaceholder = attributedString
+        textField.constrainHeight(constant: 50)
+        textField.borderStyle = .roundedRect
+        textField.font = .systemFont(ofSize: 18)
+        textField.backgroundColor = .white
+        textField.textAlignment = .center
+        textField.layer.shadowOpacity = 0.5
+        textField.layer.shadowRadius = 10
+        textField.layer.shadowOffset = .init(width: 0, height: 10)
+        textField.layer.shadowColor = UIColor.darkGray.cgColor
+        textField.autocapitalizationType = .words
+        textField.returnKeyType = .done
+        return textField
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         Auth.auth().currentUser?.reload()
@@ -82,7 +117,7 @@ class VerificationController: UIViewController {
         cancelButton.tintColor = .label
 
         view.addSubview(setupProfileLabel)
-        setupProfileLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 10, left: 50, bottom: 0, right: 50), size: .init(width: 0, height: 80))
+        setupProfileLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 10, left: 50, bottom: 0, right: 50), size: .init(width: 0, height: view.frame.height / 11.5))
 
         view.addSubview(userImageView)
         userImageView.anchor(top: setupProfileLabel.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0))
@@ -92,8 +127,12 @@ class VerificationController: UIViewController {
         plusButton.anchor(top: nil, leading: nil, bottom: userImageView.topAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         plusButton.centerXInSuperview(constantX: 50)
 
+        view.addSubview(nameTextField)
+        nameTextField.anchor(top: userImageView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))
+        nameTextField.centerXInSuperview()
+
         view.addSubview(letsGoButton)
-        letsGoButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
+        letsGoButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 50, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))
         letsGoButton.centerXInSuperview()
 
         view.addSubview(blurVisualEffectView)
@@ -135,7 +174,6 @@ class VerificationController: UIViewController {
     }
 
     @objc func cancelButonPressed() {
-        saveUserSettings()
         dismiss(animated: true, completion: nil)
     }
 
@@ -197,3 +235,4 @@ extension VerificationController: UIImagePickerControllerDelegate, UINavigationC
         dismiss(animated: true, completion: nil)
     }
 }
+

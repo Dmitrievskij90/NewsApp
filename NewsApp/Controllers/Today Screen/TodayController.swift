@@ -324,6 +324,6 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: 50)
+        return .init(width: view.frame.width, height: DefaultParameters.buttonHeight)
     }
 }

@@ -29,7 +29,7 @@ class ProfileTableFooter: UIView {
         clipsToBounds = true
 
         addSubview(logOutButton)
-        logOutButton.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
+        logOutButton.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: DefaultParameters.buttonHeight))
         logOutButton.centerInSuperview()
 
     }
