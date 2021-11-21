@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5C007449270B534900E92C66 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C007448270B534900E92C66 /* Categories.swift */; };
+		5C10981C274A7E90000C0F16 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C10981B274A7E90000C0F16 /* User.swift */; };
 		5C141CEA26ECEFBD0052028E /* TodayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C141CE926ECEFBD0052028E /* TodayController.swift */; };
 		5C148E9626FDDAC500F465AC /* ProfileTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */; };
 		5C24EEB3271899B100F302D0 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24EEB2271899B100F302D0 /* BaseButton.swift */; };
@@ -76,6 +77,7 @@
 		08021A5553E9BE722E1932DB /* Pods_NewsApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NewsApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		407639DA0D7D4EB3E97F9563 /* Pods-NewsApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsApp.debug.xcconfig"; path = "Target Support Files/Pods-NewsApp/Pods-NewsApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5C007448270B534900E92C66 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
+		5C10981B274A7E90000C0F16 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C141CE926ECEFBD0052028E /* TodayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayController.swift; sourceTree = "<group>"; };
 		5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeader.swift; sourceTree = "<group>"; };
 		5C24EEB2271899B100F302D0 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				5C8B22E127232962005ABD88 /* StockData.swift */,
 				5C7C3D3F272D676A00FD0453 /* StockCompanies.swift */,
 				5C28A1092731476500C100A4 /* StockHistoryData.swift */,
+				5C10981B274A7E90000C0F16 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 				5C8A73F52713033900AFFA76 /* ImageHeaderTableCell.swift in Sources */,
 				5C83CBB22729A90D001A42DF /* StockCompaniesViewController.swift in Sources */,
 				5C55A52126F101ED004B148F /* ProfileViewController.swift in Sources */,
+				5C10981C274A7E90000C0F16 /* User.swift in Sources */,
 				5C007449270B534900E92C66 /* Categories.swift in Sources */,
 				5CB501E226E6716700246670 /* DetailsController.swift in Sources */,
 				5C8B46F327469D9900206D07 /* DefaultParameters.swift in Sources */,

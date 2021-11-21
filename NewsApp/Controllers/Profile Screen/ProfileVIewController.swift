@@ -12,6 +12,7 @@ import FirebaseAuth
 
 class ProfileViewController: UIViewController {
     private var image = UIImage(named: "news_image")
+    private lazy var user = User(name: "")
     private var sections = [CountrySection]()
     private var header = ProfileTableHeader()
     
@@ -39,7 +40,7 @@ class ProfileViewController: UIViewController {
                         countriesImages: []),
         ]
 
-        loadUserImage()
+        loadUserSettings()
         setupHeaderForTableView()
     }
 
@@ -69,7 +70,7 @@ class ProfileViewController: UIViewController {
 
     private func setupHeaderForTableView() {
         header.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: view.frame.height / 4 )
-        header.helloLabel.text = "Hello,\(AppSettingsManager.shared.userLogin)!"
+        header.helloLabel.text = "Hello, \(user.name)!"
         header.userImageView.image = image
         header.imageTapHandler = { [unowned self] in
             self.displayImagePickerController()
@@ -102,8 +103,9 @@ class ProfileViewController: UIViewController {
         present(imagePicerController, animated: true, completion: nil)
     }
 
-    private func loadUserImage() {
+    private func loadUserSettings() {
         self.image = CategoryManager.shared.loadUserImage()
+        self.user = CategoryManager.shared.loadUser()
     }
 }
 

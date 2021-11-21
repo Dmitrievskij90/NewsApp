@@ -259,6 +259,7 @@ class LoginViewController: UIViewController {
             CategoryManager.shared.saveCategoriesStruct(with: DefaultParameters.categoriesStruct)
             CategoryManager.shared.saveStockCompaniesSet(with: DefaultParameters.stockCompaniesSet)
             CategoryManager.shared.saveStockCompaniesStruct(with: DefaultParameters.stockCompaniesStruct)
+            CategoryManager.shared.saveUser(with: DefaultParameters.user)
         }
     }
 

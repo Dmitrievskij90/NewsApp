@@ -14,18 +14,7 @@ class VerificationController: UIViewController {
     private var bottomConstraint: NSLayoutConstraint?
     private let alertView = VerificationAlertView()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-
-//    var width: CGFloat {
-//        get {
-//            return view.frame.width * 0.85
-//        }
-//    }
-//
-//    var height: CGFloat {
-//        get {
-//            return view.frame.height / 17
-//        }
-//    }
+    private lazy var user = User(name: "User")
 
     private let letsGoButton: UIButton = {
         let button = BaseButton(type: .system)
@@ -96,6 +85,7 @@ class VerificationController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameTextField.delegate = self
         Auth.auth().currentUser?.reload()
 
         let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(userImageViewTapped))
@@ -105,7 +95,6 @@ class VerificationController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         Auth.auth().currentUser?.reload()
     }
-
 
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
@@ -215,10 +204,12 @@ class VerificationController: UIViewController {
     }
 
     private func saveUserSettings() {
+        user.name = nameTextField.text!
         CategoryManager.shared.saveCategoriesSet(with:  DefaultParameters.categoriesSet)
         CategoryManager.shared.saveCategoriesStruct(with: DefaultParameters.categoriesStruct)
         CategoryManager.shared.saveStockCompaniesSet(with: DefaultParameters.stockCompaniesSet)
         CategoryManager.shared.saveStockCompaniesStruct(with: DefaultParameters.stockCompaniesStruct)
+        CategoryManager.shared.saveUser(with: user)
     }
 }
 
@@ -233,6 +224,18 @@ extension VerificationController: UIImagePickerControllerDelegate, UINavigationC
             fatalError("Can't find image")
         }
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension VerificationController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        textField.endEditing(true)
+        return true
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }
 
