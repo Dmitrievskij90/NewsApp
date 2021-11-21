@@ -67,7 +67,7 @@ class CategoryManager {
         FileManager.default.createFile(atPath: "\(documentsPath.path)/\(imageName)", contents: data, attributes: nil)
     }
 
-     func loadUserImage() -> UIImage {
+     func loadUserImage() -> UIImage? {
         var image = UIImage()
         guard let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
             fatalError()
@@ -76,6 +76,8 @@ class CategoryManager {
             if let loadedImage = UIImage(contentsOfFile: "\(documentsPath.path)/\(imageName)") {
                 image = loadedImage
             }
+        } else {
+            image = UIImage(named: "avatar_image") ?? UIImage()
         }
         return image
     }
