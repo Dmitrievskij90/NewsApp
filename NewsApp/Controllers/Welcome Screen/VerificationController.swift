@@ -68,7 +68,6 @@ class VerificationController: UIViewController {
         label.textColor = .darkGray
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
-//        label.constrainHeight(constant: 30)
         return label
     }()
 
@@ -187,7 +186,6 @@ class VerificationController: UIViewController {
             return
         }
         user.reload { _ in
-            print(AppSettingsManager.shared.userLogin)
             switch user.isEmailVerified {
             case true:
                 self.saveUserSettings()

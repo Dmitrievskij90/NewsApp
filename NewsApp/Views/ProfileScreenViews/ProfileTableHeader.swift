@@ -11,7 +11,6 @@ class ProfileTableHeader: UIView {
 
     static let identifier = "ProfileTableHeader"
     private let countryImageName = UserDefaults.standard.value(forKey: "countryImage") as? String ?? "usa_image"
-
     var imageTapHandler: (() ->())? = nil
 
     let bcgView: UIView = {
@@ -25,23 +24,27 @@ class ProfileTableHeader: UIView {
         view.backgroundColor = .init(hex: 0x494d4e)
         view.layer.cornerRadius = 16
         view.clipsToBounds = true
-//        view.layer.borderWidth = 2
-//        view.layer.borderColor = UIColor.init(hex: 0x4EFDD).cgColor
-//        view.alpha = 0.5
         return view
     }()
 
-    let helloLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.textAlignment = .left
-        label.font = .boldSystemFont(ofSize: 35)
-        label.numberOfLines = 1
-        label.minimumScaleFactor = 0.5
-        label.adjustsFontSizeToFitWidth = true
-        label.constrainHeight(constant: 100)
-        return label
-    }()
+    let nameTextField: UITextField = {
+        let textField = UITextField()
+        textField.constrainHeight(constant: DefaultParameters.buttonHeight)
+        textField.textColor = .white
+        textField.borderStyle = .none
+        textField.font = .boldSystemFont(ofSize: 35)
+        textField.minimumFontSize = 0.5
+        textField.adjustsFontSizeToFitWidth = true
+        textField.backgroundColor = .clear
+        textField.textAlignment = .left
+        textField.autocapitalizationType = .words
+        textField.returnKeyType = .done
+        textField.layer.shadowOpacity = 0.5
+        textField.layer.shadowRadius = 10
+        textField.layer.shadowOffset = .init(width: 0, height: 10)
+        textField.layer.shadowColor = UIColor.init(hex: 0x4EFDD).cgColor
+        return textField
+   }()
 
     let countrylabel: UILabel = {
         let label = UILabel()
@@ -69,11 +72,8 @@ class ProfileTableHeader: UIView {
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.backgroundColor = .white
-//        imageView.layer.borderWidth = 1
-//        imageView.layer.borderColor = UIColor.init(hex: 0xDB6400).cgColor
-        imageView.image = UIImage(named: "news_image")
-        imageView.constrainHeight(constant: 100)
-        imageView.constrainWidth(constant: 100)
+        imageView.constrainHeight(constant: 75)
+        imageView.constrainWidth(constant: 75)
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
@@ -88,7 +88,6 @@ class ProfileTableHeader: UIView {
 
 
         let verticalStackVIew = UIStackView(arrangedSubviews: [
-            helloLabel,
             countrylabel,
             countryImageView
         ])
@@ -99,8 +98,11 @@ class ProfileTableHeader: UIView {
         profileView.addSubview(userImageView)
         userImageView.anchor(top: profileView.topAnchor, leading: nil, bottom: nil, trailing: profileView.trailingAnchor, padding: .init(top: 10, left: 0, bottom: 0, right: 10))
 
+        profileView.addSubview(nameTextField)
+        nameTextField.anchor(top: profileView.topAnchor, leading: profileView.leadingAnchor, bottom: nil, trailing: userImageView.leadingAnchor, padding: .init(top: 30, left: 10, bottom: 0, right: 10))
+
         profileView.addSubview(verticalStackVIew)
-        verticalStackVIew.anchor(top: profileView.topAnchor, leading: profileView.leadingAnchor, bottom: profileView.bottomAnchor, trailing: userImageView.leadingAnchor, padding: .init(top: 0, left: 10, bottom: 10, right: 0))
+        verticalStackVIew.anchor(top: nil, leading: profileView.leadingAnchor, bottom: profileView.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
 
         let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         userImageView.addGestureRecognizer(tapGestureregognizer)
