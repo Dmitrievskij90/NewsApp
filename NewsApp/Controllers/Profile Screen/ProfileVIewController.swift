@@ -70,7 +70,8 @@ class ProfileViewController: UIViewController {
 
     private func setupHeaderForTableView() {
         header.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: view.frame.height / 4 )
-        header.helloLabel.text = "Hello, \(user.name)!"
+        header.nameTextField.delegate = self
+        header.nameTextField.text = "\(user.name)"
         header.userImageView.image = image
         header.imageTapHandler = { [unowned self] in
             self.displayImagePickerController()
@@ -212,3 +213,16 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
 
+extension ProfileViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        textField.endEditing(true)
+        if let text = textField.text, textField.text != "" {
+            user.name = text
+        } else {
+            user.name = "Reader"
+        }
+        CategoryManager.shared.saveUser(with: user)
+        return true
+    }
+}
