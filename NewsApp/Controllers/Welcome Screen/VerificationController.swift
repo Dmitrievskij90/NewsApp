@@ -15,7 +15,6 @@ class VerificationController: UIViewController {
     private let alertView = VerificationAlertView()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private lazy var user = User(name: "User")
-
     private let letsGoButton: UIButton = {
         let button = BaseButton(type: .system)
         button.setTitle("Let's go", for: .normal)
@@ -61,13 +60,25 @@ class VerificationController: UIViewController {
         return button
     }()
 
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "User name"
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
+        label.textColor = .darkGray
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+//        label.constrainHeight(constant: 30)
+        return label
+    }()
+
     private let nameTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.lightGray,
             .font : UIFont.systemFont(ofSize: 10)
         ]
-        let attributedString = NSAttributedString(string: "USER", attributes: attributes)
+        let attributedString = NSAttributedString(string: "Reader", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         textField.constrainHeight(constant: 50)
         textField.borderStyle = .roundedRect
@@ -116,9 +127,14 @@ class VerificationController: UIViewController {
         plusButton.anchor(top: nil, leading: nil, bottom: userImageView.topAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         plusButton.centerXInSuperview(constantX: 50)
 
+
         view.addSubview(nameTextField)
         nameTextField.anchor(top: userImageView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))
         nameTextField.centerXInSuperview()
+
+        view.addSubview(nameLabel)
+        nameLabel.anchor(top: nil, leading: nil, bottom: nameTextField.topAnchor, trailing: nil, size: .init(width: DefaultParameters.buttonWidth, height: 30))
+        nameLabel.centerXInSuperview()
 
         view.addSubview(letsGoButton)
         letsGoButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 50, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))

@@ -97,9 +97,9 @@ class CategoryManager {
         var user: User?
         let dataPath = documentDirectoryPath.appendingPathComponent("user.json")
         if let newData = FileManager.default.contents(atPath: dataPath.path) {
-            user = try! JSONDecoder().decode(User.self, from: newData)
+            user = try? JSONDecoder().decode(User.self, from: newData)
         }
-        return user!
+        return user ?? User(name: "Reader")
     }
 
     func isFirstLoad(_ loadCategories: () -> ()) {

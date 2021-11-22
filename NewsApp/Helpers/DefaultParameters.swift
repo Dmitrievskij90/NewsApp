@@ -43,5 +43,5 @@ enum DefaultParameters {
         StockCompanies(name: "Visa", symbol: "V", isFavorited: true),
     ]
 
-    static var user = User(name: "User")
+    static var user = User(name: "Reader")
 }

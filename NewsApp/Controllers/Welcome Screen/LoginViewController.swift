@@ -173,7 +173,7 @@ class LoginViewController: UIViewController {
         stackView.distribution = .equalSpacing
 
         view.addSubview(stackView)
-        stackView.anchor(top: nil, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 00, bottom: 0, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: 300))
+        stackView.anchor(top: nil, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: 300))
         stackView.centerInSuperview()
 
         view.addSubview(sigInLabel)
