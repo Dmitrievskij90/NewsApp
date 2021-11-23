@@ -200,12 +200,12 @@ class RegisterController: UIViewController {
         guard let login = loginTextField.text else {
             fatalError("Wrong login")
         }
-        guard let password = passwordTextField.text else {
-            fatalError("Wrong password")
+        guard let password = passwordTextField.text, password.count >= 6 else {
+            return presentOneButtonAlert(withTitle: "Short password", message: "The password must be equal to or greater than 6 characters")
         }
         
-        guard let repeatPassword = repeatPasswordTextField.text else {
-            fatalError("Wrong password")
+        guard let repeatPassword = repeatPasswordTextField.text, repeatPassword.count >= 6 else {
+            return presentOneButtonAlert(withTitle: "Short password", message: "The password must be equal to or greater than 6 characters")
         }
         
         if rememberSwitch.isOn {
