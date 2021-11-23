@@ -43,6 +43,12 @@ class ProfileTableHeader: UIView {
         textField.layer.shadowRadius = 10
         textField.layer.shadowOffset = .init(width: 0, height: 10)
         textField.layer.shadowColor = UIColor.init(hex: 0x4EFDD).cgColor
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.lightGray,
+            .font : UIFont.boldSystemFont(ofSize: 35)
+        ]
+        let attributedString = NSAttributedString(string: "Reader", attributes: attributes)
+        textField.attributedPlaceholder = attributedString
         return textField
    }()
 
