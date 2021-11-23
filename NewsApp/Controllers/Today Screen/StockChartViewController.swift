@@ -12,6 +12,13 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     var currentStockCompanyData: StockData?
 
+    private let activityIndicator: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(style: .medium)
+        aiv.color = .darkGray
+        aiv.hidesWhenStopped = true
+        return aiv
+    }()
+
     let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
@@ -111,6 +118,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
 
+        view.addSubview(activityIndicator)
+        activityIndicator.centerInSuperview()
+
         view.backgroundColor = .clear
         view.addSubview(blurVisualEffectView)
         blurVisualEffectView.fillSuperview()
@@ -153,6 +163,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
     private func fetchData() {
         let dispatchGroup = DispatchGroup()
+        activityIndicator.startAnimating()
         dispatchGroup.enter()
         NetworkService.shared.fetchStockChartData(searchedStockCompany: currentStockCompanyData?.symbol ?? "TSLA") { (res, error) in
             if let err = error {
@@ -168,12 +179,13 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
                 guard let self = self else {
                     return
                 }
-                let closeValue = Double(result.values[0].close) ?? 0.0
+                self.activityIndicator.stopAnimating()
+                let closeValue = Double(result.values[0].close ?? "") ?? 0.0
                 self.setDataToDifferenceLabel(closeValue)
 
                 var entries = [ChartDataEntry]()
                 for (index, value) in result.values.reversed().enumerated() {
-                    entries.append(ChartDataEntry(x: Double(index), y: Double(value.close) ?? 0.0))
+                    entries.append(ChartDataEntry(x: Double(index), y: Double(value.close ?? "") ?? 0.0))
                 }
                 self.setupLineChartDataSet(entries)
             }
