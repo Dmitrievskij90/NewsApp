@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class ProfileViewController: UIViewController {
     private var image = UIImage(named: "news_image")
-    private lazy var user = User(name: "")
+    private lazy var user = User()
     private var sections = [CountrySection]()
     private var header = ProfileTableHeader()
     
@@ -31,7 +31,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         sections = [CountrySection(
                         options: ["USA", "RUSSIA", "FRANCE", "GERMANY"],
-                        countriesImages: ["usa_image", "russia_image", "france_image", "germany_image"]),
+                        countriesImages: ["us", "ru", "fr", "de"]),
                     CountrySection(
                         options: [],
                         countriesImages: []),
@@ -73,6 +73,7 @@ class ProfileViewController: UIViewController {
         header.nameTextField.delegate = self
         header.nameTextField.text = "\(user.name)"
         header.userImageView.image = image
+        header.countryImageView.image = UIImage(named: user.country)
         header.imageTapHandler = { [unowned self] in
             self.displayImagePickerController()
         }
@@ -169,21 +170,20 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 let country = sections[indexPath.section].options[indexPath.row - 1]
                 switch country {
                 case "USA":
-                    UserDefaults.standard.setValue("us", forKey: "chosenCountry")
+                    user.country = "us"
                 case "RUSSIA":
-                    UserDefaults.standard.setValue("ru", forKey: "chosenCountry")
+                    user.country = "ru"
                 case "FRANCE":
-                    UserDefaults.standard.setValue("fr", forKey: "chosenCountry")
+                    user.country = "fr"
                 case "GERMANY":
-                    UserDefaults.standard.setValue("de", forKey: "chosenCountry")
+                    user.country = "de"
                 default:
-                    UserDefaults.standard.setValue("us", forKey: "chosenCountry")
+                    user.country = "us"
                 }
-                let countryImage = sections[indexPath.section].countriesImages[indexPath.row - 1]
-                header.countryImageView.image = UIImage(named: countryImage)
-                UserDefaults.standard.setValue(countryImage, forKey: "countryImage")
+                header.countryImageView.image = UIImage(named: user.country)
                 sections[indexPath.section].isOpened = false
                 tableView.reloadSections([indexPath.section], with: .none)
+                CategoryManager.shared.saveUser(with: user)
             }
         } else if indexPath.section == 1 {
             let viewController = CategoriesViewController()

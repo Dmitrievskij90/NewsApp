@@ -18,6 +18,7 @@ class TodayController: UIViewController {
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private var startingFrame: CGRect?
 
+    private var user = User()
     private var newsData = [Articles]()
     private var stockData = [StockData]()
     private var stockCompaniesSet = Set<String>()
@@ -47,7 +48,6 @@ class TodayController: UIViewController {
 
         stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
         urlString = stockCompaniesSet.sorted().joined(separator: ",")
-
         fetchTodayNews()
     }
 
@@ -84,6 +84,7 @@ class TodayController: UIViewController {
     private func fetchTodayNews(isTrue: Bool = true) {
         var stockResults = [StockData]()
         var todayResults = [Articles]()
+        user = CategoryManager.shared.loadUser()
 
         let dispatchGroup = DispatchGroup()
 
@@ -103,7 +104,7 @@ class TodayController: UIViewController {
         }
 
         dispatchGroup.enter()
-        NetworkService.shared.fetchTodayNews(preferredCountry: AppSettingsManager.shared.country) { (results, error) in
+        NetworkService.shared.fetchTodayNews(preferredCountry: user.country) { (results, error) in
             if let err = error {
                 print("Can't fetch today news", err)
             }

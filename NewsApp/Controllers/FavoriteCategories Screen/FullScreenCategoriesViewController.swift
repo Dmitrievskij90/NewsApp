@@ -10,6 +10,7 @@ import UIKit
 class FullScreenCategoriesViewController: UIViewController {
     var preferredCategoty: String?
     private var results = [Articles]()
+    private var user = User()
     private var categoryCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private let activityIndicator: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .medium)
@@ -62,13 +63,14 @@ class FullScreenCategoriesViewController: UIViewController {
     }
 
     private func fetchCategoryNews(isTrue: Bool = true) {
+        user = CategoryManager.shared.loadUser()
         if isTrue {
             activityIndicator.startAnimating()
         }
 
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        NetworkService.shared.fetchCategoriesNews(preferredCountry: AppSettingsManager.shared.country, preferredCategoty: preferredCategoty ?? "") { (results, error) in
+        NetworkService.shared.fetchCategoriesNews(preferredCountry: user.country, preferredCategoty: preferredCategoty ?? "") { (results, error) in
             if let err = error {
                 print("Failed to fetch apps:", err)
                 return
