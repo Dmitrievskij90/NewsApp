@@ -99,7 +99,7 @@ class CategoryManager {
         if let newData = FileManager.default.contents(atPath: dataPath.path) {
             user = try? JSONDecoder().decode(User.self, from: newData)
         }
-        return user ?? User(name: "Reader")
+        return user ?? User()
     }
 
     func isFirstLoad(_ loadCategories: () -> ()) {

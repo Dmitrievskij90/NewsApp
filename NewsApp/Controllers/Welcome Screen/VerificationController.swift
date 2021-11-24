@@ -14,7 +14,8 @@ class VerificationController: UIViewController {
     private var bottomConstraint: NSLayoutConstraint?
     private let alertView = VerificationAlertView()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-    private lazy var user = User(name: "User")
+    private lazy var user = User()
+
     private let letsGoButton: UIButton = {
         let button = BaseButton(type: .system)
         button.setTitle("Let's go", for: .normal)
@@ -45,8 +46,6 @@ class VerificationController: UIViewController {
         imageView.isUserInteractionEnabled = true
         imageView.image = UIImage(named: "avatar_image")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         imageView.tintColor = .init(hex: 0x494d4e)
-        imageView.constrainWidth(constant: 120)
-        imageView.constrainHeight(constant: 120)
         return imageView
     }()
 
@@ -93,6 +92,22 @@ class VerificationController: UIViewController {
         return textField
     }()
 
+    private let countryLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Country:"
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
+        label.textColor = .darkGray
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        return label
+    }()
+
+    private let countryRussiaButton = BaseButton()
+    private let countryUSAButton = BaseButton()
+    private let countryFranceButton = BaseButton()
+    private let countryGermanyButton = BaseButton()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         nameTextField.delegate = self
@@ -115,17 +130,21 @@ class VerificationController: UIViewController {
         navigationItem.leftBarButtonItem = cancelButton
         cancelButton.tintColor = .label
 
+        setupCountryButtons(with: countryRussiaButton, imageName: "ru", tag: 1)
+        setupCountryButtons(with: countryUSAButton, imageName: "us", tag: 2)
+        setupCountryButtons(with: countryFranceButton, imageName: "fr", tag: 3)
+        setupCountryButtons(with: countryGermanyButton, imageName: "de", tag: 4)
+
         view.addSubview(setupProfileLabel)
         setupProfileLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 10, left: 50, bottom: 0, right: 50), size: .init(width: 0, height: view.frame.height / 11.5))
 
         view.addSubview(userImageView)
-        userImageView.anchor(top: setupProfileLabel.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0))
+        userImageView.anchor(top: setupProfileLabel.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: view.frame.height / 7, height: view.frame.height / 7))
         userImageView.centerXInSuperview()
 
         view.addSubview(plusButton)
         plusButton.anchor(top: nil, leading: nil, bottom: userImageView.topAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         plusButton.centerXInSuperview(constantX: 50)
-
 
         view.addSubview(nameTextField)
         nameTextField.anchor(top: userImageView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))
@@ -143,7 +162,30 @@ class VerificationController: UIViewController {
         blurVisualEffectView.fillSuperview()
         blurVisualEffectView.alpha = 0
 
+        setupCountryStackView()
         setupVerificationAlertView()
+    }
+
+    private func setupCountryButtons(with button: BaseButton, imageName: String, tag: Int) {
+        button.tag = tag
+        button.setImage(UIImage(named: imageName), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.layer.borderWidth = 0
+        button.addTarget(self, action: #selector(countryButtonTapped), for: .touchUpInside)
+    }
+
+    private func setupCountryStackView() {
+        let stackVIew = UIStackView(arrangedSubviews: [countryRussiaButton, countryUSAButton, countryGermanyButton, countryFranceButton])
+        stackVIew.spacing = 5
+        stackVIew.distribution = .fillEqually
+
+        view.addSubview(stackVIew)
+        stackVIew.anchor(top: nameTextField.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: DefaultParameters.buttonWidth - 40, height: DefaultParameters.buttonHeight))
+        stackVIew.centerXInSuperview()
+
+        view.addSubview(countryLabel)
+        countryLabel.anchor(top: nil, leading: nil, bottom: stackVIew.topAnchor, trailing: nil, size: .init(width: DefaultParameters.buttonWidth, height: 30))
+        countryLabel.centerXInSuperview()
     }
 
     private func setupVerificationAlertView() {
@@ -168,12 +210,22 @@ class VerificationController: UIViewController {
         }
     }
 
-    func showAlertView() {
+    private func showAlertView() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
             self.topConstraint?.isActive = false
             self.bottomConstraint?.isActive = true
             self.blurVisualEffectView.alpha = 1
             self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc func countryButtonTapped(button: UIButton) {
+        switch button.tag {
+        case 1: user.country = "ru"
+        case 2: user.country = "us"
+        case 3: user.country = "fr"
+        case 4: user.country = "de"
+        default: user.country = "us"
         }
     }
 
