@@ -11,6 +11,7 @@ import SDWebImage
 class NewsSearchController: UIViewController {
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var results = [Articles]()
+    private var user = User()
     private var timer: Timer?
     private let searhController = UISearchController(searchResultsController: nil)
     private let enterSearchTermLabel: UILabel = {
@@ -42,7 +43,8 @@ class NewsSearchController: UIViewController {
         setupSearchBar()
 
         collectionView.addSubview(enterSearchTermLabel)
-        enterSearchTermLabel.fillSuperview(padding: .init(top: 100, left: 100, bottom: 0, right: 100))
+        enterSearchTermLabel.fillSuperview(padding: .init(top: 100, left: 0, bottom: 0, right: 0))
+        enterSearchTermLabel.centerXInSuperview()
     }
 
     private func setupSearchBar() {
@@ -106,10 +108,11 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
 extension NewsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         timer?.invalidate()
+        user = CategoryManager.shared.loadUser()
 
         let term = searchText.replacingOccurrences(of: " ", with: "")
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-            NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: AppSettingsManager.shared.country) { (results, error) in
+            NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: self.user.country) { (results, error) in
                 if let err = error {
                     print("Failed to fetch apps:", err)
                     return

@@ -7,12 +7,12 @@
 
 import UIKit
 import KeychainAccess
+import Firebase
+import FirebaseAuth
 
 class ProfileViewController: UIViewController {
-    private let fileManager = FileManager.default
-    private let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin)
-    private let keychain = Keychain()
     private var image = UIImage(named: "news_image")
+    private lazy var user = User()
     private var sections = [CountrySection]()
     private var header = ProfileTableHeader()
     
@@ -31,7 +31,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         sections = [CountrySection(
                         options: ["USA", "RUSSIA", "FRANCE", "GERMANY"],
-                        countriesImages: ["usa_image", "russia_image", "france_image", "germany_image"]),
+                        countriesImages: ["us", "ru", "fr", "de"]),
                     CountrySection(
                         options: [],
                         countriesImages: []),
@@ -40,7 +40,7 @@ class ProfileViewController: UIViewController {
                         countriesImages: []),
         ]
 
-        loadUserImage()
+        loadUserSettings()
         setupHeaderForTableView()
     }
 
@@ -70,8 +70,10 @@ class ProfileViewController: UIViewController {
 
     private func setupHeaderForTableView() {
         header.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: view.frame.height / 4 )
-        header.helloLabel.text = "Hello,\(AppSettingsManager.shared.userLogin)!"
+        header.nameTextField.delegate = self
+        header.nameTextField.text = "\(user.name)"
         header.userImageView.image = image
+        header.countryImageView.image = UIImage(named: user.country)
         header.imageTapHandler = { [unowned self] in
             self.displayImagePickerController()
         }
@@ -82,7 +84,13 @@ class ProfileViewController: UIViewController {
         let footer = ProfileTableFooter()
         footer.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 100 )
         footer.transitionHandler = {
-            self.keychain["remember"] = nil
+            let firebaseAuth = Auth.auth()
+            do {
+                try firebaseAuth.signOut()
+            } catch let signOutError as NSError {
+                print ("Error signing out: %@", signOutError)
+            }
+            AppSettingsManager.shared.forgetUser()
             let destinationVC = WelcomeController()
             destinationVC.modalPresentationStyle = .fullScreen
             self.present(destinationVC, animated: true, completion: nil)
@@ -97,15 +105,9 @@ class ProfileViewController: UIViewController {
         present(imagePicerController, animated: true, completion: nil)
     }
 
-    private func loadUserImage() {
-        guard let path = documentsPath?.path else {
-            fatalError("Can't find document path")
-        }
-        if let imageName = try? fileManager.contentsOfDirectory(atPath: "\(path)")[0] {
-            if let loadedImage = UIImage(contentsOfFile: "\(path)/\(imageName)") {
-                self.image = loadedImage
-            }
-        }
+    private func loadUserSettings() {
+        self.image = CategoryManager.shared.loadUserImage()
+        self.user = CategoryManager.shared.loadUser()
     }
 }
 
@@ -168,21 +170,20 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 let country = sections[indexPath.section].options[indexPath.row - 1]
                 switch country {
                 case "USA":
-                    UserDefaults.standard.setValue("us", forKey: "chosenCountry")
+                    user.country = "us"
                 case "RUSSIA":
-                    UserDefaults.standard.setValue("ru", forKey: "chosenCountry")
+                    user.country = "ru"
                 case "FRANCE":
-                    UserDefaults.standard.setValue("fr", forKey: "chosenCountry")
+                    user.country = "fr"
                 case "GERMANY":
-                    UserDefaults.standard.setValue("de", forKey: "chosenCountry")
+                    user.country = "de"
                 default:
-                    UserDefaults.standard.setValue("us", forKey: "chosenCountry")
+                    user.country = "us"
                 }
-                let countryImage = sections[indexPath.section].countriesImages[indexPath.row - 1]
-                header.countryImageView.image = UIImage(named: countryImage)
-                UserDefaults.standard.setValue(countryImage, forKey: "countryImage")
+                header.countryImageView.image = UIImage(named: user.country)
                 sections[indexPath.section].isOpened = false
                 tableView.reloadSections([indexPath.section], with: .none)
+                CategoryManager.shared.saveUser(with: user)
             }
         } else if indexPath.section == 1 {
             let viewController = CategoriesViewController()
@@ -200,25 +201,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: -
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        guard let path = documentsPath?.path else {
-            fatalError("Can't find document path")
-        }
-
         if let image = info[.originalImage] as? UIImage {
             self.image = image
             tableView.reloadData()
-
-            if fileManager.fileExists(atPath: path) == false {
-                do {
-                    try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    fatalError("Can't save image to directory")
-                }
-            }
-            let data = image.jpegData(compressionQuality: 0.5)
-            let imageName = "userImage.png"
-            fileManager.createFile(atPath: "\(path)/\(imageName)", contents: data, attributes: nil)
-
+            CategoryManager.shared.saveUserImage(image: image)
         } else {
             fatalError("Can't find image")
         }
@@ -227,3 +213,16 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
 
+extension ProfileViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        textField.endEditing(true)
+        if let text = textField.text, textField.text != "" {
+            user.name = text
+        } else {
+            user.name = "Reader"
+        }
+        CategoryManager.shared.saveUser(with: user)
+        return true
+    }
+}

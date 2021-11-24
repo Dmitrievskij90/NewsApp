@@ -7,10 +7,12 @@
 
 import Foundation
 import KeychainAccess
+import FirebaseAuth
 
 class AppSettingsManager {
     static let shared = AppSettingsManager()
     private let defaults = UserDefaults.standard
+    private let keychain = Keychain()
 
     var notFirsAppLaunch = UserDefaults.standard.bool(forKey: "isTrue")
 
@@ -20,18 +22,23 @@ class AppSettingsManager {
     }
 
     var userLogin: String {
-        guard let userLogin = try? keychain.get("login") else {
-            fatalError("the user's login is not set")
+        var login = ""
+        let user = Auth.auth().currentUser
+        if let user = user {
+            if let email = user.email {
+                login = email
+            }
+
         }
-        return userLogin
+        return login
     }
 
-    var userPassword: String {
-        guard let userPassword = try? keychain.get("password") else {
-            fatalError("the user's password is not set")
-        }
-        return userPassword
-    }
+//    var userPassword: String {
+//        guard let userPassword = try? keychain.get("password") else {
+//            fatalError("the user's password is not set")
+//        }
+//        return userPassword
+//    }
 
     var isUserSignedIn: String {
         guard let rememberUser = try? keychain.get("remember") else {
@@ -40,14 +47,16 @@ class AppSettingsManager {
         return rememberUser
     }
 
-    private let keychain = Keychain()
-
     func keepUserSignedIn() {
         keychain["remember"] = "yes"
     }
 
-    func setUserCredentials(login: String, password: String) {
-        keychain["login"] = login
-        keychain["password"] = password
+    func forgetUser() {
+        keychain["remember"] = nil
     }
+
+//    func setUserCredentials(login: String, password: String) {
+//        keychain["login"] = login
+//        keychain["password"] = password
+//    }
 }

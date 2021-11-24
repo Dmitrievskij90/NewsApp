@@ -6,8 +6,16 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
+    private var topConstraint: NSLayoutConstraint?
+    private var bottomConstraint: NSLayoutConstraint?
+    private let alertView = VerificationAlertView()
+    private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+    private let emailLabel = UILabel()
+    private let passwordLabel = UILabel()
     private let sigInLabel: UILabel = {
         let label = UILabel()
         label.text = "Sign in to your account"
@@ -21,36 +29,17 @@ class LoginViewController: UIViewController {
 
     private let loginTextField: UITextField = {
         let textField = UITextField()
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.darkGray
-        ]
-        let attributedString = NSAttributedString(string: "Login", attributes: attributes)
-        textField.attributedPlaceholder = attributedString
-        textField.constrainHeight(constant: 50)
-        textField.borderStyle = .bezel
-        textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .white
-        textField.textAlignment = .center
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
+        textField.constrainHeight(constant: DefaultParameters.buttonHeight)
         return textField
     }()
 
     private let passwordTextField: UITextField = {
         let textField = UITextField()
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.darkGray
-        ]
-        let attributedString = NSAttributedString(string: "Password", attributes: attributes)
-        textField.attributedPlaceholder = attributedString
-        textField.constrainHeight(constant: 50)
-        textField.borderStyle = .bezel
-        textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .white
-        textField.textAlignment = .center
-        textField.autocapitalizationType = .none
-        textField.returnKeyType = .continue
+        textField.returnKeyType = .done
         textField.isSecureTextEntry = true
+        textField.constrainHeight(constant: DefaultParameters.buttonHeight)
         return textField
     }()
 
@@ -75,9 +64,9 @@ class LoginViewController: UIViewController {
         let button = BaseButton(type: .system)
         button.setTitle("Let's go", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .init(hex: 0x16697A)
-        button.addTarget(self, action: #selector(doneButonPressed), for: .touchUpInside)
+        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
+        button.backgroundColor = .init(hex: 0x494d4e)
+        button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
         return button
     }()
 
@@ -85,6 +74,17 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         loginTextField.delegate = self
         passwordTextField.delegate = self
+
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        user.reload { error in
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        Auth.auth().currentUser?.reload()
+        print(AppSettingsManager.shared.userLogin)
     }
 
     override func loadView() {
@@ -96,6 +96,52 @@ class LoginViewController: UIViewController {
         navigationItem.leftBarButtonItem = cancelButton
         cancelButton.tintColor = .label
 
+        setupTextFields(with: loginTextField, text: "user@gmail.com")
+        setupTextFields(with: passwordTextField, text: "******")
+
+        setupStackViewLabels(with: emailLabel, text: "Email")
+        setupStackViewLabels(with: passwordLabel, text: "Password")
+
+        setupStackView()
+        setupDoneButton()
+
+        view.addSubview(blurVisualEffectView)
+        blurVisualEffectView.fillSuperview()
+        blurVisualEffectView.alpha = 0
+
+        setupVerificationAlertView()
+    }
+
+    // MARK: - setup user interface methods
+    // MARK: -
+    private func setupTextFields(with textField: UITextField, text: String) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.lightGray,
+            .font : UIFont.systemFont(ofSize: 10)
+        ]
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        textField.attributedPlaceholder = attributedString
+        textField.constrainHeight(constant: 50)
+        textField.borderStyle = .roundedRect
+        textField.font = .systemFont(ofSize: 18)
+        textField.backgroundColor = .white
+        textField.textAlignment = .center
+        textField.layer.shadowOpacity = 0.5
+        textField.layer.shadowRadius = 10
+        textField.layer.shadowOffset = .init(width: 0, height: 10)
+        textField.layer.shadowColor = UIColor.darkGray.cgColor
+    }
+
+    private func setupStackViewLabels(with label: UILabel, text: String) {
+        label.text = text
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textAlignment = .left
+        label.textColor = .darkGray
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+    }
+
+    private func setupStackView() {
         let keepMeSignedInStackView = UIStackView(arrangedSubviews: [
             rememberSwitch,
             keepMeSignedInLabel
@@ -103,10 +149,23 @@ class LoginViewController: UIViewController {
         keepMeSignedInStackView.axis = .vertical
         keepMeSignedInStackView.spacing = 4
 
+        let emailStackView = UIStackView(arrangedSubviews: [
+            emailLabel,
+            loginTextField
+        ])
+        emailStackView.axis = .vertical
+        emailStackView.spacing = 4
+
+        let passwordStackView = UIStackView(arrangedSubviews: [
+            passwordLabel,
+            passwordTextField
+        ])
+        passwordStackView.axis = .vertical
+        passwordStackView.spacing = 4
+
         let stackView = UIStackView(arrangedSubviews: [
-            sigInLabel,
-            loginTextField,
-            passwordTextField,
+            emailStackView,
+            passwordStackView,
             keepMeSignedInStackView
         ])
 
@@ -114,22 +173,52 @@ class LoginViewController: UIViewController {
         stackView.distribution = .equalSpacing
 
         view.addSubview(stackView)
-        stackView.centerInSuperview(size: .init(width: 300, height: 400), constantY: -50)
+        stackView.anchor(top: nil, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: 300))
+        stackView.centerInSuperview()
 
+        view.addSubview(sigInLabel)
+        sigInLabel.anchor(top: nil, leading: view.leadingAnchor, bottom: stackView.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
+    }
+
+    private func setupDoneButton() {
         view.addSubview(letsGoButton)
-        letsGoButton.anchor(top: stackView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: 100, height: 50))
+        letsGoButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 50, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))
         letsGoButton.centerXInSuperview()
+    }
+
+    private func setupVerificationAlertView() {
+        view.addSubview(alertView)
+        alertView.translatesAutoresizingMaskIntoConstraints = false
+        topConstraint = alertView.topAnchor.constraint(equalTo: view.bottomAnchor)
+        topConstraint?.isActive = true
+        bottomConstraint = alertView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25)
+        bottomConstraint?.isActive = false
+        alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        alertView.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+
+        alertView.tapHandler = {
+            Auth.auth().currentUser?.reload()
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+                self.topConstraint?.isActive = true
+                self.bottomConstraint?.isActive = false
+                self.blurVisualEffectView.alpha = 0
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 
     @objc func cancelButonPressed() {
         dismiss(animated: true, completion: nil)
+        AppSettingsManager.shared.forgetUser()
     }
 
-    @objc func doneButonPressed() {
+    @objc func letsGoButonPressed() {
         validateCredentials()
     }
 
     private func validateCredentials() {
+
         guard let login = loginTextField.text else {
             fatalError("Wrong login")
         }
@@ -137,13 +226,49 @@ class LoginViewController: UIViewController {
             fatalError("Wrong password")
         }
 
-        if AppSettingsManager.shared.userLogin == login, AppSettingsManager.shared.userPassword == password {
-            if rememberSwitch.isOn {
-                AppSettingsManager.shared.keepUserSignedIn()
-            }
-            presentBaseTabBarController()
+        if login.isEmpty || password.isEmpty {
+            presentOneButtonAlert(withTitle: "Empty field", message: "Please enter user data")
         } else {
-            presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
+            Auth.auth().signIn(withEmail: login, password: password) { (authResult, error) in
+                if let authResult = authResult {
+                    let user = authResult.user
+                    if user.isEmailVerified {
+                        self.keepUserSignedIn()
+                        self.saveUserSettings()
+                        self.presentBaseTabBarController()
+                    } else {
+                        self.showAlertView()
+                    }
+                }
+                if error != nil {
+                    self.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
+                }
+            }
+        }
+    }
+
+    private func keepUserSignedIn() {
+        if rememberSwitch.isOn {
+            AppSettingsManager.shared.keepUserSignedIn()
+        }
+    }
+
+    private func saveUserSettings() {
+        CategoryManager.shared.isFirstLoad {
+            CategoryManager.shared.saveCategoriesSet(with:  DefaultParameters.categoriesSet)
+            CategoryManager.shared.saveCategoriesStruct(with: DefaultParameters.categoriesStruct)
+            CategoryManager.shared.saveStockCompaniesSet(with: DefaultParameters.stockCompaniesSet)
+            CategoryManager.shared.saveStockCompaniesStruct(with: DefaultParameters.stockCompaniesStruct)
+            CategoryManager.shared.saveUser(with: DefaultParameters.user)
+        }
+    }
+
+    private func showAlertView() {
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+            self.topConstraint?.isActive = false
+            self.bottomConstraint?.isActive = true
+            self.blurVisualEffectView.alpha = 1
+            self.view.layoutIfNeeded()
         }
     }
 
