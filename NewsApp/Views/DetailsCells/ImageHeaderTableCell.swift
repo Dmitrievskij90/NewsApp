@@ -32,6 +32,8 @@ class ImageHeaderTableCell: UITableViewCell {
         label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .black
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         label.text = "BBC"
         return label
     }()
@@ -42,7 +44,7 @@ class ImageHeaderTableCell: UITableViewCell {
         label.textColor = .lightGray
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 10
+        label.minimumScaleFactor = 0.5
         label.constrainHeight(constant: 15)
         label.text = "8 September 2021"
         return label
