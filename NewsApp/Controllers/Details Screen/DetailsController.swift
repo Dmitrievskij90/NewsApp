@@ -21,7 +21,7 @@ class DetailsController: UIViewController {
         logOutButton.tintColor = .black
         navigationItem.rightBarButtonItem = logOutButton
         navigationController?.navigationBar.tintColor = .label
-        
+
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDismissFloatinContainerView))
         view.addGestureRecognizer(tapGestureRecognizer)
     }
@@ -29,6 +29,7 @@ class DetailsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.alpha = 0
+        navigationItem.largeTitleDisplayMode = .never
     }
 
     override func viewDidAppear(_ animated: Bool) {
