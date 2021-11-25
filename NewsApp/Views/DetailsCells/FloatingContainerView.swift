@@ -32,16 +32,13 @@ class FloatingContainerView: UIView {
         return label
     }()
 
-    let goButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitleColor(.white, for: .normal)
+    let goButton: BaseButton = {
+        let button = BaseButton(type: .system)
+        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitle("GO", for: .normal)
         button.contentMode = .center
-        button.backgroundColor = .init(hex: 0xBE1FBB)
-        button.layer.cornerRadius = 16
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
+        button.backgroundColor = .init(hex: 0x494d4e)
         button.constrainWidth(constant: 90)
         button.constrainHeight(constant: 40)
         button.addTarget(self, action: #selector(goToWebController), for: .touchUpInside)
@@ -69,6 +66,10 @@ class FloatingContainerView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
     }
 
     @objc func goToWebController() {
