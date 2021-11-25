@@ -66,7 +66,7 @@ class ImageHeaderTableCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 10
+        label.minimumScaleFactor = 0.5
         return label
     }()
 
