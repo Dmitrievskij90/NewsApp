@@ -34,9 +34,11 @@ class ImageHeaderCell: UICollectionViewCell {
     let sourceLabel: UILabel = {
         let label = UILabel()
         label.constrainHeight(constant: 50)
-        label.font = UIFont(name: "ScopeOne-Regular", size: 25)
+        label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .black
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
 
