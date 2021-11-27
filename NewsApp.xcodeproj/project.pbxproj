@@ -49,7 +49,6 @@
 		5CA46EFF26E36DDE0031A540 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CA46EFD26E36DDE0031A540 /* LaunchScreen.storyboard */; };
 		5CA46F0A26E377A70031A540 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA46F0926E377A70031A540 /* BaseTabBarController.swift */; };
 		5CA46F0F26E37AAB0031A540 /* NewsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA46F0E26E37AAB0031A540 /* NewsSearchController.swift */; };
-		5CA46F1626E37D390031A540 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA46F1526E37D390031A540 /* SearchCell.swift */; };
 		5CA874BC26ECF32900ABA803 /* TodayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA874BB26ECF32900ABA803 /* TodayCell.swift */; };
 		5CB501D926E6513900246670 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB501D826E6513900246670 /* BaseCell.swift */; };
 		5CB501DC26E655C700246670 /* ScopeOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CB501DB26E655C700246670 /* ScopeOne-Regular.ttf */; };
@@ -120,7 +119,6 @@
 		5CA46F0026E36DDE0031A540 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CA46F0926E377A70031A540 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		5CA46F0E26E37AAB0031A540 /* NewsSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsSearchController.swift; sourceTree = "<group>"; };
-		5CA46F1526E37D390031A540 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		5CA874BB26ECF32900ABA803 /* TodayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCell.swift; sourceTree = "<group>"; };
 		5CB501D826E6513900246670 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		5CB501DB26E655C700246670 /* ScopeOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ScopeOne-Regular.ttf"; sourceTree = "<group>"; };
@@ -298,7 +296,6 @@
 			children = (
 				5CE2D6C42703936C00362909 /* FavoriteCategoriesCell */,
 				5CA874BA26ECF31600ABA803 /* TodayCell */,
-				5CA46F1426E37D0D0031A540 /* SearchCell */,
 				5CB501E426E6746F00246670 /* DetailsCells */,
 				5C148E9A26FDE60D00F465AC /* ProfileScreenViews */,
 				5C8A73ED2712EA2C00AFFA76 /* NewsCell.swift */,
@@ -308,14 +305,6 @@
 				5CBA4EB5273C28B700FC2505 /* CircularImageView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		5CA46F1426E37D0D0031A540 /* SearchCell */ = {
-			isa = PBXGroup;
-			children = (
-				5CA46F1526E37D390031A540 /* SearchCell.swift */,
-			);
-			path = SearchCell;
 			sourceTree = "<group>";
 		};
 		5CA874BA26ECF31600ABA803 /* TodayCell */ = {
@@ -547,7 +536,6 @@
 				5C24EEB3271899B100F302D0 /* BaseButton.swift in Sources */,
 				5CBF2FE726EE411E00DB1D89 /* WelcomeController.swift in Sources */,
 				5C7098CA26E93EB600A8AEC5 /* FloatingContainerView.swift in Sources */,
-				5CA46F1626E37D390031A540 /* SearchCell.swift in Sources */,
 				5C4BADE426EA702C000620A1 /* UIColor+Extension.swift in Sources */,
 				5C61F62F2721C4A100C6D369 /* StockHeaderHorizontalController.swift in Sources */,
 				5C89366927398A7F006A8ECD /* VerificationAlertView.swift in Sources */,
