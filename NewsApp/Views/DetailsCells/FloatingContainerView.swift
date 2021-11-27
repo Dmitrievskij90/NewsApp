@@ -11,7 +11,7 @@ class FloatingContainerView: UIView {
 
     var transitionHandler: (()->())?
 
-    let imageView: UIImageView = {
+     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.constrainWidth(constant: 80)
         imageView.contentMode = .scaleAspectFill
@@ -20,7 +20,7 @@ class FloatingContainerView: UIView {
         return imageView
     }()
 
-    let label: UILabel = {
+    private let label: UILabel = {
         let label = UILabel()
         label.text = "Do you want more information?"
         label.numberOfLines = 2
@@ -32,7 +32,7 @@ class FloatingContainerView: UIView {
         return label
     }()
 
-    let goButton: BaseButton = {
+    private let goButton: BaseButton = {
         let button = BaseButton(type: .system)
         button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)

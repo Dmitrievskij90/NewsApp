@@ -10,7 +10,7 @@ import UIKit
 class StockHeaderCell: UICollectionViewCell {
     static let identifier = "StockHeaderCell"
     private var companyName = ""
-
+    
     override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
@@ -27,7 +27,7 @@ class StockHeaderCell: UICollectionViewCell {
             }
         }
     }
-
+    
     var data: StockData? {
         didSet {
             if let stockData = data {
@@ -55,8 +55,8 @@ class StockHeaderCell: UICollectionViewCell {
             }
         }
     }
-
-    let logoImageView: UIImageView = {
+    
+    private let logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -65,8 +65,8 @@ class StockHeaderCell: UICollectionViewCell {
         imageView.backgroundColor = .clear
         return imageView
     }()
-
-    let logoLabel: UILabel = {
+    
+    private let logoLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = .boldSystemFont(ofSize: 15)
@@ -76,8 +76,8 @@ class StockHeaderCell: UICollectionViewCell {
         label.minimumScaleFactor = 0.5
         return label
     }()
-
-    let priceLabel: UILabel = {
+    
+    private let priceLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = .boldSystemFont(ofSize: 15)
@@ -87,21 +87,21 @@ class StockHeaderCell: UICollectionViewCell {
         label.minimumScaleFactor = 0.5
         return label
     }()
-
-
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         layer.cornerRadius = 10
         layer.borderWidth = 0.5
         layer.borderColor = UIColor.lightGray.cgColor
-
+        
         let labelsStackView = UIStackView(arrangedSubviews: [logoLabel, priceLabel])
         labelsStackView.axis = .vertical
-
-
+        
+        
         let stackView = UIStackView(arrangedSubviews: [logoImageView, labelsStackView])
-
+        
         addSubview(stackView)
         stackView.fillSuperview(padding: .init(top: 5, left: 5, bottom: 5, right: 5))
         stackView.layer.shadowOpacity = 0.6

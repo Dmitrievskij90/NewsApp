@@ -11,7 +11,7 @@ class ImageHeaderTableCell: UITableViewCell {
 
     static let identifier = "ImageHeaderTableCell"
 
-     var topConstaraint: NSLayoutConstraint?
+    var topConstaraint: NSLayoutConstraint?
     var dataSource: Articles? {
         didSet {
             if let source = dataSource {
@@ -38,7 +38,7 @@ class ImageHeaderTableCell: UITableViewCell {
         return label
     }()
 
-    let dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15)
         label.textColor = .lightGray
@@ -50,7 +50,7 @@ class ImageHeaderTableCell: UITableViewCell {
         return label
     }()
 
-    let newsImageView: UIImageView = {
+    private let newsImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -58,7 +58,7 @@ class ImageHeaderTableCell: UITableViewCell {
         return imageView
     }()
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.constrainWidth(constant: 250)
         label.numberOfLines = 0
@@ -89,7 +89,7 @@ class ImageHeaderTableCell: UITableViewCell {
 
 
         let verticalStackView = UIStackView(arrangedSubviews: [
-           topVerticalStackView,
+            topVerticalStackView,
             newsImageView,
             titleLabel
         ])

@@ -25,7 +25,7 @@ class NewsCell: UICollectionViewCell {
         }
     }
 
-    let newsImageView: UIImageView = {
+   private let newsImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -34,7 +34,7 @@ class NewsCell: UICollectionViewCell {
         return imageView
     }()
 
-    let authorLabel: UILabel = {
+   private let authorLabel: UILabel = {
         let label = UILabel()
         label.text = "Autor"
         label.font = .boldSystemFont(ofSize: 18)
@@ -42,7 +42,7 @@ class NewsCell: UICollectionViewCell {
         return label
     }()
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "A Field Guide for Nature-Resistant Nerds"
         label.font = .systemFont(ofSize: 13)
@@ -53,7 +53,7 @@ class NewsCell: UICollectionViewCell {
         return label
     }()
 
-    let separatorView: UIView = {
+    private let separatorView: UIView = {
         let view =  UIView()
         view.backgroundColor =  UIColor(white: 0, alpha: 0.3)
         return view

@@ -22,7 +22,7 @@ class NewsDetailTableCell: UITableViewCell {
         }
     }
 
-    let descriptionTextView: UITextView = {
+    private let descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
         return textView

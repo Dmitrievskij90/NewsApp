@@ -25,7 +25,7 @@ class NewsDetailCell: UICollectionViewCell {
         }
     }
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.constrainHeight(constant: 100)
@@ -37,7 +37,7 @@ class NewsDetailCell: UICollectionViewCell {
         return label
     }()
 
-    let dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
         label.constrainHeight(constant: 30)
         label.centerXInSuperview()
@@ -47,7 +47,7 @@ class NewsDetailCell: UICollectionViewCell {
         return label
     }()
 
-    let descriptionTextView: UITextView = {
+    private let descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
         textView.font = .systemFont(ofSize: 18)

@@ -180,12 +180,12 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
                     return
                 }
                 self.activityIndicator.stopAnimating()
-                let closeValue = Double(result.values[0].close ?? "") ?? 0.0
+                let closeValue = Double(result.values[0].close ) ?? 0.0
                 self.setDataToDifferenceLabel(closeValue)
 
                 var entries = [ChartDataEntry]()
                 for (index, value) in result.values.reversed().enumerated() {
-                    entries.append(ChartDataEntry(x: Double(index), y: Double(value.close ?? "") ?? 0.0))
+                    entries.append(ChartDataEntry(x: Double(index), y: Double(value.close ) ?? 0.0))
                 }
                 self.setupLineChartDataSet(entries)
             }
