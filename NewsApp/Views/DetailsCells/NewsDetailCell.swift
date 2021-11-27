@@ -58,7 +58,7 @@ class NewsDetailCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        isUserInteractionEnabled = false
         let verticalStackView = UIStackView(arrangedSubviews: [
             titleLabel,
             dateLabel,
