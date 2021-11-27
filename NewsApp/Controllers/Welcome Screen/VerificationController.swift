@@ -44,8 +44,7 @@ class VerificationController: UIViewController {
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.init(hex: 0x494d4e).cgColor
         imageView.isUserInteractionEnabled = true
-        imageView.image = UIImage(named: "avatar_image")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
-        imageView.tintColor = .init(hex: 0x494d4e)
+        imageView.image = UIImage(named: "imagePlaceholder")
         return imageView
     }()
 

@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 
 class ProfileViewController: UIViewController {
-    private var image = UIImage(named: "news_image")
+    private var image = UIImage(named: "imagePlaceholder")
     private lazy var user = User()
     private var sections = [CountrySection]()
     private var header = ProfileTableHeader()
