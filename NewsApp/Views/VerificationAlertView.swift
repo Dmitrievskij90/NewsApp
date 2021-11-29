@@ -22,7 +22,7 @@ class VerificationAlertView: UIView {
         return label
     }()
 
-    let virificationImageView: UIImageView = {
+    private let virificationImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "virification_image")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)

@@ -40,7 +40,7 @@ class BaseButton: UIButton {
 
         override func layoutSubviews() {
             super.layoutSubviews()
-            layer.cornerRadius = layer.frame.height / 3.3
+            layer.cornerRadius = layer.frame.height / 3
         }
 
     required init?(coder: NSCoder) {

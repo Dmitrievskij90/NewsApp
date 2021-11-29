@@ -21,7 +21,7 @@ class DetailsController: UIViewController {
         logOutButton.tintColor = .black
         navigationItem.rightBarButtonItem = logOutButton
         navigationController?.navigationBar.tintColor = .label
-        
+
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDismissFloatinContainerView))
         view.addGestureRecognizer(tapGestureRecognizer)
     }
@@ -29,6 +29,7 @@ class DetailsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.alpha = 0
+        navigationItem.largeTitleDisplayMode = .never
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -66,8 +67,9 @@ class DetailsController: UIViewController {
     }
 
     private func setupFloatingContainerView() {
+        let height = view.frame.height / 9
         view.addSubview(floatingContainerView)
-        floatingContainerView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: -90, right: 16), size: .init(width: 0, height: 90))
+        floatingContainerView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: -90, right: 16), size: .init(width: 0, height: height))
         floatingContainerView.imageView.sd_setImage(with: URL(string: dataSource?.urlToImage ?? ""))
         floatingContainerView.transitionHandler = { [weak self] in
             let viewController = WebNewsViewController()

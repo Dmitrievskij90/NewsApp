@@ -11,7 +11,7 @@ class ImageHeaderTableCell: UITableViewCell {
 
     static let identifier = "ImageHeaderTableCell"
 
-     var topConstaraint: NSLayoutConstraint?
+    var topConstaraint: NSLayoutConstraint?
     var dataSource: Articles? {
         didSet {
             if let source = dataSource {
@@ -32,23 +32,25 @@ class ImageHeaderTableCell: UITableViewCell {
         label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .black
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         label.text = "BBC"
         return label
     }()
 
-    let dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15)
         label.textColor = .lightGray
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 10
+        label.minimumScaleFactor = 0.5
         label.constrainHeight(constant: 15)
         label.text = "8 September 2021"
         return label
     }()
 
-    let newsImageView: UIImageView = {
+    private let newsImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -56,7 +58,7 @@ class ImageHeaderTableCell: UITableViewCell {
         return imageView
     }()
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.constrainWidth(constant: 250)
         label.numberOfLines = 0
@@ -64,7 +66,7 @@ class ImageHeaderTableCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 10
+        label.minimumScaleFactor = 0.5
         return label
     }()
 
@@ -87,7 +89,7 @@ class ImageHeaderTableCell: UITableViewCell {
 
 
         let verticalStackView = UIStackView(arrangedSubviews: [
-           topVerticalStackView,
+            topVerticalStackView,
             newsImageView,
             titleLabel
         ])

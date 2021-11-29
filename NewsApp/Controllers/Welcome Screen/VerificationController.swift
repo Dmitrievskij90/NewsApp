@@ -44,8 +44,7 @@ class VerificationController: UIViewController {
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.init(hex: 0x494d4e).cgColor
         imageView.isUserInteractionEnabled = true
-        imageView.image = UIImage(named: "avatar_image")?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
-        imageView.tintColor = .init(hex: 0x494d4e)
+        imageView.image = UIImage(named: "imagePlaceholder")
         return imageView
     }()
 
@@ -103,10 +102,10 @@ class VerificationController: UIViewController {
         return label
     }()
 
-    private let countryRussiaButton = BaseButton()
-    private let countryUSAButton = BaseButton()
-    private let countryFranceButton = BaseButton()
-    private let countryGermanyButton = BaseButton()
+    private let countryRussiaButton = UIButton()
+    private let countryUSAButton = UIButton()
+    private let countryFranceButton = UIButton()
+    private let countryGermanyButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -166,11 +165,14 @@ class VerificationController: UIViewController {
         setupVerificationAlertView()
     }
 
-    private func setupCountryButtons(with button: BaseButton, imageName: String, tag: Int) {
+    private func setupCountryButtons(with button: UIButton, imageName: String, tag: Int) {
         button.tag = tag
         button.setImage(UIImage(named: imageName), for: .normal)
         button.contentMode = .scaleAspectFill
-        button.layer.borderWidth = 0
+        button.layer.shadowOpacity = 0.5
+        button.layer.shadowRadius = 10
+        button.layer.shadowOffset = .init(width: 0, height: 10)
+        button.layer.shadowColor = UIColor.darkGray.cgColor
         button.addTarget(self, action: #selector(countryButtonTapped), for: .touchUpInside)
     }
 
@@ -221,11 +223,54 @@ class VerificationController: UIViewController {
 
     @objc func countryButtonTapped(button: UIButton) {
         switch button.tag {
-        case 1: user.country = "ru"
-        case 2: user.country = "us"
-        case 3: user.country = "fr"
-        case 4: user.country = "de"
-        default: user.country = "us"
+        case 1:
+            user.country = "ru"
+            animateCountryButton(button: button)
+            resetButtons(button: countryUSAButton)
+            resetButtons(button: countryGermanyButton)
+            resetButtons(button: countryFranceButton)
+        case 2:
+            user.country = "us"
+            animateCountryButton(button: button)
+            resetButtons(button: countryRussiaButton)
+            resetButtons(button: countryGermanyButton)
+            resetButtons(button: countryFranceButton)
+        case 3:
+            user.country = "fr"
+            animateCountryButton(button: button)
+            resetButtons(button: countryUSAButton)
+            resetButtons(button: countryGermanyButton)
+            resetButtons(button: countryRussiaButton)
+        case 4:
+            user.country = "de"
+            animateCountryButton(button: button)
+            resetButtons(button: countryUSAButton)
+            resetButtons(button: countryRussiaButton)
+            resetButtons(button: countryFranceButton)
+        default:
+            user.country = "us"
+            animateCountryButton(button: button)
+            resetButtons(button: countryRussiaButton)
+            resetButtons(button: countryGermanyButton)
+            resetButtons(button: countryFranceButton)
+        }
+    }
+
+    private func animateCountryButton(button: UIButton) {
+        if button.transform == .identity {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
+                button.transform = .init(scaleX: 0.8, y: 0.8)
+            }
+        } else {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
+                button.transform = .identity
+            }
+        }
+    }
+
+    private func resetButtons(button: UIButton) {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
+            button.transform = .identity
         }
     }
 

@@ -79,7 +79,7 @@ class CategoryManager {
                 image = loadedImage
             }
         } else {
-            image = UIImage(named: "avatar_image") ?? UIImage()
+            image = UIImage(named: "imagePlaceholder") ?? UIImage()
         }
         return image
     }

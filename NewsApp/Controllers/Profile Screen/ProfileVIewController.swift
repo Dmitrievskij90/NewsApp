@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 
 class ProfileViewController: UIViewController {
-    private var image = UIImage(named: "news_image")
+    private var image = UIImage(named: "imagePlaceholder")
     private lazy var user = User()
     private var sections = [CountrySection]()
     private var header = ProfileTableHeader()
@@ -156,7 +156,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return DefaultParameters.buttonHeight
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

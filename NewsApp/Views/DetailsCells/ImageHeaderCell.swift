@@ -23,7 +23,7 @@ class ImageHeaderCell: UICollectionViewCell {
         }
     }
 
-    let headerImageView: UIImageView = {
+    private let headerImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "news_image")
         imageView.contentMode = .scaleAspectFit
@@ -31,12 +31,14 @@ class ImageHeaderCell: UICollectionViewCell {
         return imageView
     }()
 
-    let sourceLabel: UILabel = {
+    private let sourceLabel: UILabel = {
         let label = UILabel()
         label.constrainHeight(constant: 50)
-        label.font = UIFont(name: "ScopeOne-Regular", size: 25)
+        label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .black
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
 
