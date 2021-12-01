@@ -56,10 +56,7 @@ extension StockCompaniesViewController: UITableViewDelegate, UITableViewDataSour
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.identifier, for: indexPath) as? StockCell else {
             return UITableViewCell()
         }
-        let isFavorited = stockCompaniesStruct[indexPath.item].isFavorited
-        cell.stockImageView.image = UIImage(named: stockCompaniesStruct[indexPath.row].symbol)
-        cell.stockLabel.text = stockCompaniesStruct[indexPath.row].name
-        cell.accessoryType = isFavorited ? .checkmark : .none
+        cell.company = stockCompaniesStruct[indexPath.item]
         return cell
     }
 
