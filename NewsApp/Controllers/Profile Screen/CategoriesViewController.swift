@@ -57,14 +57,7 @@ extension CategoriesViewController: UICollectionViewDataSource, UICollectionView
             return UICollectionViewCell()
         }
 
-        let text = categoriesStruct[indexPath.item].name
-        let favorire = categoriesStruct[indexPath.item].isFavorited
-
-        cell.layer.cornerRadius = 15
-        cell.categoryLabel.text = text
-        cell.layer.shadowColor = favorire ? UIColor.init(hex: 0xDB6400).cgColor : UIColor.darkGray.cgColor
-        cell.starImageView.tintColor = favorire ? .init(hex: 0xF1A820) : .gray
-
+        cell.category = categoriesStruct[indexPath.item]
         return cell
     }
 

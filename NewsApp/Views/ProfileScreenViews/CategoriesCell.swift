@@ -8,9 +8,21 @@
 import UIKit
 
 class CategoriesCell: BaseCell {
-
     static let identifier = "CategoriesCell"
-    let categoryLabel: UILabel = {
+
+    var category: Categories? {
+        didSet {
+            if let currentCategory = category {
+                let text = currentCategory.name
+                let favorire = currentCategory.isFavorited
+                categoryLabel.text = text
+                starImageView.tintColor = favorire ? .init(hex: 0xF1A820) : .gray
+                layer.shadowColor = favorire ? UIColor.init(hex: 0xDB6400).cgColor : UIColor.darkGray.cgColor
+            }
+        }
+    }
+
+    private let categoryLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 20)
         label.textColor = .black
@@ -19,7 +31,7 @@ class CategoriesCell: BaseCell {
         return label
     }()
 
-    let starImageView: UIImageView = {
+    private let starImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "star.fill")
         imageView.tintColor = .red
