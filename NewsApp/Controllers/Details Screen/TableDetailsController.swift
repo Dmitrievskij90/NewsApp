@@ -138,8 +138,6 @@ extension TableDetailsController: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.dataSource = dataSource
-            cell.clipsToBounds = true
-            cell.backgroundView = nil
             return cell
         }
 
