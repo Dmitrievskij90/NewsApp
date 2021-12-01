@@ -11,9 +11,9 @@ class NewsCell: UICollectionViewCell {
 
     static let identifier = "NewsCategoryCell"
 
-    var results: Articles? {
+    var article: Articles? {
         didSet {
-            if let source = results {
+            if let source = article {
                 authorLabel.text = source.source.name
                 titleLabel.text = source.title
                 if let image = source.urlToImage, source.urlToImage != "" {

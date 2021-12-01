@@ -67,8 +67,8 @@ extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollect
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let viewControllerToPresent = StockChartViewController()
-        viewControllerToPresent.currentStockCompanyData = stockData[indexPath.item]
+        let data = stockData[indexPath.item]
+        let viewControllerToPresent = StockChartViewController(currentStockCompanyData: data)
         viewControllerToPresent.modalPresentationStyle = .pageSheet
         present(viewControllerToPresent, animated: true, completion: nil)
     }
