@@ -229,7 +229,10 @@ class LoginViewController: UIViewController {
         if login.isEmpty || password.isEmpty {
             presentOneButtonAlert(withTitle: "Empty field", message: "Please enter user data")
         } else {
-            Auth.auth().signIn(withEmail: login, password: password) { (authResult, error) in
+            Auth.auth().signIn(withEmail: login, password: password) { [weak self] (authResult, error) in
+                guard let self = self else {
+                    return
+                }
                 if let authResult = authResult {
                     let user = authResult.user
                     if user.isEmailVerified {

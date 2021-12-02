@@ -9,8 +9,8 @@ import UIKit
 import Charts
 
 class StockChartViewController: UIViewController, ChartViewDelegate {
-    private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private var currentStockCompanyData: StockData
+    private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private let activityIndicator: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .medium)
         aiv.color = .darkGray
@@ -18,7 +18,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return aiv
     }()
 
-    let closeButton: UIButton = {
+    private let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
         button.tintColor = .init(hex: 0xDB6400)

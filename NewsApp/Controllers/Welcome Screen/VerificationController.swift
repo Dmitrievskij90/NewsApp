@@ -12,10 +12,10 @@ import FirebaseAuth
 class VerificationController: UIViewController {
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
+    private var user = User()
     private let alertView = VerificationAlertView()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-    private lazy var user = User()
-
+    
     private let letsGoButton: UIButton = {
         let button = BaseButton(type: .system)
         button.setTitle("Let's go", for: .normal)
@@ -25,7 +25,7 @@ class VerificationController: UIViewController {
         button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
         return button
     }()
-
+    
     private let setupProfileLabel: UILabel = {
         let label = UILabel()
         label.text = "Set up profile"
@@ -36,7 +36,7 @@ class VerificationController: UIViewController {
         label.minimumScaleFactor = 0.5
         return label
     }()
-
+    
     private let userImageView: CircularImageView = {
         let imageView = CircularImageView()
         imageView.contentMode = .scaleAspectFill
@@ -47,7 +47,7 @@ class VerificationController: UIViewController {
         imageView.image = UIImage(named: "imagePlaceholder")
         return imageView
     }()
-
+    
     private let plusButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
@@ -57,7 +57,7 @@ class VerificationController: UIViewController {
         button.addTarget(self, action: #selector(plusButtonPressed), for: .touchUpInside)
         return button
     }()
-
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "User name"
@@ -68,7 +68,7 @@ class VerificationController: UIViewController {
         label.minimumScaleFactor = 0.5
         return label
     }()
-
+    
     private let nameTextField: UITextField = {
         let textField = UITextField()
         let attributes: [NSAttributedString.Key: Any] = [
@@ -90,7 +90,7 @@ class VerificationController: UIViewController {
         textField.returnKeyType = .done
         return textField
     }()
-
+    
     private let countryLabel: UILabel = {
         let label = UILabel()
         label.text = "Country:"
@@ -101,70 +101,70 @@ class VerificationController: UIViewController {
         label.minimumScaleFactor = 0.5
         return label
     }()
-
+    
     private let countryRussiaButton = UIButton()
     private let countryUSAButton = UIButton()
     private let countryFranceButton = UIButton()
     private let countryGermanyButton = UIButton()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         nameTextField.delegate = self
         Auth.auth().currentUser?.reload()
-
+        
         let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(userImageViewTapped))
         userImageView.addGestureRecognizer(tapGestureregognizer)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         Auth.auth().currentUser?.reload()
     }
-
+    
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
         self.view = view
-
+        
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButonPressed))
         navigationItem.leftBarButtonItem = cancelButton
         cancelButton.tintColor = .label
-
+        
         setupCountryButtons(with: countryRussiaButton, imageName: "ru", tag: 1)
         setupCountryButtons(with: countryUSAButton, imageName: "us", tag: 2)
         setupCountryButtons(with: countryFranceButton, imageName: "fr", tag: 3)
         setupCountryButtons(with: countryGermanyButton, imageName: "de", tag: 4)
-
+        
         view.addSubview(setupProfileLabel)
         setupProfileLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 10, left: 50, bottom: 0, right: 50), size: .init(width: 0, height: view.frame.height / 11.5))
-
+        
         view.addSubview(userImageView)
         userImageView.anchor(top: setupProfileLabel.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: view.frame.height / 7, height: view.frame.height / 7))
         userImageView.centerXInSuperview()
-
+        
         view.addSubview(plusButton)
         plusButton.anchor(top: nil, leading: nil, bottom: userImageView.topAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         plusButton.centerXInSuperview(constantX: 50)
-
+        
         view.addSubview(nameTextField)
         nameTextField.anchor(top: userImageView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))
         nameTextField.centerXInSuperview()
-
+        
         view.addSubview(nameLabel)
         nameLabel.anchor(top: nil, leading: nil, bottom: nameTextField.topAnchor, trailing: nil, size: .init(width: DefaultParameters.buttonWidth, height: 30))
         nameLabel.centerXInSuperview()
-
+        
         view.addSubview(letsGoButton)
         letsGoButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 50, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))
         letsGoButton.centerXInSuperview()
-
+        
         view.addSubview(blurVisualEffectView)
         blurVisualEffectView.fillSuperview()
         blurVisualEffectView.alpha = 0
-
+        
         setupCountryStackView()
         setupVerificationAlertView()
     }
-
+    
     private func setupCountryButtons(with button: UIButton, imageName: String, tag: Int) {
         button.tag = tag
         button.setImage(UIImage(named: imageName), for: .normal)
@@ -175,21 +175,21 @@ class VerificationController: UIViewController {
         button.layer.shadowColor = UIColor.darkGray.cgColor
         button.addTarget(self, action: #selector(countryButtonTapped), for: .touchUpInside)
     }
-
+    
     private func setupCountryStackView() {
         let stackVIew = UIStackView(arrangedSubviews: [countryRussiaButton, countryUSAButton, countryGermanyButton, countryFranceButton])
         stackVIew.spacing = 5
         stackVIew.distribution = .fillEqually
-
+        
         view.addSubview(stackVIew)
         stackVIew.anchor(top: nameTextField.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0), size: .init(width: DefaultParameters.buttonWidth - 40, height: DefaultParameters.buttonHeight))
         stackVIew.centerXInSuperview()
-
+        
         view.addSubview(countryLabel)
         countryLabel.anchor(top: nil, leading: nil, bottom: stackVIew.topAnchor, trailing: nil, size: .init(width: DefaultParameters.buttonWidth, height: 30))
         countryLabel.centerXInSuperview()
     }
-
+    
     private func setupVerificationAlertView() {
         view.addSubview(alertView)
         alertView.translatesAutoresizingMaskIntoConstraints = false
@@ -200,7 +200,7 @@ class VerificationController: UIViewController {
         alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         alertView.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-
+        
         alertView.tapHandler = {
             Auth.auth().currentUser?.reload()
             UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
@@ -211,7 +211,7 @@ class VerificationController: UIViewController {
             }
         }
     }
-
+    
     private func showAlertView() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
             self.topConstraint?.isActive = false
@@ -220,7 +220,7 @@ class VerificationController: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
-
+    
     @objc func countryButtonTapped(button: UIButton) {
         switch button.tag {
         case 1:
@@ -255,7 +255,7 @@ class VerificationController: UIViewController {
             resetButtons(button: countryFranceButton)
         }
     }
-
+    
     private func animateCountryButton(button: UIButton) {
         if button.transform == .identity {
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
@@ -267,22 +267,23 @@ class VerificationController: UIViewController {
             }
         }
     }
-
+    
     private func resetButtons(button: UIButton) {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
             button.transform = .identity
         }
     }
-
+    
     @objc func cancelButonPressed() {
         dismiss(animated: true, completion: nil)
     }
-
+    
     @objc func letsGoButonPressed() {
         guard let user = Auth.auth().currentUser else {
             return
         }
-        user.reload { _ in
+        user.reload { [weak self] _ in
+            guard let self = self else { return }
             switch user.isEmailVerified {
             case true:
                 self.saveUserSettings()
@@ -292,28 +293,28 @@ class VerificationController: UIViewController {
             }
         }
     }
-
+    
     @objc func userImageViewTapped() {
         displayImagePickerController()
     }
-
+    
     @objc func plusButtonPressed() {
         displayImagePickerController()
     }
-
+    
     private func displayImagePickerController() {
         let imagePicerController = UIImagePickerController()
         imagePicerController.delegate = self
         imagePicerController.sourceType = .photoLibrary
         present(imagePicerController, animated: true, completion: nil)
     }
-
+    
     private func presentBaseTabBarController() {
         let dV = BaseTabBarController()
         dV.modalPresentationStyle = .fullScreen
         present(dV, animated: true, completion: nil)
     }
-
+    
     private func saveUserSettings() {
         user.name = nameTextField.text!
         CategoryManager.shared.saveCategoriesSet(with:  DefaultParameters.categoriesSet)
@@ -344,7 +345,7 @@ extension VerificationController: UITextFieldDelegate {
         textField.endEditing(true)
         return true
     }
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }

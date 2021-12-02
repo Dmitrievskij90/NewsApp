@@ -12,7 +12,7 @@ class WelcomeController: UIViewController {
     private let keychain = Keychain()
     private let defaults = UserDefaults.standard
 
-    let appLabel: UILabel = {
+    private let appLabel: UILabel = {
         let label = UILabel()
         label.text = "JUST NEWS"
         label.font = .boldSystemFont(ofSize: 35)
@@ -21,7 +21,7 @@ class WelcomeController: UIViewController {
         return label
     }()
 
-    let registerButton: BaseButton = {
+    private let registerButton: BaseButton = {
         let button = BaseButton(type: .system)
         button.setTitle("REGISTER", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
@@ -31,7 +31,7 @@ class WelcomeController: UIViewController {
         return button
     }()
 
-    let signInButton: BaseButton = {
+    private let signInButton: BaseButton = {
         let button = BaseButton(type: .system)
         button.setTitle("SIGN IN", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
@@ -86,10 +86,10 @@ class WelcomeController: UIViewController {
         let navVC = UINavigationController(rootViewController: destinationVC)
         navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true, completion: nil)
-//        let destinationVC = VerificationController()
-//        let navVC = UINavigationController(rootViewController: destinationVC)
-//        navVC.modalPresentationStyle = .fullScreen
-//        present(navVC, animated: true, completion: nil)
+        //        let destinationVC = VerificationController()
+        //        let navVC = UINavigationController(rootViewController: destinationVC)
+        //        navVC.modalPresentationStyle = .fullScreen
+        //        present(navVC, animated: true, completion: nil)
     }
 
     @objc func signinButtonTapped() {

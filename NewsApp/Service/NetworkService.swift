@@ -54,7 +54,6 @@ class NetworkService {
         }
 
         URLSession.shared.dataTask(with: url) { (data, responce, error) in
-
             if let err = error {
                 print("Failed fatch data \(err)")
             }

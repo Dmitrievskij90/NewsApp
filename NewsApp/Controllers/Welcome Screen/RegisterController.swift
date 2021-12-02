@@ -217,8 +217,10 @@ class RegisterController: UIViewController {
         } else if password != repeatPassword {
             presentOneButtonAlert(withTitle: "Passwords don't match", message: "Please check the spelling and try again")
         } else {
-            Auth.auth().fetchSignInMethods(forEmail: login, completion: {
-                (providers, error) in
+            Auth.auth().fetchSignInMethods(forEmail: login, completion: { [weak self] (providers, error) in
+                guard let self = self else {
+                    return
+                }
                 if error != nil  {
                     self.presentOneButtonAlert(withTitle: "Bad Email format", message: "")
                 } else if providers != nil {
@@ -233,7 +235,7 @@ class RegisterController: UIViewController {
 
     private func createUser(with login: String, password: String) {
         Auth.auth().createUser(withEmail: login, password: password) { [weak self] (authDataResult, error) in
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
             if let authResult = authDataResult {
@@ -245,7 +247,7 @@ class RegisterController: UIViewController {
                 }
             }
             if error != nil {
-                strongSelf.presentOneButtonAlert(withTitle: "Registration failed", message: "Please try later")
+                self.presentOneButtonAlert(withTitle: "Registration failed", message: "Please try later")
             }
         }
     }

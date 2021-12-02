@@ -10,30 +10,28 @@ import KeychainAccess
 
 class TodayController: UIViewController {
     private var appFullscreenController = TableDetailsController()
+    private var user = User()
+    private var newsData = [Articles]()
+    private var stockData = [StockData]()
     private var topConstraint: NSLayoutConstraint?
     private var leadingConstraint: NSLayoutConstraint?
     private var widthConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint?
     private var appFullscreenBeginOffset: CGFloat = 0
-    private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private var startingFrame: CGRect?
-
-    private var user = User()
-    private var newsData = [Articles]()
-    private var stockData = [StockData]()
     private var stockCompaniesSet = Set<String>()
     private var urlString = ""
-
+    private var timer: Timer?
     private var todayCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+
+    private let refreshControl = UIRefreshControl()
+    private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private let activityIndicator: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .medium)
         aiv.color = .darkGray
         aiv.hidesWhenStopped = true
         return aiv
     }()
-
-    private let refreshControl = UIRefreshControl()
-    private var timer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,7 +112,8 @@ class TodayController: UIViewController {
             }
         }
 
-        dispatchGroup.notify(queue: .main) {
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
             self.stockData = stockResults
             self.newsData = todayResults
             self.activityIndicator.stopAnimating()
@@ -124,7 +123,8 @@ class TodayController: UIViewController {
 
     @objc func refreshHandler() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { [weak self] _ in
+            guard let self = self else { return }
             self.refreshControl.endRefreshing()
         })
         self.fetchTodayNews(isTrue: false)
@@ -132,6 +132,8 @@ class TodayController: UIViewController {
 
     func handleRemoveView() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+            [weak self]  in
+            guard let self = self else { return }
 
             self.blurVisualEffectView.alpha = 0
             self.appFullscreenController.view.transform = .identity
@@ -160,7 +162,8 @@ class TodayController: UIViewController {
                 self.appFullscreenController.floatingContainerView.alpha = 0
                 cell.layoutIfNeeded()
             }
-        } completion: { _ in
+        } completion: { [weak self] _ in
+            guard let self = self else { return }
             self.appFullscreenController.view.removeFromSuperview()
             self.appFullscreenController.removeFromParent()
             self.todayCollectionView.isUserInteractionEnabled = true
@@ -173,7 +176,8 @@ class TodayController: UIViewController {
 
         appFullscreenController.dataSource = newsData[indexPath.item]
 
-        appFullscreenController.dismissHandler = {
+        appFullscreenController.dismissHandler = { [weak self] in
+            guard let self = self else { return }
             self.handleRemoveView()
         }
 

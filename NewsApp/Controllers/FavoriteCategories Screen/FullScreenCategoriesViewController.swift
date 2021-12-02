@@ -8,19 +8,19 @@
 import UIKit
 
 class FullScreenCategoriesViewController: UIViewController {
-    var preferredCategoty: String
+    private var preferredCategoty: String
     private var articles = [Articles]()
     private var user = User()
     private var categoryCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+    private var timer: Timer?
+
+    private let refreshControl = UIRefreshControl()
     private let activityIndicator: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .medium)
         aiv.color = .darkGray
         aiv.hidesWhenStopped = true
         return aiv
     }()
-
-    private let refreshControl = UIRefreshControl()
-    private var timer: Timer?
 
     init(preferredCategoty: String) {
         self.preferredCategoty = preferredCategoty
@@ -123,14 +123,14 @@ extension FullScreenCategoriesViewController: UICollectionViewDataSource, UIColl
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return .init(top: 12, left: 13, bottom: 12, right: 13)
+        return .init(top: 12, left: 13, bottom: 12, right: 13)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
 
-     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let article = articles[indexPath.item]
         let appDetailController = DetailsController(article: article)
         navigationController?.pushViewController(appDetailController, animated: true)

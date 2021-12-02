@@ -13,6 +13,7 @@ class NewsSearchController: UIViewController {
     private var articles = [Articles]()
     private var user = User()
     private var timer: Timer?
+
     private let searhController = UISearchController(searchResultsController: nil)
     private let enterSearchTermLabel: UILabel = {
         let label = UILabel()
@@ -90,7 +91,7 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return .init(top: 12, left: 13, bottom: 12, right: 13)
+        return .init(top: 12, left: 13, bottom: 12, right: 13)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -110,7 +111,8 @@ extension NewsSearchController: UISearchBarDelegate {
         user = CategoryManager.shared.loadUser()
 
         let term = searchText.replacingOccurrences(of: " ", with: "")
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
+            guard let self = self else { return }
             NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: self.user.country) { (results, error) in
                 if let err = error {
                     print("Failed to fetch apps:", err)

@@ -8,8 +8,8 @@
 import UIKit
 
 class DetailsController: UIViewController {
-    var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    var article: Articles
+    private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+    private var article: Articles
     private let floatingContainerView = FloatingContainerView()
     private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
 
@@ -124,14 +124,14 @@ extension DetailsController: UICollectionViewDataSource, UICollectionViewDelegat
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageHeaderCell.identifier, for: indexPath) as? ImageHeaderCell else {
                 return UICollectionViewCell()
             }
-            cell.dataSource = self.article
+            cell.dataSource = article
             return cell
         }
 
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsDetailCell.identifier, for: indexPath) as? NewsDetailCell else {
             return UICollectionViewCell()
         }
-        cell.dataSource = self.article
+        cell.dataSource = article
         return cell
     }
 
