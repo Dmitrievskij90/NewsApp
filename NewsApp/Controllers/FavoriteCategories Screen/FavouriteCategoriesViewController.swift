@@ -78,8 +78,7 @@ extension FavouriteCategoriesViewController: UICollectionViewDataSource, UIColle
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let category = categories[indexPath.item]
-        let fullScreenController = FullScreenCategoriesViewController()
-        fullScreenController.preferredCategoty = category
+        let fullScreenController = FullScreenCategoriesViewController(preferredCategoty: category)
         navigationController?.pushViewController(fullScreenController, animated: true)
     }
 }

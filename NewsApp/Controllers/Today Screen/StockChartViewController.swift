@@ -9,9 +9,8 @@ import UIKit
 import Charts
 
 class StockChartViewController: UIViewController, ChartViewDelegate {
+    private var currentStockCompanyData: StockData
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-    var currentStockCompanyData: StockData?
-
     private let activityIndicator: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .medium)
         aiv.color = .darkGray
@@ -19,7 +18,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return aiv
     }()
 
-    let closeButton: UIButton = {
+    private let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
         button.tintColor = .init(hex: 0xDB6400)
@@ -108,6 +107,15 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return lineChartView
     }()
 
+    init(currentStockCompanyData: StockData) {
+        self.currentStockCompanyData = currentStockCompanyData
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchData()
@@ -155,9 +163,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     }
 
     private func setupLabelsData() {
-        priceLabel.text = String(currentStockCompanyData?.price ?? 0.0) + "$"
-        companyLogoImageView.image = UIImage(named: currentStockCompanyData?.symbol ?? "")
-        companyLabel.text = currentStockCompanyData?.symbol
+        priceLabel.text = String(currentStockCompanyData.price ) + "$"
+        companyLogoImageView.image = UIImage(named: currentStockCompanyData.symbol)
+        companyLabel.text = currentStockCompanyData.symbol
         dateLabel.text = Helpers.shared.getCurrentDate()
     }
 
@@ -165,7 +173,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         let dispatchGroup = DispatchGroup()
         activityIndicator.startAnimating()
         dispatchGroup.enter()
-        NetworkService.shared.fetchStockChartData(searchedStockCompany: currentStockCompanyData?.symbol ?? "TSLA") { (res, error) in
+        NetworkService.shared.fetchStockChartData(searchedStockCompany: currentStockCompanyData.symbol ) { (res, error) in
             if let err = error {
                 print("failed error", err)
             }
@@ -180,7 +188,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
                     return
                 }
                 self.activityIndicator.stopAnimating()
-                let closeValue = Double(result.values[0].close ) ?? 0.0
+                let closeValue = Double(result.values[0].close) ?? 0.0
                 self.setDataToDifferenceLabel(closeValue)
 
                 var entries = [ChartDataEntry]()
@@ -193,7 +201,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     }
 
     private func setDataToDifferenceLabel(_ closeValue: Double) {
-        let currnetValue = Double(self.currentStockCompanyData?.price ?? 0.0)
+        let currnetValue = Double(self.currentStockCompanyData.price)
         let diffrience = currnetValue - closeValue
         let price = String(format: "%.2f", diffrience)
         if diffrience > 0 {

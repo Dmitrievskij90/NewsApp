@@ -8,10 +8,19 @@
 import UIKit
 
 class DetailsController: UIViewController {
-    var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    var dataSource: Articles?
+    private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+    private var article: Articles
     private let floatingContainerView = FloatingContainerView()
     private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+
+    init(article: Articles) {
+        self.article = article
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Lificycle methods
     // MARK: -
@@ -70,11 +79,11 @@ class DetailsController: UIViewController {
         let height = view.frame.height / 9
         view.addSubview(floatingContainerView)
         floatingContainerView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: -90, right: 16), size: .init(width: 0, height: height))
-        floatingContainerView.imageView.sd_setImage(with: URL(string: dataSource?.urlToImage ?? ""))
+        floatingContainerView.imageView.sd_setImage(with: URL(string: article.urlToImage ?? ""))
         floatingContainerView.transitionHandler = { [weak self] in
             let viewController = WebNewsViewController()
             viewController.modalPresentationStyle = .fullScreen
-            viewController.urlString = self?.dataSource?.url ?? ""
+            viewController.urlString = self?.article.url ?? ""
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -98,7 +107,7 @@ class DetailsController: UIViewController {
     }
 
     @objc func shareButtonTapped() {
-        let aiv = UIActivityViewController(activityItems: [dataSource?.url ?? ""], applicationActivities: nil)
+        let aiv = UIActivityViewController(activityItems: [article.url], applicationActivities: nil)
         present(aiv, animated: true, completion: nil)
     }
 }
@@ -115,14 +124,14 @@ extension DetailsController: UICollectionViewDataSource, UICollectionViewDelegat
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageHeaderCell.identifier, for: indexPath) as? ImageHeaderCell else {
                 return UICollectionViewCell()
             }
-            cell.dataSource = self.dataSource
+            cell.dataSource = article
             return cell
         }
 
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsDetailCell.identifier, for: indexPath) as? NewsDetailCell else {
             return UICollectionViewCell()
         }
-        cell.dataSource = self.dataSource
+        cell.dataSource = article
         return cell
     }
 

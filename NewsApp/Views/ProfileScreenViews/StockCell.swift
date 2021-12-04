@@ -8,10 +8,19 @@
 import UIKit
 
 class StockCell: UITableViewCell {
-
     static let identifier = "StockCell"
+    var company: StockCompanies? {
+        didSet {
+            if let currentCompany = company {
+                let isFavorited = currentCompany.isFavorited
+                stockImageView.image = UIImage(named: currentCompany.symbol)
+                stockLabel.text = currentCompany.name
+                accessoryType = isFavorited ? .checkmark : .none
+            }
+        }
+    }
 
-    let stockLabel: UILabel = {
+   private  let stockLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
@@ -19,7 +28,7 @@ class StockCell: UITableViewCell {
         return label
     }()
 
-    let stockImageView: UIImageView = {
+   private let stockImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -27,18 +36,6 @@ class StockCell: UITableViewCell {
         imageView.constrainWidth(constant: 30)
         imageView.constrainHeight(constant: 30)
         return imageView
-    }()
-
-    let priceLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = .boldSystemFont(ofSize: 15)
-        label.textColor = .darkGray
-        label.textAlignment = .right
-//        label.text = "238.24$"
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        return label
     }()
 
     let bottomView: UIView = {
@@ -54,8 +51,7 @@ class StockCell: UITableViewCell {
 
         let stackView = UIStackView(arrangedSubviews: [
             stockImageView,
-            stockLabel,
-            priceLabel
+            stockLabel
         ])
         stackView.alignment = .center
         stackView.spacing = 5

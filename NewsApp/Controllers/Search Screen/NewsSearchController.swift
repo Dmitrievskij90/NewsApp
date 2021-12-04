@@ -10,9 +10,10 @@ import SDWebImage
 
 class NewsSearchController: UIViewController {
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private var results = [Articles]()
+    private var articles = [Articles]()
     private var user = User()
     private var timer: Timer?
+
     private let searhController = UISearchController(searchResultsController: nil)
     private let enterSearchTermLabel: UILabel = {
         let label = UILabel()
@@ -72,15 +73,15 @@ class NewsSearchController: UIViewController {
 // MARK: -
 extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        enterSearchTermLabel.isHidden = results.count != 0
-        return results.count
+        enterSearchTermLabel.isHidden = articles.count != 0
+        return articles.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsCell.identifier, for: indexPath) as? NewsCell else {
             return UICollectionViewCell()
         }
-        cell.results = results[indexPath.item]
+        cell.article = articles[indexPath.item]
         return cell
     }
 
@@ -90,7 +91,7 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return .init(top: 12, left: 13, bottom: 12, right: 13)
+        return .init(top: 12, left: 13, bottom: 12, right: 13)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -98,9 +99,8 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let res = results[indexPath.item]
-        let appDetailController = DetailsController()
-        appDetailController.dataSource = res
+        let article = articles[indexPath.item]
+        let appDetailController = DetailsController(article: article)
         navigationController?.pushViewController(appDetailController, animated: true)
     }
 }
@@ -111,13 +111,14 @@ extension NewsSearchController: UISearchBarDelegate {
         user = CategoryManager.shared.loadUser()
 
         let term = searchText.replacingOccurrences(of: " ", with: "")
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
+            guard let self = self else { return }
             NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: self.user.country) { (results, error) in
                 if let err = error {
                     print("Failed to fetch apps:", err)
                     return
                 }
-                self.results = results?.articles ?? []
+                self.articles = results?.articles ?? []
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }

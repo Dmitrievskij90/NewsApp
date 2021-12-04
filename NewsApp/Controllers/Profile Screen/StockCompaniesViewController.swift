@@ -8,10 +8,9 @@
 import UIKit
 
 class StockCompaniesViewController: UIViewController {
-
     private var stockCompaniesStruct = [StockCompanies]()
     private var stockCompaniesSet = Set<String>()
-
+    
     private let stockCompaniesTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -19,26 +18,26 @@ class StockCompaniesViewController: UIViewController {
         tableView.backgroundColor = .white
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
         stockCompaniesStruct =  CategoryManager.shared.loadStockCompaniesStruct()
     }
-
+    
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
-
+        
         setupTableView()
     }
-
+    
     private func setupTableView() {
         stockCompaniesTableView.dataSource = self
         stockCompaniesTableView.delegate = self
@@ -51,29 +50,26 @@ extension StockCompaniesViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stockCompaniesStruct.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.identifier, for: indexPath) as? StockCell else {
             return UITableViewCell()
         }
-        let isFavorited = stockCompaniesStruct[indexPath.item].isFavorited
-        cell.stockImageView.image = UIImage(named: stockCompaniesStruct[indexPath.row].symbol)
-        cell.stockLabel.text = stockCompaniesStruct[indexPath.row].name
-        cell.accessoryType = isFavorited ? .checkmark : .none
+        cell.company = stockCompaniesStruct[indexPath.item]
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let hasFavorited = stockCompaniesStruct[indexPath.item].isFavorited
         stockCompaniesStruct[indexPath.item].isFavorited = !hasFavorited
         stockCompaniesTableView.reloadRows(at: [indexPath], with: .none)
         CategoryManager.shared.saveStockCompaniesStruct(with: stockCompaniesStruct)
-
+        
         let name = stockCompaniesStruct[indexPath.row].symbol
         if stockCompaniesSet.contains(name) {
             stockCompaniesSet.remove(name)

@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class ProfileViewController: UIViewController {
     private var image = UIImage(named: "imagePlaceholder")
-    private lazy var user = User()
+    private var user = User()
     private var sections = [CountrySection]()
     private var header = ProfileTableHeader()
     
@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController {
         tableView.backgroundColor = .white
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         sections = [CountrySection(
@@ -39,16 +39,16 @@ class ProfileViewController: UIViewController {
                         options: [],
                         countriesImages: []),
         ]
-
+        
         loadUserSettings()
         setupHeaderForTableView()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
     }
-
+    
     // MARK: - setup user interface methods
     // MARK: -
     override func loadView() {
@@ -56,30 +56,30 @@ class ProfileViewController: UIViewController {
         self.view = view
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
-
+        
         setupTableView()
         setupFooterForTableView()
     }
-
+    
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: view.frame.width, height: view.frame.height))
     }
-
+    
     private func setupHeaderForTableView() {
         header.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: view.frame.height / 4 )
         header.nameTextField.delegate = self
         header.nameTextField.text = "\(user.name)"
         header.userImageView.image = image
         header.countryImageView.image = UIImage(named: user.country)
-        header.imageTapHandler = { [unowned self] in
-            self.displayImagePickerController()
+        header.imageTapHandler = { [weak self] in
+            self?.displayImagePickerController()
         }
         self.tableView.tableHeaderView = header
     }
-
+    
     private func setupFooterForTableView() {
         let footer = ProfileTableFooter()
         footer.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 100 )
@@ -97,14 +97,14 @@ class ProfileViewController: UIViewController {
         }
         self.tableView.tableFooterView = footer
     }
-
+    
     private func displayImagePickerController() {
         let imagePicerController = UIImagePickerController()
         imagePicerController.delegate = self
         imagePicerController.sourceType = .photoLibrary
         present(imagePicerController, animated: true, completion: nil)
     }
-
+    
     private func loadUserSettings() {
         self.image = CategoryManager.shared.loadUserImage()
         self.user = CategoryManager.shared.loadUser()
@@ -117,7 +117,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let section = sections[section]
         if section.isOpened {
@@ -126,7 +126,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             return 1
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
@@ -148,19 +148,19 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             }
             return cell
         }
-
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StockCompaniesCell.identifier, for: indexPath) as? StockCompaniesCell else {
             return UITableViewCell()
         }
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return DefaultParameters.buttonHeight
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
             if indexPath.row == 0 {
