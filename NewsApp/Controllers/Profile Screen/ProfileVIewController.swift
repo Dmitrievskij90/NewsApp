@@ -184,6 +184,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 sections[indexPath.section].isOpened = false
                 tableView.reloadSections([indexPath.section], with: .none)
                 CategoryManager.shared.saveUser(with: user)
+                NotificationCenter.default.post(name: NSNotification.Name("user"), object: user)
             }
         } else if indexPath.section == 1 {
             let viewController = CategoriesViewController()
@@ -223,6 +224,7 @@ extension ProfileViewController: UITextFieldDelegate {
             user.name = "Reader"
         }
         CategoryManager.shared.saveUser(with: user)
+        NotificationCenter.default.post(name: NSNotification.Name("user"), object: user)
         return true
     }
 }
