@@ -13,4 +13,5 @@ struct TodayCellModel {
     let title: String
     let image: String
     let description: String
+    let url: String
 }

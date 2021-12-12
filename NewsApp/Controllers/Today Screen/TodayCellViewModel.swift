@@ -32,7 +32,7 @@ public class TodayCellViewModel {
                 print("Can't fetch today news", err)
             }
             if let res = results?.articles {
-                self.todayNews.value = res.compactMap{TodayCellModel(source: $0.source.name, date: $0.publishedAt, title: $0.title ?? "", image: $0.urlToImage ?? "", description: $0.description ?? "")}
+                self.todayNews.value = res.compactMap{TodayCellModel(source: $0.source.name, date: $0.publishedAt, title: $0.title ?? "", image: $0.urlToImage ?? "", description: $0.description ?? "", url: $0.url)}
             }
         }
     }

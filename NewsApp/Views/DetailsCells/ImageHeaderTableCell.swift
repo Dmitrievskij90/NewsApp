@@ -12,14 +12,29 @@ class ImageHeaderTableCell: UITableViewCell {
     static let identifier = "ImageHeaderTableCell"
 
     var topConstaraint: NSLayoutConstraint?
-    var dataSource: Articles? {
+//    var dataSource: Articles? {
+//        didSet {
+//            if let source = dataSource {
+//                sourceLabel.text = source.source.name.uppercased()
+//                dateLabel.text = Helpers.shared.convertDate(date: source.publishedAt)
+//                titleLabel.text = source.title
+//                if let image = source.urlToImage, source.urlToImage != "" {
+//                    newsImageView.sd_setImage(with: URL(string: image))
+//                } else {
+//                    newsImageView.image = UIImage(named: "news_image")
+//                }
+//            }
+//        }
+//    }
+
+    var dataSource: TodayCellModel? {
         didSet {
             if let source = dataSource {
-                sourceLabel.text = source.source.name.uppercased()
-                dateLabel.text = Helpers.shared.convertDate(date: source.publishedAt)
+                sourceLabel.text = source.source.uppercased()
+                dateLabel.text = Helpers.shared.convertDate(date: source.date)
                 titleLabel.text = source.title
-                if let image = source.urlToImage, source.urlToImage != "" {
-                    newsImageView.sd_setImage(with: URL(string: image))
+                if source.image != "" {
+                    newsImageView.sd_setImage(with: URL(string: source.image))
                 } else {
                     newsImageView.image = UIImage(named: "news_image")
                 }

@@ -191,7 +191,8 @@ class TodayController: UIViewController {
     private func setupAppSingleFullscreenController(_ indexPath: IndexPath) {
         let appFullscreenController = TableDetailsController()
 
-        appFullscreenController.dataSource = newsData[indexPath.item]
+//        appFullscreenController.dataSource = newsData[indexPath.item]
+        appFullscreenController.dataSource = viewModel.todayNews.value[indexPath.item]
 
         appFullscreenController.dismissHandler = { [weak self] in
             guard let self = self else { return }

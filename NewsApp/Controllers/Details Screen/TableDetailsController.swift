@@ -9,7 +9,7 @@ import UIKit
 
 class TableDetailsController: UIViewController {
     var dismissHandler: (() ->())?
-    var dataSource: Articles?
+    var dataSource: TodayCellModel?
     private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     let floatingContainerView = FloatingContainerView()
 
@@ -94,7 +94,7 @@ class TableDetailsController: UIViewController {
         let height = view.frame.height / 9
         view.addSubview(floatingContainerView)
         floatingContainerView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: -90, right: 16), size: .init(width: 0, height: height))
-        floatingContainerView.imageView.sd_setImage(with: URL(string: dataSource?.urlToImage ?? ""))
+        floatingContainerView.imageView.sd_setImage(with: URL(string: dataSource?.image ?? ""))
         floatingContainerView.transitionHandler = { [weak self] in
             let viewController = WebNewsViewController()
             viewController.modalPresentationStyle = .fullScreen
