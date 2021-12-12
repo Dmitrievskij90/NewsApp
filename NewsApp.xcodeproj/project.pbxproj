@@ -11,6 +11,9 @@
 		5C10981C274A7E90000C0F16 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C10981B274A7E90000C0F16 /* User.swift */; };
 		5C141CEA26ECEFBD0052028E /* TodayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C141CE926ECEFBD0052028E /* TodayController.swift */; };
 		5C148E9626FDDAC500F465AC /* ProfileTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */; };
+		5C23AEED27662002006521BD /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C23AEEC27662002006521BD /* Box.swift */; };
+		5C23AEF02766204B006521BD /* TodayCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C23AEEF2766204B006521BD /* TodayCellViewModel.swift */; };
+		5C23AEF327662064006521BD /* TodayCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C23AEF227662064006521BD /* TodayCellModel.swift */; };
 		5C24EEB3271899B100F302D0 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24EEB2271899B100F302D0 /* BaseButton.swift */; };
 		5C28A10A2731476500C100A4 /* StockHistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C28A1092731476500C100A4 /* StockHistoryData.swift */; };
 		5C2DF30B27024B6B00D51EEE /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2DF30A27024B6B00D51EEE /* CategoriesViewController.swift */; };
@@ -79,6 +82,9 @@
 		5C10981B274A7E90000C0F16 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C141CE926ECEFBD0052028E /* TodayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayController.swift; sourceTree = "<group>"; };
 		5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeader.swift; sourceTree = "<group>"; };
+		5C23AEEC27662002006521BD /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
+		5C23AEEF2766204B006521BD /* TodayCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCellViewModel.swift; sourceTree = "<group>"; };
+		5C23AEF227662064006521BD /* TodayCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCellModel.swift; sourceTree = "<group>"; };
 		5C24EEB2271899B100F302D0 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		5C28A1092731476500C100A4 /* StockHistoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHistoryData.swift; sourceTree = "<group>"; };
 		5C2DF30A27024B6B00D51EEE /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +172,8 @@
 			isa = PBXGroup;
 			children = (
 				5C141CE926ECEFBD0052028E /* TodayController.swift */,
+				5C23AEEF2766204B006521BD /* TodayCellViewModel.swift */,
+				5C23AEF227662064006521BD /* TodayCellModel.swift */,
 				5C61F62E2721C4A100C6D369 /* StockHeaderHorizontalController.swift */,
 				5C38A805272ED5F7009B1535 /* StockChartViewController.swift */,
 			);
@@ -382,6 +390,7 @@
 				5C4BADE326EA702C000620A1 /* UIColor+Extension.swift */,
 				5CF9EFCD26EFC33500655DD2 /* UIViewController+UIAlertController.swift */,
 				5C8B46F227469D9900206D07 /* DefaultParameters.swift */,
+				5C23AEEC27662002006521BD /* Box.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -530,11 +539,13 @@
 				5C10981C274A7E90000C0F16 /* User.swift in Sources */,
 				5C007449270B534900E92C66 /* Categories.swift in Sources */,
 				5CB501E226E6716700246670 /* DetailsController.swift in Sources */,
+				5C23AEED27662002006521BD /* Box.swift in Sources */,
 				5C8B46F327469D9900206D07 /* DefaultParameters.swift in Sources */,
 				5C38A806272ED5F7009B1535 /* StockChartViewController.swift in Sources */,
 				5CA46F0A26E377A70031A540 /* BaseTabBarController.swift in Sources */,
 				5C24EEB3271899B100F302D0 /* BaseButton.swift in Sources */,
 				5CBF2FE726EE411E00DB1D89 /* WelcomeController.swift in Sources */,
+				5C23AEF327662064006521BD /* TodayCellModel.swift in Sources */,
 				5C7098CA26E93EB600A8AEC5 /* FloatingContainerView.swift in Sources */,
 				5C4BADE426EA702C000620A1 /* UIColor+Extension.swift in Sources */,
 				5C61F62F2721C4A100C6D369 /* StockHeaderHorizontalController.swift in Sources */,
@@ -569,6 +580,7 @@
 				5CBF2FEF26EE4DEF00DB1D89 /* RegisterController.swift in Sources */,
 				5CF9EFCE26EFC33500655DD2 /* UIViewController+UIAlertController.swift in Sources */,
 				5CE2D6C2270392B300362909 /* FavouriteCategoriesViewController.swift in Sources */,
+				5C23AEF02766204B006521BD /* TodayCellViewModel.swift in Sources */,
 				5CBA606926FA432B00A81A53 /* ChooseCountryCell.swift in Sources */,
 				5CB501D926E6513900246670 /* BaseCell.swift in Sources */,
 				5CA46EF526E36DDC0031A540 /* SceneDelegate.swift in Sources */,

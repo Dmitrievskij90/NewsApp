@@ -21,8 +21,9 @@ public class TodayCellViewModel {
     }
 
     @objc func updateDefaultAddress(_ notification: Notification) {
-        let loc = notification.object as! User
-        fetchWeatherForLocation(loc.country)
+        if let loc = notification.object as? User {
+            fetchWeatherForLocation(loc.country)
+        }
     }
 
    private func fetchWeatherForLocation(_ location: String) {

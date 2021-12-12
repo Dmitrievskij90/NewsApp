@@ -30,12 +30,22 @@ class TodayController: UIViewController {
         let aiv = UIActivityIndicatorView(style: .medium)
         aiv.color = .darkGray
         aiv.hidesWhenStopped = true
+        aiv.startAnimating()
         return aiv
     }()
+
+   private let viewModel = TodayCellViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .label
+        animateAV()
+        
+        viewModel.todayNews.bind { _ in
+            DispatchQueue.main.async { [weak self] in
+                self?.todayCollectionView.reloadData()
+            }
+        }
 
         view.addSubview(blurVisualEffectView)
         blurVisualEffectView.fillSuperview()
@@ -46,7 +56,14 @@ class TodayController: UIViewController {
 
         stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
         urlString = stockCompaniesSet.sorted().joined(separator: ",")
-        fetchTodayNews()
+//        fetchTodayNews()
+
+    }
+
+    func animateAV() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            self?.activityIndicator.stopAnimating()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -81,7 +98,7 @@ class TodayController: UIViewController {
 
     private func fetchTodayNews(isTrue: Bool = true) {
         var stockResults = [StockData]()
-        var todayResults = [Articles]()
+//        var todayResults = [Articles]()
         user = CategoryManager.shared.loadUser()
 
         let dispatchGroup = DispatchGroup()
@@ -101,21 +118,21 @@ class TodayController: UIViewController {
             }
         }
 
-        dispatchGroup.enter()
-        NetworkService.shared.fetchTodayNews(preferredCountry: user.country) { (results, error) in
-            if let err = error {
-                print("Can't fetch today news", err)
-            }
-            dispatchGroup.leave()
-            if let res = results {
-                todayResults = res.articles
-            }
-        }
+//        dispatchGroup.enter()
+//        NetworkService.shared.fetchTodayNews(preferredCountry: user.country) { (results, error) in
+//            if let err = error {
+//                print("Can't fetch today news", err)
+//            }
+//            dispatchGroup.leave()
+//            if let res = results {
+//                todayResults = res.articles
+//            }
+//        }
 
         dispatchGroup.notify(queue: .main) { [weak self] in
             guard let self = self else { return }
             self.stockData = stockResults
-            self.newsData = todayResults
+//            self.newsData = todayResults
             self.activityIndicator.stopAnimating()
             self.todayCollectionView.reloadData()
         }
@@ -289,7 +306,8 @@ extension TodayController: UIGestureRecognizerDelegate {
 
 extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return newsData.count        
+//        return newsData.count
+        return viewModel.todayNews.value.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -297,9 +315,10 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
             return UICollectionViewCell()
         }
 
-        let res = newsData[indexPath.item]
+        cell.results = viewModel.todayNews.value[indexPath.item]
 
-        cell.results = res
+//        let res = newsData[indexPath.item]
+//        cell.results = res
         return cell
     }
 

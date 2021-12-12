@@ -21,9 +21,9 @@ final class Box<T> {
   init(_ value: T) {
     self.value = value
   }
-  //4
-  func bind(listener: Listener?) {
-    self.listener = listener
-    listener?(value)
-  }
+    //4
+    func bind(listener: Listener?) {
+        self.listener = listener
+        listener?(value)
+    }
 }
