@@ -10,14 +10,29 @@ import UIKit
 class TodayCell: BaseCell {
     static let identifier = "TodayCell"
     private var topConstaraint: NSLayoutConstraint?
-    var results: Articles? {
+//    var results: Articles? {
+//        didSet {
+//            if let source = results {
+//                sourceLabel.text = source.source.name.uppercased()
+//                dateLabel.text = Helpers.shared.convertDate(date: source.publishedAt)
+//                titleLabel.text = source.title
+//                if let image = source.urlToImage, source.urlToImage != "" {
+//                    imageView.sd_setImage(with: URL(string: image))
+//                } else {
+//                    imageView.image = UIImage(named: "news_image")
+//                }
+//            }
+//        }
+//    }
+
+    var results: TodayCellModel? {
         didSet {
             if let source = results {
-                sourceLabel.text = source.source.name.uppercased()
-                dateLabel.text = Helpers.shared.convertDate(date: source.publishedAt)
+                sourceLabel.text = source.source.uppercased()
+                dateLabel.text = Helpers.shared.convertDate(date: source.date)
                 titleLabel.text = source.title
-                if let image = source.urlToImage, source.urlToImage != "" {
-                    imageView.sd_setImage(with: URL(string: image))
+                if source.image != "" {
+                    imageView.sd_setImage(with: URL(string: source.image))
                 } else {
                     imageView.image = UIImage(named: "news_image")
                 }
