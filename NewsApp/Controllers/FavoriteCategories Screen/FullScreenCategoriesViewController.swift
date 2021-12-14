@@ -15,12 +15,7 @@ class FullScreenCategoriesViewController: UIViewController {
     private var timer: Timer?
 
     private let refreshControl = UIRefreshControl()
-    private let activityIndicator: UIActivityIndicatorView = {
-        let aiv = UIActivityIndicatorView(style: .medium)
-        aiv.color = .darkGray
-        aiv.hidesWhenStopped = true
-        return aiv
-    }()
+    private let activityIndicator = BaseActivityIndicator(style: .medium)
 
     init(preferredCategoty: String) {
         self.preferredCategoty = preferredCategoty

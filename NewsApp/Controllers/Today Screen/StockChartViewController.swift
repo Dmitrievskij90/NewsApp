@@ -11,12 +11,7 @@ import Charts
 class StockChartViewController: UIViewController, ChartViewDelegate {
     private var currentStockCompanyData: StockData
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-    private let activityIndicator: UIActivityIndicatorView = {
-        let aiv = UIActivityIndicatorView(style: .medium)
-        aiv.color = .darkGray
-        aiv.hidesWhenStopped = true
-        return aiv
-    }()
+    private let activityIndicator = BaseActivityIndicator(style: .medium)
 
     private let closeButton: UIButton = {
         let button = UIButton(type: .system)
