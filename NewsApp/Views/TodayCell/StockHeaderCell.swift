@@ -28,7 +28,7 @@ class StockHeaderCell: UICollectionViewCell {
         }
     }
     
-    var data: StockData? {
+    var data: StockHeaderCellModel? {
         didSet {
             if let stockData = data {
                 switch stockData.symbol {
