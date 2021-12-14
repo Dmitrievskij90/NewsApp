@@ -167,7 +167,9 @@
 		5C141CE426ECD1CE0052028E /* WebNews Screen */ = {
 			isa = PBXGroup;
 			children = (
-				5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */,
+				5CBDA4322768F8E4003AB428 /* Model */,
+				5CBDA4332768F8E9003AB428 /* View */,
+				5CBDA4342768F8EE003AB428 /* ViewModel */,
 			);
 			path = "WebNews Screen";
 			sourceTree = "<group>";
@@ -175,29 +177,11 @@
 		5C141CE826ECEFA90052028E /* Today Screen */ = {
 			isa = PBXGroup;
 			children = (
-				5C141CE926ECEFBD0052028E /* TodayController.swift */,
-				5C23AEEF2766204B006521BD /* TodayCellViewModel.swift */,
-				5C23AEF227662064006521BD /* TodayCellModel.swift */,
-				5C61F62E2721C4A100C6D369 /* StockHeaderHorizontalController.swift */,
-				5C38A805272ED5F7009B1535 /* StockChartViewController.swift */,
-				5C8917B32767A68800927EE9 /* StockHeaderCellModel.swift */,
+				5CBDA4162768F320003AB428 /* Model */,
+				5CBDA4182768F337003AB428 /* VIew */,
+				5CBDA4172768F329003AB428 /* ViewModel */,
 			);
 			path = "Today Screen";
-			sourceTree = "<group>";
-		};
-		5C148E9A26FDE60D00F465AC /* ProfileScreenViews */ = {
-			isa = PBXGroup;
-			children = (
-				5CBA606826FA432B00A81A53 /* ChooseCountryCell.swift */,
-				5CE00E2C26F78F1B00BAFAAE /* CountryCell.swift */,
-				5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */,
-				5CE576EE2701EFAB00D24069 /* ProfileTableFooter.swift */,
-				5C31FF6527286B7E0001E714 /* StockCompaniesCell.swift */,
-				5CC07475272876B00083D6B8 /* FavouriteCategoriesCell.swift */,
-				5C307CA22702DEA1004BAF0D /* CategoriesCell.swift */,
-				5C83CBB42729AA3E001A42DF /* StockCell.swift */,
-			);
-			path = ProfileScreenViews;
 			sourceTree = "<group>";
 		};
 		5C43A92C26E50B5F005FDD7B /* Models */ = {
@@ -206,9 +190,7 @@
 				5C43A92D26E50BB5005FDD7B /* NewsData.swift */,
 				5CBA606526FA412300A81A53 /* CountrySection.swift */,
 				5C007448270B534900E92C66 /* Categories.swift */,
-				5C8B22E127232962005ABD88 /* StockData.swift */,
 				5C7C3D3F272D676A00FD0453 /* StockCompanies.swift */,
-				5C28A1092731476500C100A4 /* StockHistoryData.swift */,
 				5C10981B274A7E90000C0F16 /* User.swift */,
 			);
 			path = Models;
@@ -227,9 +209,9 @@
 		5C55A51A26F10127004B148F /* Profile Screen */ = {
 			isa = PBXGroup;
 			children = (
-				5C55A52026F101ED004B148F /* ProfileViewController.swift */,
-				5C2DF30A27024B6B00D51EEE /* CategoriesViewController.swift */,
-				5C83CBB12729A90D001A42DF /* StockCompaniesViewController.swift */,
+				5CBDA42A2768F73B003AB428 /* Model */,
+				5CBDA42B2768F742003AB428 /* View */,
+				5CBDA42C2768F749003AB428 /* ViewModel */,
 			);
 			path = "Profile Screen";
 			sourceTree = "<group>";
@@ -258,9 +240,8 @@
 				5CB501DE26E6563E00246670 /* Resources */,
 				5CFB9F4E26E3AFE00095D548 /* Helpers */,
 				5C43A93126E510B1005FDD7B /* Service */,
-				5C43A92C26E50B5F005FDD7B /* Models */,
-				5CA46F1326E37D030031A540 /* Views */,
-				5CA46F0726E3775C0031A540 /* Controllers */,
+				5CBDA40F2768F1A7003AB428 /* Screens */,
+				5CBDA4352768F997003AB428 /* Common files */,
 				5CA46EF226E36DDC0031A540 /* AppDelegate.swift */,
 				5CA46EF426E36DDC0031A540 /* SceneDelegate.swift */,
 				5CA46EF626E36DDC0031A540 /* ViewController.swift */,
@@ -276,13 +257,7 @@
 		5CA46F0726E3775C0031A540 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5CBF2FDF26EE40BC00DB1D89 /* Welcome Screen */,
-				5C141CE826ECEFA90052028E /* Today Screen */,
-				5CE2D6C02703926A00362909 /* FavoriteCategories Screen */,
-				5CA46F0D26E37A8A0031A540 /* Search Screen */,
-				5C55A51A26F10127004B148F /* Profile Screen */,
 				5CB501EC26E6764A00246670 /* Details Screen */,
-				5C141CE426ECD1CE0052028E /* WebNews Screen */,
 				5CA46F0826E3776D0031A540 /* BaseController */,
 			);
 			path = Controllers;
@@ -299,7 +274,9 @@
 		5CA46F0D26E37A8A0031A540 /* Search Screen */ = {
 			isa = PBXGroup;
 			children = (
-				5CA46F0E26E37AAB0031A540 /* NewsSearchController.swift */,
+				5CBDA4252768F65A003AB428 /* Model */,
+				5CBDA4262768F665003AB428 /* View */,
+				5CBDA4272768F670003AB428 /* ViewModel */,
 			);
 			path = "Search Screen";
 			sourceTree = "<group>";
@@ -307,11 +284,7 @@
 		5CA46F1326E37D030031A540 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5CE2D6C42703936C00362909 /* FavoriteCategoriesCell */,
-				5CA874BA26ECF31600ABA803 /* TodayCell */,
 				5CB501E426E6746F00246670 /* DetailsCells */,
-				5C148E9A26FDE60D00F465AC /* ProfileScreenViews */,
-				5C89366827398A7F006A8ECD /* VerificationAlertView.swift */,
 				5C8A73ED2712EA2C00AFFA76 /* NewsCell.swift */,
 				5CB501D826E6513900246670 /* BaseCell.swift */,
 				5C24EEB2271899B100F302D0 /* BaseButton.swift */,
@@ -319,16 +292,6 @@
 				5C8917C72767BE6400927EE9 /* BaseActivityIndicator.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		5CA874BA26ECF31600ABA803 /* TodayCell */ = {
-			isa = PBXGroup;
-			children = (
-				5CA874BB26ECF32900ABA803 /* TodayCell.swift */,
-				5C61F62B2721C3B200C6D369 /* StockPageHeader.swift */,
-				5C61F6312721C58C00C6D369 /* StockHeaderCell.swift */,
-			);
-			path = TodayCell;
 			sourceTree = "<group>";
 		};
 		5CB501DE26E6563E00246670 /* Resources */ = {
@@ -355,18 +318,238 @@
 			isa = PBXGroup;
 			children = (
 				5CB501E126E6716700246670 /* DetailsController.swift */,
-				5C8A73F12713016600AFFA76 /* TableDetailsController.swift */,
 			);
 			path = "Details Screen";
 			sourceTree = "<group>";
 		};
-		5CBF2FDF26EE40BC00DB1D89 /* Welcome Screen */ = {
+		5CBDA40F2768F1A7003AB428 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				5CBF2FDF26EE40BC00DB1D89 /* Welcome Screen */,
+				5C141CE826ECEFA90052028E /* Today Screen */,
+				5CE2D6C02703926A00362909 /* FavoriteCategories Screen */,
+				5CA46F0D26E37A8A0031A540 /* Search Screen */,
+				5C55A51A26F10127004B148F /* Profile Screen */,
+				5C141CE426ECD1CE0052028E /* WebNews Screen */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		5CBDA4112768F1F3003AB428 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5CBDA4122768F1FC003AB428 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5CBDA4132768F20A003AB428 /* VIew */ = {
 			isa = PBXGroup;
 			children = (
 				5CBF2FE626EE411E00DB1D89 /* WelcomeController.swift */,
 				5CBF2FEE26EE4DEF00DB1D89 /* RegisterController.swift */,
 				5C55A50F26F0EC79004B148F /* LoginViewController.swift */,
 				5CCC7B362738189900F63437 /* VerificationController.swift */,
+				5C89366827398A7F006A8ECD /* VerificationAlertView.swift */,
+			);
+			path = VIew;
+			sourceTree = "<group>";
+		};
+		5CBDA4162768F320003AB428 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5C23AEF227662064006521BD /* TodayCellModel.swift */,
+				5C8917B32767A68800927EE9 /* StockHeaderCellModel.swift */,
+				5C8B22E127232962005ABD88 /* StockData.swift */,
+				5C28A1092731476500C100A4 /* StockHistoryData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5CBDA4172768F329003AB428 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5C23AEEF2766204B006521BD /* TodayCellViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5CBDA4182768F337003AB428 /* VIew */ = {
+			isa = PBXGroup;
+			children = (
+				5CBDA41C2768F523003AB428 /* Today news */,
+				5CBDA41E2768F53C003AB428 /* Stock news */,
+			);
+			path = VIew;
+			sourceTree = "<group>";
+		};
+		5CBDA41C2768F523003AB428 /* Today news */ = {
+			isa = PBXGroup;
+			children = (
+				5C141CE926ECEFBD0052028E /* TodayController.swift */,
+				5CA874BB26ECF32900ABA803 /* TodayCell.swift */,
+				5C8A73F12713016600AFFA76 /* TableDetailsController.swift */,
+			);
+			path = "Today news";
+			sourceTree = "<group>";
+		};
+		5CBDA41E2768F53C003AB428 /* Stock news */ = {
+			isa = PBXGroup;
+			children = (
+				5C61F62E2721C4A100C6D369 /* StockHeaderHorizontalController.swift */,
+				5C61F62B2721C3B200C6D369 /* StockPageHeader.swift */,
+				5C61F6312721C58C00C6D369 /* StockHeaderCell.swift */,
+				5C38A805272ED5F7009B1535 /* StockChartViewController.swift */,
+			);
+			path = "Stock news";
+			sourceTree = "<group>";
+		};
+		5CBDA4212768F599003AB428 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5CBDA4222768F5A1003AB428 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5CE2D6C1270392B300362909 /* FavouriteCategoriesViewController.swift */,
+				5C664317270E0FE900C4F297 /* FullScreenCategoriesViewController.swift */,
+				5CE2D6C52703939900362909 /* FavoriteCategoriesCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5CBDA4232768F5A8003AB428 /* VIewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VIewModel;
+			sourceTree = "<group>";
+		};
+		5CBDA4252768F65A003AB428 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5CBDA4262768F665003AB428 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5CA46F0E26E37AAB0031A540 /* NewsSearchController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5CBDA4272768F670003AB428 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5CBDA42A2768F73B003AB428 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5CBDA42B2768F742003AB428 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5CBDA42D2768F854003AB428 /* Profile */,
+				5CBDA42F2768F864003AB428 /* Categories */,
+				5CBDA4302768F87F003AB428 /* Stock companies */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5CBDA42C2768F749003AB428 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5CBDA42D2768F854003AB428 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				5C55A52026F101ED004B148F /* ProfileViewController.swift */,
+				5CBA606826FA432B00A81A53 /* ChooseCountryCell.swift */,
+				5CE00E2C26F78F1B00BAFAAE /* CountryCell.swift */,
+				5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */,
+				5CE576EE2701EFAB00D24069 /* ProfileTableFooter.swift */,
+				5CC07475272876B00083D6B8 /* FavouriteCategoriesCell.swift */,
+				5C31FF6527286B7E0001E714 /* StockCompaniesCell.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		5CBDA42F2768F864003AB428 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				5C2DF30A27024B6B00D51EEE /* CategoriesViewController.swift */,
+				5C307CA22702DEA1004BAF0D /* CategoriesCell.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		5CBDA4302768F87F003AB428 /* Stock companies */ = {
+			isa = PBXGroup;
+			children = (
+				5C83CBB12729A90D001A42DF /* StockCompaniesViewController.swift */,
+				5C83CBB42729AA3E001A42DF /* StockCell.swift */,
+			);
+			path = "Stock companies";
+			sourceTree = "<group>";
+		};
+		5CBDA4322768F8E4003AB428 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5CBDA4332768F8E9003AB428 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5CBDA4342768F8EE003AB428 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5CBDA4352768F997003AB428 /* Common files */ = {
+			isa = PBXGroup;
+			children = (
+				5C43A92C26E50B5F005FDD7B /* Models */,
+				5CA46F1326E37D030031A540 /* Views */,
+				5CA46F0726E3775C0031A540 /* Controllers */,
+			);
+			path = "Common files";
+			sourceTree = "<group>";
+		};
+		5CBF2FDF26EE40BC00DB1D89 /* Welcome Screen */ = {
+			isa = PBXGroup;
+			children = (
+				5CBDA4112768F1F3003AB428 /* Model */,
+				5CBDA4132768F20A003AB428 /* VIew */,
+				5CBDA4122768F1FC003AB428 /* ViewModel */,
 			);
 			path = "Welcome Screen";
 			sourceTree = "<group>";
@@ -374,18 +557,11 @@
 		5CE2D6C02703926A00362909 /* FavoriteCategories Screen */ = {
 			isa = PBXGroup;
 			children = (
-				5CE2D6C1270392B300362909 /* FavouriteCategoriesViewController.swift */,
-				5C664317270E0FE900C4F297 /* FullScreenCategoriesViewController.swift */,
+				5CBDA4212768F599003AB428 /* Model */,
+				5CBDA4222768F5A1003AB428 /* View */,
+				5CBDA4232768F5A8003AB428 /* VIewModel */,
 			);
 			path = "FavoriteCategories Screen";
-			sourceTree = "<group>";
-		};
-		5CE2D6C42703936C00362909 /* FavoriteCategoriesCell */ = {
-			isa = PBXGroup;
-			children = (
-				5CE2D6C52703939900362909 /* FavoriteCategoriesCell.swift */,
-			);
-			path = FavoriteCategoriesCell;
 			sourceTree = "<group>";
 		};
 		5CFB9F4E26E3AFE00095D548 /* Helpers */ = {
