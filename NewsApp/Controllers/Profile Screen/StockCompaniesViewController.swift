@@ -74,9 +74,12 @@ extension StockCompaniesViewController: UITableViewDelegate, UITableViewDataSour
         if stockCompaniesSet.contains(name) {
             stockCompaniesSet.remove(name)
             CategoryManager.shared.saveStockCompaniesSet(with: stockCompaniesSet)
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationName"), object: nil, userInfo: imageDataDict)
+            NotificationCenter.default.post(name: NSNotification.Name("stockCompaniesSet"), object: stockCompaniesSet)
         } else {
             stockCompaniesSet.insert(name)
             CategoryManager.shared.saveStockCompaniesSet(with: stockCompaniesSet)
+            NotificationCenter.default.post(name: NSNotification.Name("stockCompaniesSet"), object: stockCompaniesSet)
         }
     }
 }
