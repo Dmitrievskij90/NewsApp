@@ -9,19 +9,16 @@ import UIKit
 
 class StockHeaderHorizontalController: UIViewController {
     var stockCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    var stockData = [StockData]()
-    
-    private var stockCompaniesSet = Set<String>()
-    
+    var stockData = [StockHeaderCellModel]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
-        DispatchQueue.main.async {
-            self.stockCollectionView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.stockCollectionView.reloadData()
         }
     }
     
