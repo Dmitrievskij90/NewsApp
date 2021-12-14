@@ -10,57 +10,46 @@ import KeychainAccess
 
 class TodayController: UIViewController {
     private var appFullscreenController = TableDetailsController()
-    private var user = User()
-    private var newsData = [Articles]()
-    private var stockData = [StockData]()
     private var topConstraint: NSLayoutConstraint?
     private var leadingConstraint: NSLayoutConstraint?
     private var widthConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint?
     private var appFullscreenBeginOffset: CGFloat = 0
     private var startingFrame: CGRect?
-    private var stockCompaniesSet = Set<String>()
-    private var urlString = ""
     private var timer: Timer?
     private var todayCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
 
     private let refreshControl = UIRefreshControl()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-    private let activityIndicator: UIActivityIndicatorView = {
-        let aiv = UIActivityIndicatorView(style: .medium)
-        aiv.color = .darkGray
-        aiv.hidesWhenStopped = true
-        aiv.startAnimating()
-        return aiv
-    }()
+    private let activityIndicator = BaseActivityIndicator(style: .medium)
 
-   private let viewModel = TodayCellViewModel()
+    private let viewModel = TodayCellViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .label
-        animateAV()
-        
-        viewModel.todayNews.bind { _ in
+        animateActivityIndicator()
+        bindData()
+
+        refreshControl.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
+        todayCollectionView.refreshControl = refreshControl
+    }
+
+    private func bindData() {
+        viewModel.stockData.bind { _ in
             DispatchQueue.main.async { [weak self] in
                 self?.todayCollectionView.reloadData()
             }
         }
 
-        view.addSubview(blurVisualEffectView)
-        blurVisualEffectView.fillSuperview()
-        blurVisualEffectView.alpha = 0
-
-        refreshControl.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
-        todayCollectionView.refreshControl = refreshControl
-
-        stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
-        urlString = stockCompaniesSet.sorted().joined(separator: ",")
-//        fetchTodayNews()
-
+        viewModel.todayNews.bind { _ in
+            DispatchQueue.main.async { [weak self] in
+                self?.todayCollectionView.reloadData()
+            }
+        }
     }
 
-    func animateAV() {
+   private func animateActivityIndicator() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             self?.activityIndicator.stopAnimating()
         }
@@ -68,14 +57,17 @@ class TodayController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
-        urlString = stockCompaniesSet.sorted().joined(separator: ",")
+        viewModel.viewWillAppear()
     }
 
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
         setupCollectinView()
+
+        view.addSubview(blurVisualEffectView)
+        blurVisualEffectView.fillSuperview()
+        blurVisualEffectView.alpha = 0
 
         view.addSubview(activityIndicator)
         activityIndicator.centerInSuperview()
@@ -96,55 +88,13 @@ class TodayController: UIViewController {
         todayCollectionView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
 
-    private func fetchTodayNews(isTrue: Bool = true) {
-        var stockResults = [StockData]()
-//        var todayResults = [Articles]()
-        user = CategoryManager.shared.loadUser()
-
-        let dispatchGroup = DispatchGroup()
-
-        if isTrue {
-            activityIndicator.startAnimating()
-        }
-
-        dispatchGroup.enter()
-        NetworkService.shared.fetchStockData(searchedStockCompanies: urlString) { (result, error) in
-            if let err = error {
-                print("Can't fetch stock data", err)
-            }
-            dispatchGroup.leave()
-            if let res = result {
-                stockResults = res
-            }
-        }
-
-//        dispatchGroup.enter()
-//        NetworkService.shared.fetchTodayNews(preferredCountry: user.country) { (results, error) in
-//            if let err = error {
-//                print("Can't fetch today news", err)
-//            }
-//            dispatchGroup.leave()
-//            if let res = results {
-//                todayResults = res.articles
-//            }
-//        }
-
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            guard let self = self else { return }
-            self.stockData = stockResults
-//            self.newsData = todayResults
-            self.activityIndicator.stopAnimating()
-            self.todayCollectionView.reloadData()
-        }
-    }
-
     @objc func refreshHandler() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { [weak self] _ in
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
         })
-        self.fetchTodayNews(isTrue: false)
+        viewModel.refreshData()
     }
 
     func handleRemoveView() {
@@ -190,8 +140,6 @@ class TodayController: UIViewController {
     //MARK: - Методы анимации ячейки для одного приложения
     private func setupAppSingleFullscreenController(_ indexPath: IndexPath) {
         let appFullscreenController = TableDetailsController()
-
-//        appFullscreenController.dataSource = newsData[indexPath.item]
         appFullscreenController.dataSource = viewModel.todayNews.value[indexPath.item]
 
         appFullscreenController.dismissHandler = { [weak self] in
@@ -307,7 +255,6 @@ extension TodayController: UIGestureRecognizerDelegate {
 
 extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return newsData.count
         return viewModel.todayNews.value.count
     }
 
@@ -315,11 +262,7 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TodayCell.identifier, for: indexPath) as? TodayCell else {
             return UICollectionViewCell()
         }
-
         cell.results = viewModel.todayNews.value[indexPath.item]
-
-//        let res = newsData[indexPath.item]
-//        cell.results = res
         return cell
     }
 
@@ -343,7 +286,7 @@ extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate,
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: StockPageHeader.identifier, for: indexPath) as? StockPageHeader else {
             return UICollectionReusableView()
         }
-        header.stockHeaderHorizontalController.stockData = self.stockData
+        header.stockHeaderHorizontalController.stockData = viewModel.stockData.value
         header.stockHeaderHorizontalController.stockCollectionView.reloadData()
         return header
     }
