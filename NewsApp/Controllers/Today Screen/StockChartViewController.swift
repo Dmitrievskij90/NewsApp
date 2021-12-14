@@ -9,7 +9,7 @@ import UIKit
 import Charts
 
 class StockChartViewController: UIViewController, ChartViewDelegate {
-    private var currentStockCompanyData: StockData
+    private var currentStockCompanyData: StockHeaderCellModel
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private let activityIndicator = BaseActivityIndicator(style: .medium)
 
@@ -102,7 +102,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return lineChartView
     }()
 
-    init(currentStockCompanyData: StockData) {
+    init(currentStockCompanyData: StockHeaderCellModel) {
         self.currentStockCompanyData = currentStockCompanyData
         super.init(nibName: nil, bundle: nil)
     }
