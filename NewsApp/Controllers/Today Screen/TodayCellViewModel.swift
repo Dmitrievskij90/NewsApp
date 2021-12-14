@@ -9,25 +9,68 @@ import Foundation
 
 public class TodayCellViewModel {
     var todayNews: Box<[TodayCellModel]> = Box([])
-    static private var defaultAddress = CategoryManager.shared.loadUser()
+    var stockData: Box<[StockHeaderCellModel]> = Box([])
+    private var defaultLocation = CategoryManager.shared.loadUser().country
+    private var stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet().sorted().joined(separator: ",")
 
-     init() {
-        fetchWeatherForLocation(Self.defaultAddress.country)
+
+
+    init() {
+        fetchTodayNews(with: defaultLocation)
+        fetchStockData(with: stockCompaniesSet)
+        addObservers()
+    }
+
+    func viewWillAppear() {
+        stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet().sorted().joined(separator: ",")
+        defaultLocation = CategoryManager.shared.loadUser().country
+    }
+
+    func refreshData() {
+        fetchStockData(with: stockCompaniesSet)
+        fetchTodayNews(with: defaultLocation)
+    }
+
+    private func addObservers() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(self.updateDefaultAddress),
+            selector: #selector(self.updateCountryforTodayNews),
             name: Notification.Name("user"),
+            object: nil)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.updateStockCompaniesSet),
+            name: Notification.Name("stockCompaniesSet"),
             object: nil)
     }
 
-    @objc func updateDefaultAddress(_ notification: Notification) {
-        if let loc = notification.object as? User {
-            fetchWeatherForLocation(loc.country)
+    @objc private func updateStockCompaniesSet(_ notification: Notification) {
+        if let loc = notification.object {
+            guard let copm = loc as? Set<String> else {return}
+            fetchStockData(with: copm.sorted().joined(separator: ","))
         }
     }
 
-   private func fetchWeatherForLocation(_ location: String) {
-        NetworkService.shared.fetchTodayNews(preferredCountry: location) { (results, error) in
+    @objc private func updateCountryforTodayNews(_ notification: Notification) {
+        if let location = notification.object as? User {
+            fetchTodayNews(with: location.country)
+        }
+    }
+
+    private func fetchStockData(with companies: String) {
+        NetworkService.shared.fetchStockData(searchedStockCompanies: companies) { (results, error) in
+            if let err = error {
+                print("Can't fetch stock data", err)
+            }
+            if let res = results {
+                self.stockData.value = res.compactMap{StockHeaderCellModel(symbol: $0.symbol, price: $0.price)}
+            }
+        }
+    }
+    
+    private func fetchTodayNews(with country: String) {
+        NetworkService.shared.fetchTodayNews(preferredCountry: country) { (results, error) in
             if let err = error {
                 print("Can't fetch today news", err)
             }
@@ -37,3 +80,4 @@ public class TodayCellViewModel {
         }
     }
 }
+
