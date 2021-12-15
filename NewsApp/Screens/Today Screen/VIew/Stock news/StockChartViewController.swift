@@ -115,6 +115,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         super.viewDidLoad()
         fetchData()
         lineChartView.delegate = self
+        setupLabelsData()
     }
 
     override func loadView() {
@@ -132,7 +133,6 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         setupHalfView()
         setupStackView()
         setupCloseButton()
-        setupLabelsData()
     }
 
     private func setupCloseButton() {
