@@ -8,7 +8,6 @@
 import UIKit
 
 class StockCell: UITableViewCell {
-    static let identifier = "StockCell"
     var company: StockCompanies? {
         didSet {
             if let currentCompany = company {

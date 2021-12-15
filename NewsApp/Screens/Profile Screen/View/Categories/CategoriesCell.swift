@@ -8,8 +8,6 @@
 import UIKit
 
 class CategoriesCell: BaseCell {
-    static let identifier = "CategoriesCell"
-
     var category: Categories? {
         didSet {
             if let currentCategory = category {

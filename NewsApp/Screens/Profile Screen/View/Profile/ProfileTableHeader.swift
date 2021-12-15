@@ -8,8 +8,6 @@
 import UIKit
 
 class ProfileTableHeader: UIView {
-
-    static let identifier = "ProfileTableHeader"
     private let countryImageName = UserDefaults.standard.value(forKey: "countryImage") as? String ?? "usa_image"
     var imageTapHandler: (() ->())? = nil
 

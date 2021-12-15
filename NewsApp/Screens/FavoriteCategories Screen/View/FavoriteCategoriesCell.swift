@@ -8,9 +8,6 @@
 import UIKit
 
 class FavoriteCategoriesCell: UICollectionViewCell {
-    
-    static let identifier = "FavoriteCategoriesCell"
-    
     var dataSourse: String? {
         didSet {
             if let text = dataSourse {

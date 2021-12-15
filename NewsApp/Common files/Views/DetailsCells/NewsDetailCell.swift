@@ -8,7 +8,6 @@
 import UIKit
 
 class NewsDetailCell: UICollectionViewCell {
-    static let identifier = "NewsDetailCell"
     private let attributes: [NSAttributedString.Key : Any] = [
         .foregroundColor : UIColor.black,
         .font : UIFont.systemFont(ofSize: 18)

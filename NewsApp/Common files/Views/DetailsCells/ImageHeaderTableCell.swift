@@ -8,9 +8,6 @@
 import UIKit
 
 class ImageHeaderTableCell: UITableViewCell {
-
-    static let identifier = "ImageHeaderTableCell"
-
     var topConstaraint: NSLayoutConstraint?
 //    var dataSource: Articles? {
 //        didSet {

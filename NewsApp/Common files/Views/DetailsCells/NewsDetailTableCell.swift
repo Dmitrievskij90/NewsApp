@@ -8,20 +8,9 @@
 import UIKit
 
 class NewsDetailTableCell: UITableViewCell {
-
-    static let identifier = "NewsDetailTableCell"
     private let paragraph = NSMutableParagraphStyle()
     private var attributes = [NSAttributedString.Key : Any]()
-
-//    var dataSource: Articles? {
-//        didSet {
-//            if let source = dataSource {
-//                let attributedString = NSAttributedString(string: source.description ?? "", attributes: attributes)
-//                descriptionTextView.attributedText = attributedString
-//            }
-//        }
-//    }
-
+    
     var dataSource: TodayCellModel? {
         didSet {
             if let source = dataSource {

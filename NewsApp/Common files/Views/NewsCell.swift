@@ -8,9 +8,6 @@
 import UIKit
 
 class NewsCell: UICollectionViewCell {
-
-    static let identifier = "NewsCategoryCell"
-
     var article: Articles? {
         didSet {
             if let source = article {

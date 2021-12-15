@@ -8,8 +8,6 @@
 import UIKit
 
 class ImageHeaderCell: UICollectionViewCell {
-    static let identifier = "ImageHeaderCell"
-
     var dataSource: Articles? {
         didSet {
             if let source = dataSource {

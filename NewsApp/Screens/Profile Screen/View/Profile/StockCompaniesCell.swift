@@ -8,8 +8,6 @@
 import UIKit
 
 class StockCompaniesCell: UITableViewCell {
-    static let identifier = "StockCompaniesCell"
-
     let countryLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)

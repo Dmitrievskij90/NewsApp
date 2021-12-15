@@ -8,8 +8,6 @@
 import UIKit
 
 class FavouriteCategoriesCell: UITableViewCell {
-    static let identifier = "FavouriteCategoriesCell"
-
     let countryLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)

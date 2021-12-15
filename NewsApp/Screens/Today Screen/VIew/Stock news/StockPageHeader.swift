@@ -8,7 +8,6 @@
 import UIKit
 
 class StockPageHeader: UICollectionReusableView {
-    static let identifier = "StockPageHeader"
     let stockHeaderHorizontalController = StockHeaderHorizontalController()
 
     override init(frame: CGRect) {

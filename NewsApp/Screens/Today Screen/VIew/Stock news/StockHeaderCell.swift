@@ -8,7 +8,6 @@
 import UIKit
 
 class StockHeaderCell: UICollectionViewCell {
-    static let identifier = "StockHeaderCell"
     private var companyName = ""
     
     override var isHighlighted: Bool {

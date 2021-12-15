@@ -8,8 +8,6 @@
 import UIKit
 
 class ChooseCountryCell: UITableViewCell {
-    static let identifier = "ChooseCountryCell"
-
     let countryLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
