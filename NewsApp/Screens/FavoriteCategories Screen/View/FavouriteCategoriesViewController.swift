@@ -9,8 +9,7 @@ import UIKit
 
 class FavouriteCategoriesViewController: UIViewController {
     private var favouriteCategoriesCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private var set = Set<String>()
-    private var categories = [String]()
+    private let viewModel = FavouriteCategoriesViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,8 +17,7 @@ class FavouriteCategoriesViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        set = CategoryManager.shared.loadCategoriesSet()
-        categories = set.sorted()
+        viewModel.viewWillAppear()
         DispatchQueue.main.async {
             self.favouriteCategoriesCollectionView.reloadData()
         }
@@ -51,7 +49,7 @@ class FavouriteCategoriesViewController: UIViewController {
 extension FavouriteCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return set.count
+        return viewModel.categories.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -60,7 +58,7 @@ extension FavouriteCategoriesViewController: UICollectionViewDataSource, UIColle
         }
 
         cell.layer.cornerRadius = 15
-        cell.dataSourse = categories[indexPath.item]
+        cell.dataSourse = viewModel.categories[indexPath.item]
         return cell
     }
 
@@ -77,7 +75,7 @@ extension FavouriteCategoriesViewController: UICollectionViewDataSource, UIColle
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let category = categories[indexPath.item]
+        let category = viewModel.categories[indexPath.item]
         let fullScreenController = FullScreenCategoriesViewController(preferredCategoty: category)
         navigationController?.pushViewController(fullScreenController, animated: true)
     }
