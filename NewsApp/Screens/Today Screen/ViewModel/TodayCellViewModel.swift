@@ -10,6 +10,7 @@ import Foundation
 public class TodayCellViewModel {
     var todayNews: Box<[TodayCellModel]> = Box([])
     var stockData: Box<[StockHeaderCellModel]> = Box([])
+    var stopAnimating: (()->())?
     private var defaultLocation = CategoryManager.shared.loadUser().country
     private var stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet().sorted().joined(separator: ",")
 
@@ -68,12 +69,18 @@ public class TodayCellViewModel {
     }
     
     private func fetchTodayNews(with country: String) {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
         NetworkService.shared.fetchTodayNews(preferredCountry: country) { (results, error) in
             if let err = error {
                 print("Can't fetch today news", err)
             }
             if let res = results?.articles {
                 self.todayNews.value = res.compactMap{TodayCellModel(source: $0.source.name, date: $0.publishedAt, title: $0.title ?? "", image: $0.urlToImage ?? "", description: $0.description ?? "", url: $0.url)}
+            }
+            dispatchGroup.leave()
+            dispatchGroup.notify(queue: .main) { [weak self] in
+                self?.stopAnimating?()
             }
         }
     }
