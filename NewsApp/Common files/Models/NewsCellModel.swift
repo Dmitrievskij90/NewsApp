@@ -8,7 +8,11 @@
 import Foundation
 
 struct NewsCellModel {
-    let author: String
+    let source: String
+    let date: String
     let title: String
     let image: String
+    let description: String
+    let url: String
+    let publishedAt: String
 }
