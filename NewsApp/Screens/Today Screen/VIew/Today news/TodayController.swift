@@ -28,7 +28,6 @@ class TodayController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .label
-        animateActivityIndicator()
         bindData()
 
         refreshControl.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
@@ -47,10 +46,8 @@ class TodayController: UIViewController {
                 self?.todayCollectionView.reloadData()
             }
         }
-    }
 
-   private func animateActivityIndicator() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+        viewModel.stopAnimating = { [weak self] in
             self?.activityIndicator.stopAnimating()
         }
     }
