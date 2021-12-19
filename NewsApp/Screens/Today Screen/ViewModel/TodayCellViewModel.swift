@@ -13,8 +13,6 @@ public class TodayCellViewModel {
     private var defaultLocation = CategoryManager.shared.loadUser().country
     private var stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet().sorted().joined(separator: ",")
 
-
-
     init() {
         fetchTodayNews(with: defaultLocation)
         fetchStockData(with: stockCompaniesSet)
