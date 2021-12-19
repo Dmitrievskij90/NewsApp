@@ -47,7 +47,8 @@ class TodayController: UIViewController {
             }
         }
 
-        viewModel.stopAnimating = { [weak self] in
+        viewModel.updateViews = { [weak self] in
+            self?.todayCollectionView.reloadData()
             self?.activityIndicator.stopAnimating()
         }
     }

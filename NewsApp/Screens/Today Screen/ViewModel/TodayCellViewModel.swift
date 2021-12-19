@@ -10,13 +10,12 @@ import Foundation
 public class TodayCellViewModel {
     var todayNews: Box<[TodayCellModel]> = Box([])
     var stockData: Box<[StockHeaderCellModel]> = Box([])
-    var stopAnimating: (()->())?
+    var updateViews: (()->())?
     private var defaultLocation = CategoryManager.shared.loadUser().country
     private var stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet().sorted().joined(separator: ",")
 
     init() {
-        fetchTodayNews(with: defaultLocation)
-        fetchStockData(with: stockCompaniesSet)
+        fetchTodayNews(with: defaultLocation, with: stockCompaniesSet)
         addObservers()
     }
 
@@ -26,8 +25,7 @@ public class TodayCellViewModel {
     }
 
     func refreshData() {
-        fetchStockData(with: stockCompaniesSet)
-        fetchTodayNews(with: defaultLocation)
+        fetchTodayNews(with: defaultLocation, with: stockCompaniesSet)
     }
 
     private func addObservers() {
@@ -47,41 +45,49 @@ public class TodayCellViewModel {
     @objc private func updateStockCompaniesSet(_ notification: Notification) {
         if let loc = notification.object {
             guard let copm = loc as? Set<String> else {return}
-            fetchStockData(with: copm.sorted().joined(separator: ","))
+            stockCompaniesSet = copm.sorted().joined(separator: ",")
+            refreshData()
         }
     }
 
     @objc private func updateCountryforTodayNews(_ notification: Notification) {
         if let location = notification.object as? User {
-            fetchTodayNews(with: location.country)
+            defaultLocation = location.country
+            refreshData()
         }
     }
 
-    private func fetchStockData(with companies: String) {
-        NetworkService.shared.fetchStockData(searchedStockCompanies: companies) { (results, error) in
-            if let err = error {
-                print("Can't fetch stock data", err)
-            }
-            if let res = results {
-                self.stockData.value = res.compactMap{StockHeaderCellModel(symbol: $0.symbol, price: $0.price)}
-            }
-        }
-    }
-    
-    private func fetchTodayNews(with country: String) {
+    private func fetchTodayNews(with country: String, with companies: String) {
+        let todayNews: Box<[TodayCellModel]> = Box([])
+        let stockData: Box<[StockHeaderCellModel]> = Box([])
+
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         NetworkService.shared.fetchTodayNews(preferredCountry: country) { (results, error) in
             if let err = error {
                 print("Can't fetch today news", err)
             }
-            if let res = results?.articles {
-                self.todayNews.value = res.compactMap{TodayCellModel(source: $0.source.name, date: $0.publishedAt, title: $0.title ?? "", image: $0.urlToImage ?? "", description: $0.description ?? "", url: $0.url)}
-            }
             dispatchGroup.leave()
-            dispatchGroup.notify(queue: .main) { [weak self] in
-                self?.stopAnimating?()
+            if let res = results?.articles {
+                todayNews.value = res.compactMap{TodayCellModel(source: $0.source.name, date: $0.publishedAt, title: $0.title ?? "", image: $0.urlToImage ?? "", description: $0.description ?? "", url: $0.url)}
             }
+
+        }
+            dispatchGroup.enter()
+            NetworkService.shared.fetchStockData(searchedStockCompanies: companies) { (results, error) in
+                if let err = error {
+                    print("Can't fetch stock data", err)
+                }
+                dispatchGroup.leave()
+                if let res = results {
+                    stockData.value = res.compactMap{StockHeaderCellModel(symbol: $0.symbol, price: $0.price)}
+                }
+            }
+
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.todayNews = todayNews
+            self?.stockData = stockData
+            self?.updateViews?()
         }
     }
 }
