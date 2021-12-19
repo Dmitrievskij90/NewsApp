@@ -99,9 +99,9 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let article = articles[indexPath.item]
-        let appDetailController = DetailsController(article: article)
-        navigationController?.pushViewController(appDetailController, animated: true)
+//        let article = articles[indexPath.item]
+//        let appDetailController = DetailsController(article: article)
+//        navigationController?.pushViewController(appDetailController, animated: true)
     }
 }
 

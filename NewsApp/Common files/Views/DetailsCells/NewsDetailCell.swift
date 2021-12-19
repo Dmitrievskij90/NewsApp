@@ -13,10 +13,10 @@ class NewsDetailCell: UICollectionViewCell {
         .font : UIFont.systemFont(ofSize: 18)
     ]
 
-    var dataSource: Articles? {
+    var dataSource: NewsCellModel? {
         didSet {
             if let source = dataSource {
-                let attributedString = NSAttributedString(string: source.description ?? "", attributes: attributes)
+                let attributedString = NSAttributedString(string: source.description , attributes: attributes)
                 titleLabel.text = source.title
                 descriptionTextView.attributedText = attributedString
                 dateLabel.text = Helpers.shared.convertDate(date: source.publishedAt) 

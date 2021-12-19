@@ -113,8 +113,8 @@ extension FullScreenCategoriesViewController: UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //        let article = viewModel.categoryNews.value[indexPath.item]
-        //        let appDetailController = DetailsController(article: article)
-        //        navigationController?.pushViewController(appDetailController, animated: true)
+                let article = viewModel.categoryNews.value[indexPath.item]
+                let appDetailController = DetailsController(article: article)
+                navigationController?.pushViewController(appDetailController, animated: true)
     }
 }

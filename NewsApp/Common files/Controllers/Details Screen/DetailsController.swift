@@ -9,11 +9,11 @@ import UIKit
 
 class DetailsController: UIViewController {
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private var article: Articles
+    private var article: NewsCellModel
     private let floatingContainerView = FloatingContainerView()
     private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
 
-    init(article: Articles) {
+    init(article: NewsCellModel) {
         self.article = article
         super.init(nibName: nil, bundle: nil)
     }
@@ -79,7 +79,7 @@ class DetailsController: UIViewController {
         let height = view.frame.height / 9
         view.addSubview(floatingContainerView)
         floatingContainerView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: -90, right: 16), size: .init(width: 0, height: height))
-        floatingContainerView.imageView.sd_setImage(with: URL(string: article.urlToImage ?? ""))
+        floatingContainerView.imageView.sd_setImage(with: URL(string: article.image))
         floatingContainerView.transitionHandler = { [weak self] in
             let viewController = WebNewsViewController()
             viewController.modalPresentationStyle = .fullScreen

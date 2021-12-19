@@ -11,7 +11,7 @@ class FavoriteCategoryNewsCell: UICollectionViewCell {
     var article: NewsCellModel? {
         didSet {
             if let source = article {
-                authorLabel.text = source.author
+                authorLabel.text = source.source
                 titleLabel.text = source.title
                 if source.image != "" {
                     newsImageView.sd_setImage(with: URL(string: source.image))

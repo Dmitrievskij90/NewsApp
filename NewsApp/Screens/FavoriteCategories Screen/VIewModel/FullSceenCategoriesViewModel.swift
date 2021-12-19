@@ -9,9 +9,9 @@ import Foundation
 
 class FullSceenCategoriesViewModel {
     var categoryNews: Box<[NewsCellModel]> = Box([])
-    private var defaultLocation = CategoryManager.shared.loadUser().country
     var category: String
     var stopAnimating: (()->())?
+    private var defaultLocation = CategoryManager.shared.loadUser().country
 
     init(category: String) {
         self.category = category
@@ -34,7 +34,7 @@ class FullSceenCategoriesViewModel {
                 print("Can't fetch stock data", err)
             }
             if let res = results?.articles  {
-                self.categoryNews.value = res.compactMap{NewsCellModel(author: $0.author ?? "", title: $0.title ?? "", image: $0.urlToImage ?? "")}
+                self.categoryNews.value = res.compactMap{NewsCellModel(source: $0.source.name, date: $0.publishedAt, title: $0.title ?? "", image: $0.urlToImage ?? "", description: $0.description ?? "", url: $0.url, publishedAt: $0.publishedAt)}
             }
             dispatchGroup.leave()
             dispatchGroup.notify(queue: .main) { [weak self] in

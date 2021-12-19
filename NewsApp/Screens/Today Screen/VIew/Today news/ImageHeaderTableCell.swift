@@ -9,21 +9,6 @@ import UIKit
 
 class ImageHeaderTableCell: UITableViewCell {
     var topConstaraint: NSLayoutConstraint?
-//    var dataSource: Articles? {
-//        didSet {
-//            if let source = dataSource {
-//                sourceLabel.text = source.source.name.uppercased()
-//                dateLabel.text = Helpers.shared.convertDate(date: source.publishedAt)
-//                titleLabel.text = source.title
-//                if let image = source.urlToImage, source.urlToImage != "" {
-//                    newsImageView.sd_setImage(with: URL(string: image))
-//                } else {
-//                    newsImageView.image = UIImage(named: "news_image")
-//                }
-//            }
-//        }
-//    }
-
     var dataSource: TodayCellModel? {
         didSet {
             if let source = dataSource {

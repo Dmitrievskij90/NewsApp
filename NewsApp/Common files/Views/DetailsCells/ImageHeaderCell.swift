@@ -8,12 +8,12 @@
 import UIKit
 
 class ImageHeaderCell: UICollectionViewCell {
-    var dataSource: Articles? {
+    var dataSource: NewsCellModel? {
         didSet {
             if let source = dataSource {
-                sourceLabel.text = source.source.name.uppercased()
-                if let image = source.urlToImage, source.urlToImage != "" {
-                    headerImageView.sd_setImage(with: URL(string: image))
+                sourceLabel.text = source.source.uppercased()
+                if source.image != "" {
+                    headerImageView.sd_setImage(with: URL(string: source.image))
                 } else {
                     headerImageView.image = UIImage(named: "news_image")
                 }
