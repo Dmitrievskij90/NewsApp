@@ -8,13 +8,13 @@
 import UIKit
 
 class NewsSearchCell: UICollectionViewCell {
-    var article: Articles? {
+    var article: NewsCellModel? {
         didSet {
             if let source = article {
-                authorLabel.text = source.source.name
+                authorLabel.text = source.source
                 titleLabel.text = source.title
-                if let image = source.urlToImage, source.urlToImage != "" {
-                    newsImageView.sd_setImage(with: URL(string: image))
+                if source.image != "" {
+                    newsImageView.sd_setImage(with: URL(string: source.image))
                 } else {
                     newsImageView.image = UIImage(named: "news_image")
                 }
