@@ -23,14 +23,22 @@ class NewsSearchController: UIViewController {
         return label
     }()
 
+    private let viewModel = NewsSearchControllerViewModel()
+
     // MARK: - Lificycle methods
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.newsBySearch.bind { _ in
+            DispatchQueue.main.async { [weak self] in
+                self?.collectionView.reloadData()
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.viewWillAppear()
         tabBarController?.tabBar.alpha = 1
     }
 
@@ -60,7 +68,7 @@ class NewsSearchController: UIViewController {
         layout.scrollDirection = .vertical
 
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        collectionView.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell.identifier)
+        collectionView.register(NewsSearchCell.self, forCellWithReuseIdentifier: NewsSearchCell.identifier)
         collectionView.backgroundColor = UIColor.white
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -73,15 +81,16 @@ class NewsSearchController: UIViewController {
 // MARK: -
 extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        enterSearchTermLabel.isHidden = articles.count != 0
-        return articles.count
+        enterSearchTermLabel.isHidden = viewModel.newsBySearch.value.count != 0
+//        return articles.count
+        return viewModel.newsBySearch.value.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsCell.identifier, for: indexPath) as? NewsCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsSearchCell.identifier, for: indexPath) as? NewsSearchCell else {
             return UICollectionViewCell()
         }
-        cell.article = articles[indexPath.item]
+        cell.article = viewModel.newsBySearch.value[indexPath.item]
         return cell
     }
 
@@ -99,9 +108,9 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let article = articles[indexPath.item]
-//        let appDetailController = DetailsController(article: article)
-//        navigationController?.pushViewController(appDetailController, animated: true)
+        let article = viewModel.newsBySearch.value[indexPath.item]
+        let appDetailController = DetailsController(article: article)
+        navigationController?.pushViewController(appDetailController, animated: true)
     }
 }
 
@@ -111,19 +120,20 @@ extension NewsSearchController: UISearchBarDelegate {
         user = CategoryManager.shared.loadUser()
 
         let term = searchText.replacingOccurrences(of: " ", with: "")
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
-            guard let self = self else { return }
-            NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: self.user.country) { (results, error) in
-                if let err = error {
-                    print("Failed to fetch apps:", err)
-                    return
-                }
-                self.articles = results?.articles ?? []
+        NotificationCenter.default.post(name: NSNotification.Name("term"), object: term)
+//        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
+//            guard let self = self else { return }
+//            NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: self.user.country) { (results, error) in
+//                if let err = error {
+//                    print("Failed to fetch apps:", err)
+//                    return
+//                }
+//                self.articles = results?.articles ?? []
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
-            }
-        })
+//            }
+//        })
     }
 }
 
