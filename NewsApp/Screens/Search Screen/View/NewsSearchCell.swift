@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewsCell: UICollectionViewCell {
+class NewsSearchCell: UICollectionViewCell {
     var article: Articles? {
         didSet {
             if let source = article {
