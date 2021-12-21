@@ -46,14 +46,14 @@ public class TodayCellViewModel {
         if let loc = notification.object {
             guard let copm = loc as? Set<String> else {return}
             stockCompaniesSet = copm.sorted().joined(separator: ",")
-            refreshData()
+//            refreshData()
         }
     }
 
     @objc private func updateCountryforTodayNews(_ notification: Notification) {
         if let location = notification.object as? User {
             defaultLocation = location.country
-            refreshData()
+//            refreshData()
         }
     }
 

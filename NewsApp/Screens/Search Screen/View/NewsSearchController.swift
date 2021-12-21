@@ -10,10 +10,6 @@ import SDWebImage
 
 class NewsSearchController: UIViewController {
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private var articles = [Articles]()
-    private var user = User()
-    private var timer: Timer?
-
     private let searhController = UISearchController(searchResultsController: nil)
     private let enterSearchTermLabel: UILabel = {
         let label = UILabel()
@@ -82,7 +78,6 @@ class NewsSearchController: UIViewController {
 extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         enterSearchTermLabel.isHidden = viewModel.newsBySearch.value.count != 0
-//        return articles.count
         return viewModel.newsBySearch.value.count
     }
 
@@ -116,24 +111,11 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
 
 extension NewsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        timer?.invalidate()
-        user = CategoryManager.shared.loadUser()
-
         let term = searchText.replacingOccurrences(of: " ", with: "")
         NotificationCenter.default.post(name: NSNotification.Name("term"), object: term)
-//        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
-//            guard let self = self else { return }
-//            NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: self.user.country) { (results, error) in
-//                if let err = error {
-//                    print("Failed to fetch apps:", err)
-//                    return
-//                }
-//                self.articles = results?.articles ?? []
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-//            }
-//        })
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
 }
 
