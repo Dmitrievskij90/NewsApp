@@ -39,6 +39,7 @@
 		5C7098CA26E93EB600A8AEC5 /* FloatingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7098C926E93EB600A8AEC5 /* FloatingContainerView.swift */; };
 		5C75F8762733CAF0001F2B80 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C75F8752733CAF0001F2B80 /* GoogleService-Info.plist */; };
 		5C7C3D40272D676A00FD0453 /* StockCompanies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3D3F272D676A00FD0453 /* StockCompanies.swift */; };
+		5C7D6D6C277380000069BE08 /* WelcomeControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D6D6B277380000069BE08 /* WelcomeControllerViewModel.swift */; };
 		5C83CBB22729A90D001A42DF /* StockCompaniesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C83CBB12729A90D001A42DF /* StockCompaniesViewController.swift */; };
 		5C83CBB52729AA3E001A42DF /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C83CBB42729AA3E001A42DF /* StockCell.swift */; };
 		5C8917B42767A68800927EE9 /* StockHeaderCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8917B32767A68800927EE9 /* StockHeaderCellModel.swift */; };
@@ -118,6 +119,7 @@
 		5C7098C926E93EB600A8AEC5 /* FloatingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingContainerView.swift; sourceTree = "<group>"; };
 		5C75F8752733CAF0001F2B80 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5C7C3D3F272D676A00FD0453 /* StockCompanies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCompanies.swift; sourceTree = "<group>"; };
+		5C7D6D6B277380000069BE08 /* WelcomeControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeControllerViewModel.swift; sourceTree = "<group>"; };
 		5C83CBB12729A90D001A42DF /* StockCompaniesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCompaniesViewController.swift; sourceTree = "<group>"; };
 		5C83CBB42729AA3E001A42DF /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
 		5C8917B32767A68800927EE9 /* StockHeaderCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHeaderCellModel.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 		5CBDA4122768F1FC003AB428 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				5C7D6D6B277380000069BE08 /* WelcomeControllerViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -789,6 +792,7 @@
 				5CB501D926E6513900246670 /* BaseCell.swift in Sources */,
 				5C8917C82767BE6400927EE9 /* BaseActivityIndicator.swift in Sources */,
 				5CA46EF526E36DDC0031A540 /* SceneDelegate.swift in Sources */,
+				5C7D6D6C277380000069BE08 /* WelcomeControllerViewModel.swift in Sources */,
 				5CD683A22770E43500C6EBA5 /* NewsSearchControllerViewModel.swift in Sources */,
 				5CBB48BD276A4439005F2F69 /* UIView+Extension.swift in Sources */,
 				5CE00E2D26F78F1B00BAFAAE /* CountryCell.swift in Sources */,

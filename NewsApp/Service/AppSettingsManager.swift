@@ -33,13 +33,6 @@ class AppSettingsManager {
         return login
     }
 
-//    var userPassword: String {
-//        guard let userPassword = try? keychain.get("password") else {
-//            fatalError("the user's password is not set")
-//        }
-//        return userPassword
-//    }
-
     var isUserSignedIn: String {
         guard let rememberUser = try? keychain.get("remember") else {
             return ""
@@ -54,9 +47,4 @@ class AppSettingsManager {
     func forgetUser() {
         keychain["remember"] = nil
     }
-
-//    func setUserCredentials(login: String, password: String) {
-//        keychain["login"] = login
-//        keychain["password"] = password
-//    }
 }
