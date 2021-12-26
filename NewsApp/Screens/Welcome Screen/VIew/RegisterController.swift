@@ -6,13 +6,12 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseAuth
 
 class RegisterController: UIViewController {
     private let emailLabel = UILabel()
     private let passwordLabel = UILabel()
     private let confirmLabel = UILabel()
+    private let viewModel = RegisterControllerViewModel()
 
     private let registerLabel: UILabel = {
         let label = UILabel()
@@ -55,6 +54,7 @@ class RegisterController: UIViewController {
         rememberSwitch.onTintColor = .init(hex: 0xDB6400)
         rememberSwitch.thumbTintColor = .white
         rememberSwitch.isUserInteractionEnabled = false
+        rememberSwitch.addTarget(self, action: #selector(observeRememberSwitch), for: .valueChanged)
         return rememberSwitch
     }()
     
@@ -81,6 +81,8 @@ class RegisterController: UIViewController {
         loginTextField.delegate = self
         passwordTextField.delegate = self
         repeatPasswordTextField.delegate = self
+
+        updateControllerWithVIewModel()
     }
     
     override func loadView() {
@@ -187,69 +189,50 @@ class RegisterController: UIViewController {
         doneButton.centerXInSuperview()
     }
     
-    @objc func cancelButonPressed() {
+    @objc private func cancelButonPressed() {
         dismiss(animated: true, completion: nil)
-        AppSettingsManager.shared.forgetUser()
+        viewModel.cancelButonPressed()
     }
 
-    @objc func doneButonPressed() {
+    @objc private func doneButonPressed() {
         setUserData()
     }
 
-    private func setUserData() {
-        guard let login = loginTextField.text else {
-            fatalError("Wrong login")
-        }
-        guard let password = passwordTextField.text, password.count >= 6 else {
-            return presentOneButtonAlert(withTitle: "Short password", message: "The password must be equal to or greater than 6 characters")
-        }
-        
-        guard let repeatPassword = repeatPasswordTextField.text, repeatPassword.count >= 6 else {
-            return presentOneButtonAlert(withTitle: "Short password", message: "The password must be equal to or greater than 6 characters")
-        }
-        
-        if rememberSwitch.isOn {
-            AppSettingsManager.shared.keepUserSignedIn()
-        }
-        
-        if login.isEmpty || password.isEmpty {
-            presentOneButtonAlert(withTitle: "Empty field", message: "Please enter user data")
-        } else if password != repeatPassword {
-            presentOneButtonAlert(withTitle: "Passwords don't match", message: "Please check the spelling and try again")
-        } else {
-            Auth.auth().fetchSignInMethods(forEmail: login, completion: { [weak self] (providers, error) in
-                guard let self = self else {
-                    return
-                }
-                if error != nil  {
-                    self.presentOneButtonAlert(withTitle: "Bad Email format", message: "")
-                } else if providers != nil {
-                    self.presentOneButtonAlert(withTitle: "User is alredy exists", message: "")
-                } else {
-                    self.createUser(with: login, password: password)
-                    self.presentVerificationController()
-                }
-            })
-        }
+    @objc private func observeRememberSwitch() {
+        NotificationCenter.default.post(name: NSNotification.Name("rememberSwitch"), object: rememberSwitch)
     }
 
-    private func createUser(with login: String, password: String) {
-        Auth.auth().createUser(withEmail: login, password: password) { [weak self] (authDataResult, error) in
+    private func updateControllerWithVIewModel() {
+        viewModel.result.bind { [weak self ] result in
             guard let self = self else {
                 return
             }
-            if let authResult = authDataResult {
-                let user = authResult.user
-                user.sendEmailVerification { error in
-                    if error != nil {
-                        print("we have problem \(String(describing: error))")
-                    }
-                }
-            }
-            if error != nil {
+            switch result {
+            case .emptyField :
+                self.presentOneButtonAlert(withTitle: "Empty field", message: "Please enter user data")
+            case .badEmailFormat:
+                self.presentOneButtonAlert(withTitle: "Bad Email format", message: "")
+            case .passwordsNotmatch:
+                self.presentOneButtonAlert(withTitle: "Passwords don't match", message: "Please check the spelling and try again")
+            case .registrationFailed:
                 self.presentOneButtonAlert(withTitle: "Registration failed", message: "Please try later")
+            case .userAlredyExists:
+                self.presentOneButtonAlert(withTitle: "User is alredy exists", message: "")
+            case .shortPassword:
+                self.presentOneButtonAlert(withTitle: "Short password", message: "The password must be equal to or greater than 6 characters")
+            case .presentVerificationController:
+                self.presentVerificationController()
+            default:
+                break
             }
         }
+    }
+
+    private func setUserData() {
+        guard let login = loginTextField.text, let password = passwordTextField.text, let repeatPassword = repeatPasswordTextField.text else {
+            return
+        }
+        viewModel.setUserData(with: login, password: password, repeatPassword: repeatPassword)
     }
 
     private func presentVerificationController() {
