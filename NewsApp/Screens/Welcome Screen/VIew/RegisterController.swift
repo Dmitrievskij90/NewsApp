@@ -8,9 +8,9 @@
 import UIKit
 
 class RegisterController: UIViewController {
-    private let emailLabel = UILabel()
-    private let passwordLabel = UILabel()
-    private let confirmLabel = UILabel()
+    private let emailLabel = UILabel(text: "Email")
+    private let passwordLabel = UILabel(text: "Password")
+    private let confirmLabel = UILabel(text: "Confirm password")
     private let viewModel = RegisterControllerViewModel()
 
     private let registerLabel: UILabel = {
@@ -91,26 +91,12 @@ class RegisterController: UIViewController {
         navigationItem.leftBarButtonItem = cancelButton
         cancelButton.tintColor = .label
 
-        setupStackViewLabels(with: emailLabel, text: "Email")
-        setupStackViewLabels(with: passwordLabel, text: "Password")
-        setupStackViewLabels(with: confirmLabel, text: "Confirm password")
-
         setupStackView()
         setupDoneButton()
     }
 
     // MARK: - setup user interface methods
     // MARK: -
-
-    private func setupStackViewLabels(with label: UILabel, text: String) {
-        label.text = text
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .left
-        label.textColor = .darkGray
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-    }
-
     private func setupStackView() {
         let keepMeSignedInStackView = UIStackView(arrangedSubviews: [
             rememberSwitch,

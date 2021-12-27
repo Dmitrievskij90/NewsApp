@@ -13,8 +13,8 @@ class LoginViewController: UIViewController {
     private var bottomConstraint: NSLayoutConstraint?
     private let alertView = VerificationAlertView()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-    private let emailLabel = UILabel()
-    private let passwordLabel = UILabel()
+    private let emailLabel = UILabel(text: "Email")
+    private let passwordLabel = UILabel(text: "Password")
     private let sigInLabel: UILabel = {
         let label = UILabel()
         label.text = "Sign in to your account"
@@ -88,9 +88,6 @@ class LoginViewController: UIViewController {
         navigationItem.leftBarButtonItem = cancelButton
         cancelButton.tintColor = .label
 
-        setupStackViewLabels(with: emailLabel, text: "Email")
-        setupStackViewLabels(with: passwordLabel, text: "Password")
-
         setupStackView()
         setupDoneButton()
 
@@ -103,15 +100,6 @@ class LoginViewController: UIViewController {
 
     // MARK: - setup user interface methods
     // MARK: -
-    private func setupStackViewLabels(with label: UILabel, text: String) {
-        label.text = text
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .left
-        label.textColor = .darkGray
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-    }
-
     private func setupStackView() {
         let keepMeSignedInStackView = UIStackView(arrangedSubviews: [
             rememberSwitch,
