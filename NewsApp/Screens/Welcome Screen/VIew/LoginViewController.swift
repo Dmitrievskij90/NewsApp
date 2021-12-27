@@ -6,10 +6,9 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseAuth
 
 class LoginViewController: UIViewController {
+    private let viewModel = LoginControllerViewModel()
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
     private let alertView = VerificationAlertView()
@@ -49,6 +48,7 @@ class LoginViewController: UIViewController {
         rememberSwitch.onTintColor = .init(hex: 0xDB6400)
         rememberSwitch.thumbTintColor = .white
         rememberSwitch.isUserInteractionEnabled = false
+        rememberSwitch.addTarget(self, action: #selector(observeRememberSwitch), for: .valueChanged)
         return rememberSwitch
     }()
 
@@ -74,17 +74,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         loginTextField.delegate = self
         passwordTextField.delegate = self
-
-        guard let user = Auth.auth().currentUser else {
-            return
-        }
-        user.reload { error in
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        Auth.auth().currentUser?.reload()
-        print(AppSettingsManager.shared.userLogin)
+        viewModel.reloadUser()
+        updateControllerWithVIewModel()
     }
 
     override func loadView() {
@@ -197,72 +191,64 @@ class LoginViewController: UIViewController {
         alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         alertView.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
 
-        alertView.tapHandler = {
-            Auth.auth().currentUser?.reload()
-            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
-                self.topConstraint?.isActive = true
-                self.bottomConstraint?.isActive = false
-                self.blurVisualEffectView.alpha = 0
-                self.view.layoutIfNeeded()
-            }
+        alertView.tapHandler = { [weak self] in
+            self?.viewModel.reloadUser()
+            self?.hideAlertView()
         }
     }
 
+    //MARK: - Actions methods
+    //MARK: -
     @objc func cancelButonPressed() {
         dismiss(animated: true, completion: nil)
-        AppSettingsManager.shared.forgetUser()
+        viewModel.cancelButonPressed()
     }
 
     @objc func letsGoButonPressed() {
         validateCredentials()
     }
 
-    private func validateCredentials() {
+    @objc private func observeRememberSwitch() {
+        NotificationCenter.default.post(name: NSNotification.Name("loginSwitch"), object: rememberSwitch)
+    }
 
-        guard let login = loginTextField.text else {
-            fatalError("Wrong login")
-        }
-        guard let password = passwordTextField.text else {
-            fatalError("Wrong password")
-        }
-
-        if login.isEmpty || password.isEmpty {
-            presentOneButtonAlert(withTitle: "Empty field", message: "Please enter user data")
-        } else {
-            Auth.auth().signIn(withEmail: login, password: password) { [weak self] (authResult, error) in
-                guard let self = self else {
-                    return
-                }
-                if let authResult = authResult {
-                    let user = authResult.user
-                    if user.isEmailVerified {
-                        self.keepUserSignedIn()
-                        self.saveUserSettings()
-                        self.presentBaseTabBarController()
-                    } else {
-                        self.showAlertView()
-                    }
-                }
-                if error != nil {
-                    self.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
-                }
+    //MARK: - login methods
+    //MARK: -
+    private func updateControllerWithVIewModel() {
+        viewModel.result.bind { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case .emptyField :
+                self.presentOneButtonAlert(withTitle: "Empty field", message: "Please enter user data")
+            case .presentTabBarController:
+                self.presentBaseTabBarController()
+            case .showAlertView:
+                self.showAlertView()
+            case .wrongUserData:
+                self.presentOneButtonAlert(withTitle: "Error", message: "Wrong user data. Please try again")
+            default:
+                break
             }
         }
     }
 
-    private func keepUserSignedIn() {
-        if rememberSwitch.isOn {
-            AppSettingsManager.shared.keepUserSignedIn()
+    private func validateCredentials() {
+        guard let login = loginTextField.text, let password = passwordTextField.text else {
+            return
         }
+        viewModel.validateCredentials(with: login, password: password)
     }
 
-    private func saveUserSettings() {
-        CategoryManager.shared.isFirstLoad {
-            CategoryManager.shared.saveCategoriesSet(with:  DefaultParameters.categoriesSet)
-            CategoryManager.shared.saveCategoriesStruct(with: DefaultParameters.categoriesStruct)
-            CategoryManager.shared.saveStockCompaniesSet(with: DefaultParameters.stockCompaniesSet)
-            CategoryManager.shared.saveStockCompaniesStruct(with: DefaultParameters.stockCompaniesStruct)
-            CategoryManager.shared.saveUser(with: DefaultParameters.user)
+    //MARK: - alertView animation methods
+    //MARK: -
+    private func hideAlertView() {
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+            self.topConstraint?.isActive = true
+            self.bottomConstraint?.isActive = false
+            self.blurVisualEffectView.alpha = 0
+            self.view.layoutIfNeeded()
         }
     }
 
