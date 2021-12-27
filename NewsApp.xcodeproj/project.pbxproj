@@ -11,7 +11,10 @@
 		5C10981C274A7E90000C0F16 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C10981B274A7E90000C0F16 /* User.swift */; };
 		5C141CEA26ECEFBD0052028E /* TodayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C141CE926ECEFBD0052028E /* TodayController.swift */; };
 		5C148E9626FDDAC500F465AC /* ProfileTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */; };
+		5C16C7E8277A131900F96CE6 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C16C7E7277A131900F96CE6 /* UITextField+Extension.swift */; };
 		5C17A35B2778CFE8002F8A8D /* RegisterResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C17A35A2778CFE7002F8A8D /* RegisterResult.swift */; };
+		5C17A35E2778D3CC002F8A8D /* LoginControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C17A35D2778D3CC002F8A8D /* LoginControllerViewModel.swift */; };
+		5C17A3622778D67B002F8A8D /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C17A3612778D67B002F8A8D /* LoginResult.swift */; };
 		5C23AEED27662002006521BD /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C23AEEC27662002006521BD /* Box.swift */; };
 		5C23AEF02766204B006521BD /* TodayCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C23AEEF2766204B006521BD /* TodayCellViewModel.swift */; };
 		5C23AEF327662064006521BD /* TodayCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C23AEF227662064006521BD /* TodayCellModel.swift */; };
@@ -93,7 +96,10 @@
 		5C10981B274A7E90000C0F16 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C141CE926ECEFBD0052028E /* TodayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayController.swift; sourceTree = "<group>"; };
 		5C148E9526FDDAC500F465AC /* ProfileTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeader.swift; sourceTree = "<group>"; };
+		5C16C7E7277A131900F96CE6 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		5C17A35A2778CFE7002F8A8D /* RegisterResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterResult.swift; sourceTree = "<group>"; };
+		5C17A35D2778D3CC002F8A8D /* LoginControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginControllerViewModel.swift; sourceTree = "<group>"; };
+		5C17A3612778D67B002F8A8D /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
 		5C23AEEC27662002006521BD /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		5C23AEEF2766204B006521BD /* TodayCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCellViewModel.swift; sourceTree = "<group>"; };
 		5C23AEF227662064006521BD /* TodayCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCellModel.swift; sourceTree = "<group>"; };
@@ -355,6 +361,7 @@
 			isa = PBXGroup;
 			children = (
 				5C17A35A2778CFE7002F8A8D /* RegisterResult.swift */,
+				5C17A3612778D67B002F8A8D /* LoginResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -364,6 +371,7 @@
 			children = (
 				5C7D6D6B277380000069BE08 /* WelcomeControllerViewModel.swift */,
 				5C7D6D6E2773841E0069BE08 /* RegisterControllerViewModel.swift */,
+				5C17A35D2778D3CC002F8A8D /* LoginControllerViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -600,6 +608,7 @@
 				5C8B46F227469D9900206D07 /* DefaultParameters.swift */,
 				5C23AEEC27662002006521BD /* Box.swift */,
 				5CBB48BC276A4439005F2F69 /* UIView+Extension.swift */,
+				5C16C7E7277A131900F96CE6 /* UITextField+Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -739,6 +748,7 @@
 			files = (
 				5CB501E626E674B700246670 /* ImageHeaderCell.swift in Sources */,
 				5C8A73F22713016600AFFA76 /* TableDetailsController.swift in Sources */,
+				5C17A35E2778D3CC002F8A8D /* LoginControllerViewModel.swift in Sources */,
 				5C7098C726E9382100A8AEC5 /* Helpers.swift in Sources */,
 				5C4BADE726EA7E93000620A1 /* WebNewsViewController.swift in Sources */,
 				5C43A92E26E50BB5005FDD7B /* NewsData.swift in Sources */,
@@ -757,6 +767,7 @@
 				5C24EEB3271899B100F302D0 /* BaseButton.swift in Sources */,
 				5CBF2FE726EE411E00DB1D89 /* WelcomeController.swift in Sources */,
 				5C23AEF327662064006521BD /* TodayCellModel.swift in Sources */,
+				5C17A3622778D67B002F8A8D /* LoginResult.swift in Sources */,
 				5C7098CA26E93EB600A8AEC5 /* FloatingContainerView.swift in Sources */,
 				5C4BADE426EA702C000620A1 /* UIColor+Extension.swift in Sources */,
 				5C5A1BA9276B8DFC005FA529 /* FavouriteCategoriesViewModel.swift in Sources */,
@@ -770,6 +781,7 @@
 				5C2DF30B27024B6B00D51EEE /* CategoriesViewController.swift in Sources */,
 				5C31FF6627286B7E0001E714 /* StockCompaniesCell.swift in Sources */,
 				5C148E9626FDDAC500F465AC /* ProfileTableHeader.swift in Sources */,
+				5C16C7E8277A131900F96CE6 /* UITextField+Extension.swift in Sources */,
 				5C4867052709A0B20087A708 /* CategoryManager.swift in Sources */,
 				5C55A51026F0EC79004B148F /* LoginViewController.swift in Sources */,
 				5CA46F0F26E37AAB0031A540 /* NewsSearchController.swift in Sources */,
