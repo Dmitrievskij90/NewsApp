@@ -70,22 +70,7 @@ class VerificationController: UIViewController {
     }()
     
     private let nameTextField: UITextField = {
-        let textField = UITextField()
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.lightGray,
-            .font : UIFont.systemFont(ofSize: 10)
-        ]
-        let attributedString = NSAttributedString(string: "Reader", attributes: attributes)
-        textField.attributedPlaceholder = attributedString
-        textField.constrainHeight(constant: 50)
-        textField.borderStyle = .roundedRect
-        textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .white
-        textField.textAlignment = .center
-        textField.layer.shadowOpacity = 0.5
-        textField.layer.shadowRadius = 10
-        textField.layer.shadowOffset = .init(width: 0, height: 10)
-        textField.layer.shadowColor = UIColor.darkGray.cgColor
+        let textField = UITextField(placeholder: "Reader")
         textField.autocapitalizationType = .words
         textField.returnKeyType = .done
         return textField

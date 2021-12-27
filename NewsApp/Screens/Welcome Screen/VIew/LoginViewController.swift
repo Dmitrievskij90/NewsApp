@@ -27,18 +27,16 @@ class LoginViewController: UIViewController {
     }()
 
     private let loginTextField: UITextField = {
-        let textField = UITextField()
+        let textField = UITextField(placeholder: "user@gmail.com")
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
-        textField.constrainHeight(constant: DefaultParameters.buttonHeight)
         return textField
     }()
 
     private let passwordTextField: UITextField = {
-        let textField = UITextField()
+        let textField = UITextField(placeholder: "******")
         textField.returnKeyType = .done
         textField.isSecureTextEntry = true
-        textField.constrainHeight(constant: DefaultParameters.buttonHeight)
         return textField
     }()
 
@@ -90,9 +88,6 @@ class LoginViewController: UIViewController {
         navigationItem.leftBarButtonItem = cancelButton
         cancelButton.tintColor = .label
 
-        setupTextFields(with: loginTextField, text: "user@gmail.com")
-        setupTextFields(with: passwordTextField, text: "******")
-
         setupStackViewLabels(with: emailLabel, text: "Email")
         setupStackViewLabels(with: passwordLabel, text: "Password")
 
@@ -108,24 +103,6 @@ class LoginViewController: UIViewController {
 
     // MARK: - setup user interface methods
     // MARK: -
-    private func setupTextFields(with textField: UITextField, text: String) {
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.lightGray,
-            .font : UIFont.systemFont(ofSize: 10)
-        ]
-        let attributedString = NSAttributedString(string: text, attributes: attributes)
-        textField.attributedPlaceholder = attributedString
-        textField.constrainHeight(constant: 50)
-        textField.borderStyle = .roundedRect
-        textField.font = .systemFont(ofSize: 18)
-        textField.backgroundColor = .white
-        textField.textAlignment = .center
-        textField.layer.shadowOpacity = 0.5
-        textField.layer.shadowRadius = 10
-        textField.layer.shadowOffset = .init(width: 0, height: 10)
-        textField.layer.shadowColor = UIColor.darkGray.cgColor
-    }
-
     private func setupStackViewLabels(with label: UILabel, text: String) {
         label.text = text
         label.font = .boldSystemFont(ofSize: 18)
