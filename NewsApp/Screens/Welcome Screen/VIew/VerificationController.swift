@@ -89,7 +89,9 @@ class VerificationController: UIViewController {
     private let countryUSAButton = UIButton()
     private let countryFranceButton = UIButton()
     private let countryGermanyButton = UIButton()
-    
+
+    // MARK: - lifecycle methods
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         nameTextField.delegate = self
@@ -102,7 +104,9 @@ class VerificationController: UIViewController {
         viewModel.reloadUser()
         updateControllerWithVIewModel()
     }
-    
+
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
@@ -190,6 +194,26 @@ class VerificationController: UIViewController {
         }
     }
 
+    //MARK: - Presentation methods
+    //MARK: -
+    private func updateControllerWithVIewModel() {
+        viewModel.result.bind { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case .presentTabBarController:
+                self.presentBaseTabBarController()
+            case .showAlertView:
+                self.showAlertView()
+            default:
+                break
+            }
+        }
+    }
+
+    //MARK: - Animation methods
+    //MARK: -
     private func hideAlertView() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
             self.topConstraint?.isActive = true
@@ -207,7 +231,29 @@ class VerificationController: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
+
+    private func animateCountryButton(button: UIButton) {
+        if button.transform == .identity {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
+                button.transform = .init(scaleX: 0.8, y: 0.8)
+            }
+        } else {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
+                button.transform = .identity
+            }
+        }
+    }
     
+    private func resetButtons(buttons: [UIButton]) {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
+            for button in buttons {
+                button.transform = .identity
+            }
+        }
+    }
+
+    //MARK: - Actions methods
+    //MARK: -
     @objc func countryButtonTapped(button: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name("country"), object: button.tag)
         switch button.tag {
@@ -228,51 +274,15 @@ class VerificationController: UIViewController {
             resetButtons(buttons: [countryRussiaButton, countryGermanyButton, countryFranceButton])
         }
     }
-    
-    private func animateCountryButton(button: UIButton) {
-        if button.transform == .identity {
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
-                button.transform = .init(scaleX: 0.8, y: 0.8)
-            }
-        } else {
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
-                button.transform = .identity
-            }
-        }
-    }
-    
-    private func resetButtons(buttons: [UIButton]) {
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
-            for button in buttons {
-                button.transform = .identity
-            }
-        }
-    }
-    
+
     @objc private func cancelButonPressed() {
         dismiss(animated: true, completion: nil)
     }
-    
+
     @objc private func letsGoButonPressed() {
         viewModel.letsGoButonPressed()
     }
 
-    private func updateControllerWithVIewModel() {
-        viewModel.result.bind { [weak self] result in
-            guard let self = self else {
-                return
-            }
-            switch result {
-            case .presentTabBarController:
-                self.presentBaseTabBarController()
-            case .showAlertView:
-                self.showAlertView()
-            default:
-                break
-            }
-        }
-    }
-    
     @objc private func userImageViewTapped() {
         displayImagePickerController()
     }
@@ -309,6 +319,8 @@ extension VerificationController: UIImagePickerControllerDelegate, UINavigationC
     }
 }
 
+//MARK: - UITextFieldDelegate methods
+//MARK: -
 extension VerificationController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
