@@ -12,7 +12,7 @@ class VerificationAlertView: UIView {
 
     private let alertLabel: UILabel = {
         let label = UILabel()
-        label.text = "Virify you account.\nWe have sent a verification letter to your email. Please confirm your email and try again"
+        label.text = "Verify your account.\nWe have sent a verification letter to your email. Please confirm your email and try again"
         label.font = .boldSystemFont(ofSize: 20)
         label.textAlignment = .center
         label.textColor = .white

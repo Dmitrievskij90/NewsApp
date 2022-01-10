@@ -84,6 +84,8 @@
 		5CE2D6C2270392B300362909 /* FavouriteCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2D6C1270392B300362909 /* FavouriteCategoriesViewController.swift */; };
 		5CE2D6C62703939900362909 /* FavoriteCategoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2D6C52703939900362909 /* FavoriteCategoriesCell.swift */; };
 		5CE576EF2701EFAB00D24069 /* ProfileTableFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE576EE2701EFAB00D24069 /* ProfileTableFooter.swift */; };
+		5CF00311278C84A7007FEDA4 /* VerificationControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF00310278C84A7007FEDA4 /* VerificationControllerViewModel.swift */; };
+		5CF00314278C8FEE007FEDA4 /* VerificationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF00313278C8FEE007FEDA4 /* VerificationResult.swift */; };
 		5CF9EFCA26EFAD2900655DD2 /* AppSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF9EFC926EFAD2900655DD2 /* AppSettingsManager.swift */; };
 		5CF9EFCE26EFC33500655DD2 /* UIViewController+UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF9EFCD26EFC33500655DD2 /* UIViewController+UIAlertController.swift */; };
 		5CFB9F5026E3AFF90095D548 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFB9F4F26E3AFF90095D548 /* UIView+Layout.swift */; };
@@ -172,6 +174,8 @@
 		5CE2D6C1270392B300362909 /* FavouriteCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCategoriesViewController.swift; sourceTree = "<group>"; };
 		5CE2D6C52703939900362909 /* FavoriteCategoriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCategoriesCell.swift; sourceTree = "<group>"; };
 		5CE576EE2701EFAB00D24069 /* ProfileTableFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableFooter.swift; sourceTree = "<group>"; };
+		5CF00310278C84A7007FEDA4 /* VerificationControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationControllerViewModel.swift; sourceTree = "<group>"; };
+		5CF00313278C8FEE007FEDA4 /* VerificationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationResult.swift; sourceTree = "<group>"; };
 		5CF9EFC926EFAD2900655DD2 /* AppSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsManager.swift; sourceTree = "<group>"; };
 		5CF9EFCD26EFC33500655DD2 /* UIViewController+UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UIAlertController.swift"; sourceTree = "<group>"; };
 		5CFB9F4F26E3AFF90095D548 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
@@ -364,6 +368,7 @@
 			children = (
 				5C17A35A2778CFE7002F8A8D /* RegisterResult.swift */,
 				5C17A3612778D67B002F8A8D /* LoginResult.swift */,
+				5CF00313278C8FEE007FEDA4 /* VerificationResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -374,6 +379,7 @@
 				5C7D6D6B277380000069BE08 /* WelcomeControllerViewModel.swift */,
 				5C7D6D6E2773841E0069BE08 /* RegisterControllerViewModel.swift */,
 				5C17A35D2778D3CC002F8A8D /* LoginControllerViewModel.swift */,
+				5CF00310278C84A7007FEDA4 /* VerificationControllerViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -796,6 +802,7 @@
 				5CA46EF326E36DDC0031A540 /* AppDelegate.swift in Sources */,
 				5CB501EA26E675DF00246670 /* NewsDetailCell.swift in Sources */,
 				5C28A10A2731476500C100A4 /* StockHistoryData.swift in Sources */,
+				5CF00311278C84A7007FEDA4 /* VerificationControllerViewModel.swift in Sources */,
 				5CFB9F5026E3AFF90095D548 /* UIView+Layout.swift in Sources */,
 				5C17A35B2778CFE8002F8A8D /* RegisterResult.swift in Sources */,
 				5CE2D6C62703939900362909 /* FavoriteCategoriesCell.swift in Sources */,
@@ -820,6 +827,7 @@
 				5CD683A22770E43500C6EBA5 /* NewsSearchControllerViewModel.swift in Sources */,
 				5CBB48BD276A4439005F2F69 /* UIView+Extension.swift in Sources */,
 				5CE00E2D26F78F1B00BAFAAE /* CountryCell.swift in Sources */,
+				5CF00314278C8FEE007FEDA4 /* VerificationResult.swift in Sources */,
 				5C141CEA26ECEFBD0052028E /* TodayController.swift in Sources */,
 				5CE576EF2701EFAB00D24069 /* ProfileTableFooter.swift in Sources */,
 				5C8917B42767A68800927EE9 /* StockHeaderCellModel.swift in Sources */,

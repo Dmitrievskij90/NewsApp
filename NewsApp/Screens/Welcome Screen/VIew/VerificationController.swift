@@ -6,15 +6,13 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseAuth
 
 class VerificationController: UIViewController {
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
-    private var user = User()
     private let alertView = VerificationAlertView()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+    private let viewModel = VerificationControllerViewModel()
     
     private let letsGoButton: UIButton = {
         let button = BaseButton(type: .system)
@@ -95,14 +93,14 @@ class VerificationController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         nameTextField.delegate = self
-        Auth.auth().currentUser?.reload()
-        
+
         let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(userImageViewTapped))
         userImageView.addGestureRecognizer(tapGestureregognizer)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        Auth.auth().currentUser?.reload()
+        viewModel.reloadUser()
+        updateControllerWithVIewModel()
     }
     
     override func loadView() {
@@ -186,14 +184,18 @@ class VerificationController: UIViewController {
         alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         alertView.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         
-        alertView.tapHandler = {
-            Auth.auth().currentUser?.reload()
-            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
-                self.topConstraint?.isActive = true
-                self.bottomConstraint?.isActive = false
-                self.blurVisualEffectView.alpha = 0
-                self.view.layoutIfNeeded()
-            }
+        alertView.tapHandler = { [weak self] in
+            self?.viewModel.reloadUser()
+            self?.hideAlertView()
+        }
+    }
+
+    private func hideAlertView() {
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+            self.topConstraint?.isActive = true
+            self.bottomConstraint?.isActive = false
+            self.blurVisualEffectView.alpha = 0
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -207,37 +209,23 @@ class VerificationController: UIViewController {
     }
     
     @objc func countryButtonTapped(button: UIButton) {
+        NotificationCenter.default.post(name: NSNotification.Name("country"), object: button.tag)
         switch button.tag {
         case 1:
-            user.country = "ru"
             animateCountryButton(button: button)
-            resetButtons(button: countryUSAButton)
-            resetButtons(button: countryGermanyButton)
-            resetButtons(button: countryFranceButton)
+            resetButtons(buttons: [countryUSAButton, countryGermanyButton, countryFranceButton])
         case 2:
-            user.country = "us"
             animateCountryButton(button: button)
-            resetButtons(button: countryRussiaButton)
-            resetButtons(button: countryGermanyButton)
-            resetButtons(button: countryFranceButton)
+            resetButtons(buttons: [countryRussiaButton, countryGermanyButton, countryFranceButton])
         case 3:
-            user.country = "fr"
             animateCountryButton(button: button)
-            resetButtons(button: countryUSAButton)
-            resetButtons(button: countryGermanyButton)
-            resetButtons(button: countryRussiaButton)
+            resetButtons(buttons: [countryUSAButton, countryGermanyButton, countryRussiaButton])
         case 4:
-            user.country = "de"
             animateCountryButton(button: button)
-            resetButtons(button: countryUSAButton)
-            resetButtons(button: countryRussiaButton)
-            resetButtons(button: countryFranceButton)
+            resetButtons(buttons: [countryUSAButton, countryRussiaButton, countryFranceButton])
         default:
-            user.country = "us"
             animateCountryButton(button: button)
-            resetButtons(button: countryRussiaButton)
-            resetButtons(button: countryGermanyButton)
-            resetButtons(button: countryFranceButton)
+            resetButtons(buttons: [countryRussiaButton, countryGermanyButton, countryFranceButton])
         }
     }
     
@@ -253,60 +241,57 @@ class VerificationController: UIViewController {
         }
     }
     
-    private func resetButtons(button: UIButton) {
+    private func resetButtons(buttons: [UIButton]) {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
-            button.transform = .identity
-        }
-    }
-    
-    @objc func cancelButonPressed() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func letsGoButonPressed() {
-        guard let user = Auth.auth().currentUser else {
-            return
-        }
-        user.reload { [weak self] _ in
-            guard let self = self else { return }
-            switch user.isEmailVerified {
-            case true:
-                self.saveUserSettings()
-                self.presentBaseTabBarController()
-            case false:
-                self.showAlertView()
+            for button in buttons {
+                button.transform = .identity
             }
         }
     }
     
-    @objc func userImageViewTapped() {
+    @objc private func cancelButonPressed() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func letsGoButonPressed() {
+        viewModel.letsGoButonPressed()
+    }
+
+    private func updateControllerWithVIewModel() {
+        viewModel.result.bind { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case .presentTabBarController:
+                self.presentBaseTabBarController()
+            case .showAlertView:
+                self.showAlertView()
+            default:
+                break
+            }
+        }
+    }
+    
+    @objc private func userImageViewTapped() {
         displayImagePickerController()
     }
     
-    @objc func plusButtonPressed() {
+    @objc private func plusButtonPressed() {
         displayImagePickerController()
     }
-    
+
     private func displayImagePickerController() {
         let imagePicerController = UIImagePickerController()
         imagePicerController.delegate = self
         imagePicerController.sourceType = .photoLibrary
         present(imagePicerController, animated: true, completion: nil)
     }
-    
+
     private func presentBaseTabBarController() {
         let dV = BaseTabBarController()
         dV.modalPresentationStyle = .fullScreen
         present(dV, animated: true, completion: nil)
-    }
-    
-    private func saveUserSettings() {
-        user.name = nameTextField.text!
-        CategoryManager.shared.saveCategoriesSet(with:  DefaultParameters.categoriesSet)
-        CategoryManager.shared.saveCategoriesStruct(with: DefaultParameters.categoriesStruct)
-        CategoryManager.shared.saveStockCompaniesSet(with: DefaultParameters.stockCompaniesSet)
-        CategoryManager.shared.saveStockCompaniesStruct(with: DefaultParameters.stockCompaniesStruct)
-        CategoryManager.shared.saveUser(with: user)
     }
 }
 
@@ -316,7 +301,7 @@ extension VerificationController: UIImagePickerControllerDelegate, UINavigationC
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             userImageView.image = image
-            CategoryManager.shared.saveUserImage(image: image)
+            viewModel.saveUserImage(image: image)
         } else {
             fatalError("Can't find image")
         }
@@ -333,6 +318,12 @@ extension VerificationController: UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text {
+            NotificationCenter.default.post(name: NSNotification.Name("name"), object: text)
+        }
     }
 }
 
