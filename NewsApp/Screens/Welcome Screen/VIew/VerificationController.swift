@@ -256,21 +256,17 @@ class VerificationController: UIViewController {
     //MARK: -
     @objc func countryButtonTapped(button: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name("country"), object: button.tag)
+        animateCountryButton(button: button)
         switch button.tag {
         case 1:
-            animateCountryButton(button: button)
             resetButtons(buttons: [countryUSAButton, countryGermanyButton, countryFranceButton])
         case 2:
-            animateCountryButton(button: button)
             resetButtons(buttons: [countryRussiaButton, countryGermanyButton, countryFranceButton])
         case 3:
-            animateCountryButton(button: button)
             resetButtons(buttons: [countryUSAButton, countryGermanyButton, countryRussiaButton])
         case 4:
-            animateCountryButton(button: button)
             resetButtons(buttons: [countryUSAButton, countryRussiaButton, countryFranceButton])
         default:
-            animateCountryButton(button: button)
             resetButtons(buttons: [countryRussiaButton, countryGermanyButton, countryFranceButton])
         }
     }
