@@ -50,7 +50,8 @@ class StockHeaderCell: UICollectionViewCell {
                 }
                 logoLabel.text = companyName
                 logoImageView.image = UIImage(named:stockData.symbol)
-                priceLabel.text = String(stockData.price) + "$"
+                priceLabel.text =  String(format: "%.2f", stockData.price) + "$"
+
             }
         }
     }
@@ -68,7 +69,7 @@ class StockHeaderCell: UICollectionViewCell {
     private let logoLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = .boldSystemFont(ofSize: 15)
+        label.font = .boldSystemFont(ofSize: 13)
         label.textColor = .darkGray
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
