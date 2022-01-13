@@ -9,9 +9,8 @@ import UIKit
 import Charts
 
 class StockChartViewController: UIViewController, ChartViewDelegate {
-    private var currentStockCompanyData: StockHeaderCellModel
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-    private let activityIndicator = BaseActivityIndicator(style: .medium)
+    private let viewModel: StockChartViewModel
 
     private let closeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -102,8 +101,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return lineChartView
     }()
 
-    init(currentStockCompanyData: StockHeaderCellModel) {
-        self.currentStockCompanyData = currentStockCompanyData
+    init(viewModel: StockChartViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -116,14 +115,12 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         fetchData()
         lineChartView.delegate = self
         setupLabelsData()
+        setDataToDifferenceLabel()
     }
 
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
-
-        view.addSubview(activityIndicator)
-        activityIndicator.centerInSuperview()
 
         view.backgroundColor = .clear
         view.addSubview(blurVisualEffectView)
@@ -157,37 +154,19 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: halfView.topAnchor, trailing: view.trailingAnchor)
     }
 
+
     private func setupLabelsData() {
-        priceLabel.text = String(currentStockCompanyData.price ) + "$"
-        companyLogoImageView.image = UIImage(named: currentStockCompanyData.symbol)
-        companyLabel.text = currentStockCompanyData.symbol
+        priceLabel.text = viewModel.priceLabel
+        companyLogoImageView.image = UIImage(named: viewModel.stockChartSymbol)
+        companyLabel.text = viewModel.stockChartSymbol
         dateLabel.text = Helpers.shared.getCurrentDate()
     }
 
     private func fetchData() {
-        let dispatchGroup = DispatchGroup()
-        activityIndicator.startAnimating()
-        dispatchGroup.enter()
-        NetworkService.shared.fetchStockChartData(searchedStockCompany: currentStockCompanyData.symbol ) { (res, error) in
-            if let err = error {
-                print("failed error", err)
-            }
-            dispatchGroup.leave()
-
-            guard let result = res else {
-                return
-            }
-
-            dispatchGroup.notify(queue: .main) { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.activityIndicator.stopAnimating()
-                let closeValue = Double(result.values[0].close) ?? 0.0
-                self.setDataToDifferenceLabel(closeValue)
-
+        viewModel.stockModel.bind {result in
+            if let res = result {
                 var entries = [ChartDataEntry]()
-                for (index, value) in result.values.reversed().enumerated() {
+                for (index, value) in res.values.reversed().enumerated() {
                     entries.append(ChartDataEntry(x: Double(index), y: Double(value.close ) ?? 0.0))
                 }
                 self.setupLineChartDataSet(entries)
@@ -195,16 +174,16 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         }
     }
 
-    private func setDataToDifferenceLabel(_ closeValue: Double) {
-        let currnetValue = Double(self.currentStockCompanyData.price)
-        let diffrience = currnetValue - closeValue
-        let price = String(format: "%.2f", diffrience)
-        if diffrience > 0 {
-            differenceButton.setTitleColor(.green, for: .normal)
-            differenceButton.setTitle("(+\(price))", for: .normal)
-        } else {
-            differenceButton.setTitle("(\(price))", for: .normal)
-            differenceButton.setTitleColor(.red, for: .normal)
+    private func setDataToDifferenceLabel() {
+        viewModel.diffrience.bind { diffrience in
+            let price = String(format: "%.2f", diffrience)
+            if diffrience > 0 {
+                self.differenceButton.setTitleColor(.green, for: .normal)
+                self.differenceButton.setTitle("(+\(price))", for: .normal)
+            } else {
+                self.differenceButton.setTitle("(\(price))", for: .normal)
+                self.differenceButton.setTitleColor(.red, for: .normal)
+            }
         }
     }
 
