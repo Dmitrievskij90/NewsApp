@@ -65,13 +65,9 @@ extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = stockData[indexPath.item]
-        let fullScreenVM = editViewModelForStockCompany(company: data)
-        let fullScreenController = StockChartViewController(viewModel: fullScreenVM)
-        fullScreenController.modalPresentationStyle = .pageSheet
-        present(fullScreenController, animated: true, completion: nil)
-    }
-
-    func editViewModelForStockCompany(company: StockHeaderCellModel) -> StockChartViewModel {
-        return StockChartViewModel(currentStockCompanyData: company)
+        let viewModel = StockChartViewModel(currentStockCompanyData: data)
+        let stockChartController = StockChartViewController(viewModel: viewModel)
+        stockChartController.modalPresentationStyle = .pageSheet
+        present(stockChartController, animated: true, completion: nil)
     }
 }
