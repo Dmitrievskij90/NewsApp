@@ -9,8 +9,7 @@ import UIKit
 
 class CategoriesViewController: UIViewController {
     private var categoryCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private var categoriesSet = Set<String>()
-    private var categoriesStruct = [Categories]()
+    private var viewModel = CategoriesViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +18,7 @@ class CategoriesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
-        categoriesSet = CategoryManager.shared.loadCategoriesSet()
-        categoriesStruct = CategoryManager.shared.loadCategoriesStruct()
+        viewModel.viewWillAppear()
     }
     
     override func loadView() {
@@ -49,15 +47,14 @@ class CategoriesViewController: UIViewController {
 
 extension CategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categoriesStruct.count
+        return viewModel.categoriesStruct.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCell.identifier, for: indexPath) as? CategoriesCell else {
             return UICollectionViewCell()
         }
-        
-        cell.category = categoriesStruct[indexPath.item]
+        cell.category = viewModel.categoriesStruct[indexPath.item]
         return cell
     }
     
@@ -74,19 +71,7 @@ extension CategoriesViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let name = categoriesStruct[indexPath.item]
-        let hasFavorited = name.isFavorited
-        categoriesStruct[indexPath.item].isFavorited = !hasFavorited
+        NotificationCenter.default.post(name: NSNotification.Name("indexPath"), object: indexPath)
         categoryCollectionView.reloadItems(at: [indexPath])
-        CategoryManager.shared.saveCategoriesStruct(with: categoriesStruct)
-        
-        let item = categoriesStruct[indexPath.item].name
-        if categoriesSet.contains(item) {
-            categoriesSet.remove(item)
-            CategoryManager.shared.saveCategoriesSet(with: categoriesSet)
-        } else {
-            categoriesSet.insert(item)
-            CategoryManager.shared.saveCategoriesSet(with: categoriesSet)
-        }
     }
 }
