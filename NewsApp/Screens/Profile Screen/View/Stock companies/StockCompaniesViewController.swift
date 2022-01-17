@@ -8,8 +8,7 @@
 import UIKit
 
 class StockCompaniesViewController: UIViewController {
-    private var stockCompaniesStruct = [StockCompanies]()
-    private var stockCompaniesSet = Set<String>()
+    private var viewModel = StockCompaniesViewModel()
     
     private let stockCompaniesTableView: UITableView = {
         let tableView = UITableView()
@@ -25,8 +24,7 @@ class StockCompaniesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
-        stockCompaniesStruct =  CategoryManager.shared.loadStockCompaniesStruct()
+        viewModel.viewWillAppear()
     }
     
     override func loadView() {
@@ -48,14 +46,14 @@ class StockCompaniesViewController: UIViewController {
 
 extension StockCompaniesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stockCompaniesStruct.count
+        return viewModel.stockCompaniesStruct.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StockCell.identifier, for: indexPath) as? StockCell else {
             return UITableViewCell()
         }
-        cell.company = stockCompaniesStruct[indexPath.item]
+        cell.company = viewModel.stockCompaniesStruct[indexPath.item]
         return cell
     }
     
@@ -65,20 +63,7 @@ extension StockCompaniesViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let hasFavorited = stockCompaniesStruct[indexPath.item].isFavorited
-        stockCompaniesStruct[indexPath.item].isFavorited = !hasFavorited
+        NotificationCenter.default.post(name: NSNotification.Name("stockIndexPath"), object: indexPath)
         stockCompaniesTableView.reloadRows(at: [indexPath], with: .none)
-        CategoryManager.shared.saveStockCompaniesStruct(with: stockCompaniesStruct)
-        
-        let name = stockCompaniesStruct[indexPath.row].symbol
-        if stockCompaniesSet.contains(name) {
-            stockCompaniesSet.remove(name)
-            CategoryManager.shared.saveStockCompaniesSet(with: stockCompaniesSet)
-            NotificationCenter.default.post(name: NSNotification.Name("stockCompaniesSet"), object: stockCompaniesSet)
-        } else {
-            stockCompaniesSet.insert(name)
-            CategoryManager.shared.saveStockCompaniesSet(with: stockCompaniesSet)
-            NotificationCenter.default.post(name: NSNotification.Name("stockCompaniesSet"), object: stockCompaniesSet)
-        }
     }
 }
