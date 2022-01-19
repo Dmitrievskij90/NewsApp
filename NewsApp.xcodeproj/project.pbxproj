@@ -47,6 +47,8 @@
 		5C7C3D40272D676A00FD0453 /* StockCompanies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C3D3F272D676A00FD0453 /* StockCompanies.swift */; };
 		5C7D6D6C277380000069BE08 /* WelcomeControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D6D6B277380000069BE08 /* WelcomeControllerViewModel.swift */; };
 		5C7D6D6F2773841E0069BE08 /* RegisterControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D6D6E2773841E0069BE08 /* RegisterControllerViewModel.swift */; };
+		5C7E3021279710BC002FC232 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7E3020279710BC002FC232 /* ProfileViewModel.swift */; };
+		5C7E303A27972466002FC232 /* ProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7E303927972466002FC232 /* ProfileResult.swift */; };
 		5C83CBB22729A90D001A42DF /* StockCompaniesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C83CBB12729A90D001A42DF /* StockCompaniesViewController.swift */; };
 		5C83CBB52729AA3E001A42DF /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C83CBB42729AA3E001A42DF /* StockCell.swift */; };
 		5C8917B42767A68800927EE9 /* StockHeaderCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8917B32767A68800927EE9 /* StockHeaderCellModel.swift */; };
@@ -138,6 +140,8 @@
 		5C7C3D3F272D676A00FD0453 /* StockCompanies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCompanies.swift; sourceTree = "<group>"; };
 		5C7D6D6B277380000069BE08 /* WelcomeControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeControllerViewModel.swift; sourceTree = "<group>"; };
 		5C7D6D6E2773841E0069BE08 /* RegisterControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterControllerViewModel.swift; sourceTree = "<group>"; };
+		5C7E3020279710BC002FC232 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		5C7E303927972466002FC232 /* ProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResult.swift; sourceTree = "<group>"; };
 		5C83CBB12729A90D001A42DF /* StockCompaniesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCompaniesViewController.swift; sourceTree = "<group>"; };
 		5C83CBB42729AA3E001A42DF /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
 		5C8917B32767A68800927EE9 /* StockHeaderCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHeaderCellModel.swift; sourceTree = "<group>"; };
@@ -508,6 +512,7 @@
 		5CBDA42A2768F73B003AB428 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5C7E303927972466002FC232 /* ProfileResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -527,6 +532,7 @@
 			children = (
 				5C8BDD6C2795C86A00A437A9 /* CategoriesViewModel.swift */,
 				5C8BDD6F2795CE0600A437A9 /* StockCompaniesViewModel.swift */,
+				5C7E3020279710BC002FC232 /* ProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -769,6 +775,7 @@
 				5C17A35E2778D3CC002F8A8D /* LoginControllerViewModel.swift in Sources */,
 				5C7098C726E9382100A8AEC5 /* Helpers.swift in Sources */,
 				5C4BADE726EA7E93000620A1 /* WebNewsViewController.swift in Sources */,
+				5C7E303A27972466002FC232 /* ProfileResult.swift in Sources */,
 				5C8BDD6D2795C86A00A437A9 /* CategoriesViewModel.swift in Sources */,
 				5C43A92E26E50BB5005FDD7B /* NewsData.swift in Sources */,
 				5C8A73F52713033900AFFA76 /* ImageHeaderTableCell.swift in Sources */,
@@ -801,6 +808,7 @@
 				5C2DF30B27024B6B00D51EEE /* CategoriesViewController.swift in Sources */,
 				5C31FF6627286B7E0001E714 /* StockCompaniesCell.swift in Sources */,
 				5C148E9626FDDAC500F465AC /* ProfileTableHeader.swift in Sources */,
+				5C7E3021279710BC002FC232 /* ProfileViewModel.swift in Sources */,
 				5C16C7E8277A131900F96CE6 /* UITextField+Extension.swift in Sources */,
 				5C4867052709A0B20087A708 /* CategoryManager.swift in Sources */,
 				5C8BDD702795CE0600A437A9 /* StockCompaniesViewModel.swift in Sources */,

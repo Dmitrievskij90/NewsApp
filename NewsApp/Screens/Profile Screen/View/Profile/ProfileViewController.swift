@@ -6,15 +6,10 @@
 //
 
 import UIKit
-import KeychainAccess
-import Firebase
-import FirebaseAuth
 
 class ProfileViewController: UIViewController {
-    private var image = UIImage(named: "imagePlaceholder")
-    private var user = User()
-    private var sections = [CountrySection]()
     private var header = ProfileTableHeader()
+    private let viewModel = ProfileViewModel()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -29,24 +24,43 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sections = [CountrySection(
-                        options: ["USA", "RUSSIA", "FRANCE", "GERMANY"],
-                        countriesImages: ["us", "ru", "fr", "de"]),
-                    CountrySection(
-                        options: [],
-                        countriesImages: []),
-                    CountrySection(
-                        options: [],
-                        countriesImages: []),
-        ]
-        
-        loadUserSettings()
-        setupHeaderForTableView()
+        viewModel.loadUserSettings()
+        bindData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
+    }
+
+    func bindData() {
+        viewModel.indexPath.bind { [weak self] result in
+            if let res = result {
+                self?.tableView.reloadSections([res.section], with: .none)
+            }
+        }
+
+        viewModel.updateWithUser = { [weak self] user in
+            self?.header.nameTextField.text = "\(user.name)"
+            self?.header.countryImageView.image = UIImage(named: user.country)
+        }
+
+        viewModel.result.bind { [weak self] result in
+            switch result {
+            case .presentCategoriesViewController:
+                self?.presentCategoriesViewController()
+            case .presentStockCompaniesViewController:
+                self?.presentStockCompaniesViewController()
+            case .presentWelcomeController:
+                self?.presentWelcomeController()
+            default:
+                break
+            }
+        }
+
+        header.nameTextField.text = "\(viewModel.user.name)"
+        header.userImageView.image = viewModel.image
+        header.countryImageView.image = UIImage(named: viewModel.user.country)
     }
     
     // MARK: - setup user interface methods
@@ -59,6 +73,7 @@ class ProfileViewController: UIViewController {
         
         setupTableView()
         setupFooterForTableView()
+        setupHeaderForTableView()
     }
     
     private func setupTableView() {
@@ -71,9 +86,6 @@ class ProfileViewController: UIViewController {
     private func setupHeaderForTableView() {
         header.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: view.frame.height / 4 )
         header.nameTextField.delegate = self
-        header.nameTextField.text = "\(user.name)"
-        header.userImageView.image = image
-        header.countryImageView.image = UIImage(named: user.country)
         header.imageTapHandler = { [weak self] in
             self?.displayImagePickerController()
         }
@@ -83,17 +95,8 @@ class ProfileViewController: UIViewController {
     private func setupFooterForTableView() {
         let footer = ProfileTableFooter()
         footer.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 100 )
-        footer.transitionHandler = {
-            let firebaseAuth = Auth.auth()
-            do {
-                try firebaseAuth.signOut()
-            } catch let signOutError as NSError {
-                print ("Error signing out: %@", signOutError)
-            }
-            AppSettingsManager.shared.forgetUser()
-            let destinationVC = WelcomeController()
-            destinationVC.modalPresentationStyle = .fullScreen
-            self.present(destinationVC, animated: true, completion: nil)
+        footer.transitionHandler = { [weak self] in
+            self?.viewModel.signOut()
         }
         self.tableView.tableFooterView = footer
     }
@@ -104,10 +107,23 @@ class ProfileViewController: UIViewController {
         imagePicerController.sourceType = .photoLibrary
         present(imagePicerController, animated: true, completion: nil)
     }
-    
-    private func loadUserSettings() {
-        self.image = CategoryManager.shared.loadUserImage()
-        self.user = CategoryManager.shared.loadUser()
+
+    private func presentWelcomeController() {
+        let destinationVC = WelcomeController()
+        destinationVC.modalPresentationStyle = .fullScreen
+        present(destinationVC, animated: true, completion: nil)
+    }
+
+    private func presentCategoriesViewController() {
+        let viewController = CategoriesViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func presentStockCompaniesViewController() {
+        let viewController = StockCompaniesViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -115,11 +131,11 @@ class ProfileViewController: UIViewController {
 //MARK: -
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return viewModel.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let section = sections[section]
+        let section = viewModel.sections[section]
         if section.isOpened {
             return section.options.count + 1
         } else {
@@ -138,8 +154,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier, for: indexPath) as? CountryCell else {
                     return UITableViewCell()
                 }
-                cell.countryLabel.text = sections[indexPath.section].options[indexPath.row - 1]
-                cell.countryImageView.image = UIImage(named: sections[indexPath.section].countriesImages[indexPath.row - 1])
+                cell.countryLabel.text = viewModel.sections[indexPath.section].options[indexPath.row - 1]
+                cell.countryImageView.image = UIImage(named: viewModel.sections[indexPath.section].countriesImages[indexPath.row - 1])
                 return cell
             }
         } else if indexPath.section == 1 {
@@ -160,41 +176,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                sections[indexPath.section].isOpened = !sections[indexPath.section].isOpened
-                tableView.reloadSections([indexPath.section], with: .none)
-            } else {
-                let country = sections[indexPath.section].options[indexPath.row - 1]
-                switch country {
-                case "USA":
-                    user.country = "us"
-                case "RUSSIA":
-                    user.country = "ru"
-                case "FRANCE":
-                    user.country = "fr"
-                case "GERMANY":
-                    user.country = "de"
-                default:
-                    user.country = "us"
-                }
-                header.countryImageView.image = UIImage(named: user.country)
-                sections[indexPath.section].isOpened = false
-                tableView.reloadSections([indexPath.section], with: .none)
-                CategoryManager.shared.saveUser(with: user)
-                NotificationCenter.default.post(name: NSNotification.Name("user"), object: user)
-            }
-        } else if indexPath.section == 1 {
-            let viewController = CategoriesViewController()
-            viewController.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(viewController, animated: true)
-        } else {
-            let viewController = StockCompaniesViewController()
-            viewController.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
+        viewModel.didSelectRowAt(indexPath: indexPath)
     }
 }
 
@@ -203,13 +186,12 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
-            self.image = image
+            header.userImageView.image = image
+            viewModel.saveUserImage(image: image)
             tableView.reloadData()
-            CategoryManager.shared.saveUserImage(image: image)
         } else {
             fatalError("Can't find image")
         }
-        header.userImageView.image = image
         dismiss(animated: true, completion: nil)
     }
 }
@@ -218,13 +200,9 @@ extension ProfileViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         textField.endEditing(true)
-        if let text = textField.text, textField.text != "" {
-            user.name = text
-        } else {
-            user.name = "Reader"
+        if let text = textField.text {
+            NotificationCenter.default.post(name: NSNotification.Name("profileName"), object: text)
         }
-        CategoryManager.shared.saveUser(with: user)
-        NotificationCenter.default.post(name: NSNotification.Name("user"), object: user)
         return true
     }
 }
