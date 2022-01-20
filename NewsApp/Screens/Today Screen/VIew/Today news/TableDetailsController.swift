@@ -96,9 +96,9 @@ class TableDetailsController: UIViewController {
         floatingContainerView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: -90, right: 16), size: .init(width: 0, height: height))
         floatingContainerView.imageView.sd_setImage(with: URL(string: dataSource?.image ?? ""))
         floatingContainerView.transitionHandler = { [weak self] in
-            let viewController = WebNewsViewController()
+            let newsURL = self?.dataSource?.url ?? ""
+            let viewController = WebNewsViewController(urlString: newsURL)
             viewController.modalPresentationStyle = .fullScreen
-            viewController.urlString = self?.dataSource?.url ?? ""
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
     }

@@ -27,29 +27,10 @@ class TodayController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .label
-        bindData()
+        updateControllerWithVIewModel()
 
         refreshControl.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
         todayCollectionView.refreshControl = refreshControl
-    }
-
-    private func bindData() {
-        viewModel.stockData.bind { _ in
-            DispatchQueue.main.async { [weak self] in
-                self?.todayCollectionView.reloadData()
-            }
-        }
-
-        viewModel.todayNews.bind { _ in
-            DispatchQueue.main.async { [weak self] in
-                self?.todayCollectionView.reloadData()
-            }
-        }
-
-        viewModel.updateViews = { [weak self] in
-            self?.todayCollectionView.reloadData()
-            self?.activityIndicator.stopAnimating()
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +64,25 @@ class TodayController: UIViewController {
 
         view.addSubview(todayCollectionView)
         todayCollectionView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
+    }
+
+    private func updateControllerWithVIewModel() {
+        viewModel.stockData.bind { _ in
+            DispatchQueue.main.async { [weak self] in
+                self?.todayCollectionView.reloadData()
+            }
+        }
+
+        viewModel.todayNews.bind { _ in
+            DispatchQueue.main.async { [weak self] in
+                self?.todayCollectionView.reloadData()
+            }
+        }
+
+        viewModel.updateViews = { [weak self] in
+            self?.todayCollectionView.reloadData()
+            self?.activityIndicator.stopAnimating()
+        }
     }
 
     @objc func refreshHandler() {

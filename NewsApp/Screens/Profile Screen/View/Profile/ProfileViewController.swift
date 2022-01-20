@@ -25,7 +25,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.loadUserSettings()
-        bindData()
+        updateControllerWithViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,7 +33,7 @@ class ProfileViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
 
-    func bindData() {
+    func updateControllerWithViewModel() {
         viewModel.indexPath.bind { [weak self] result in
             if let res = result {
                 self?.tableView.reloadSections([res.section], with: .none)

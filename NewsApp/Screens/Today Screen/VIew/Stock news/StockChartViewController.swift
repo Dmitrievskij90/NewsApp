@@ -112,7 +112,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchData()
+        setupStockChart()
         lineChartView.delegate = self
         setupLabelsData()
         setDataToDifferenceLabel()
@@ -162,7 +162,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         dateLabel.text = Helpers.shared.getCurrentDate()
     }
 
-    private func fetchData() {
+    private func setupStockChart() {
         viewModel.stockModel.bind {result in
             if let res = result {
                 var entries = [ChartDataEntry]()

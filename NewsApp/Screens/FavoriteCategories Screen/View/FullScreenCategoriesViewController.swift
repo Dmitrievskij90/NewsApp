@@ -25,7 +25,7 @@ class FullScreenCategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindData()
+        updateControllerWithViewModel()
         
         refreshControl.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
         categoryCollectionView.refreshControl = refreshControl
@@ -64,7 +64,7 @@ class FullScreenCategoriesViewController: UIViewController {
         view.addSubview(categoryCollectionView)
     }
     
-    private func bindData() {
+    private func updateControllerWithViewModel() {
         viewModel.categoryNews.bind { _ in
             DispatchQueue.main.async { [weak self] in
                 self?.categoryCollectionView.reloadData()
