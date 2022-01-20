@@ -8,6 +8,7 @@
 import Foundation
 
 class FullSceenCategoriesViewModel {
+    private var networkService: NetworkServiceFetchCategoriesNewsProtocol = NetworkService()
     var categoryNews: Box<[NewsCellModel]> = Box([])
     var category: String
     var stopAnimating: (()->())?
@@ -29,7 +30,7 @@ class FullSceenCategoriesViewModel {
     private func fetchCategoryNews(_ country: String, category: String) {
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        NetworkService.shared.fetchCategoriesNews(preferredCountry: country, preferredCategoty: category) {  (results, error) in
+        networkService.fetchCategoriesNews(preferredCountry: country, preferredCategoty: category) {  (results, error) in
             if let err = error {
                 print("Can't fetch stock data", err)
             }

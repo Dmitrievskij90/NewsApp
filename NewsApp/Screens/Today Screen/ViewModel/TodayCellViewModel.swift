@@ -8,6 +8,7 @@
 import Foundation
 
 public class TodayCellViewModel {
+    private var networkService: NetworkServiceFetchTodayNewsProtocol = NetworkService()
     var todayNews: Box<[TodayCellModel]> = Box([])
     var stockData: Box<[StockHeaderCellModel]> = Box([])
     var updateViews: (()->())?
@@ -63,7 +64,7 @@ public class TodayCellViewModel {
 
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        NetworkService.shared.fetchTodayNews(preferredCountry: country) { (results, error) in
+        networkService.fetchTodayNews(preferredCountry: country) { (results, error) in
             if let err = error {
                 print("Can't fetch today news", err)
             }
@@ -74,7 +75,7 @@ public class TodayCellViewModel {
 
         }
             dispatchGroup.enter()
-            NetworkService.shared.fetchStockData(searchedStockCompanies: companies) { (results, error) in
+        networkService.fetchStockData(searchedStockCompanies: companies) { (results, error) in
                 if let err = error {
                     print("Can't fetch stock data", err)
                 }

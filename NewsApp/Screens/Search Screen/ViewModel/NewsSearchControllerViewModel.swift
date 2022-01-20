@@ -8,6 +8,7 @@
 import Foundation
 
 class NewsSearchControllerViewModel {
+    private var networkService: NetworkServiceSearchNewsProtocol = NetworkService()
     var newsBySearch: Box<[NewsCellModel]> = Box([])
     var stopAnimating: (()->())?
     private var defaultLocation = CategoryManager.shared.loadUser().country
@@ -43,7 +44,7 @@ class NewsSearchControllerViewModel {
     }
 
     private func fetchNews(_ country: String, category: String) {
-        NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: country) {  (results, error) in
+        networkService.searchNews(searchTerm: term, preferredCountry: country) {  (results, error) in
             if let err = error {
                 print("Can't fetch stock data", err)
             }
