@@ -243,7 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				5C6965AB2799BC7600076560 /* Protocols */,
-				5C43A93226E51185005FDD7B /* NetworkService.swift */,
 				5CF9EFC926EFAD2900655DD2 /* AppSettingsManager.swift */,
 				5C4867042709A0B20087A708 /* CategoryManager.swift */,
 			);
@@ -263,6 +262,7 @@
 		5C6965AB2799BC7600076560 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				5C43A93226E51185005FDD7B /* NetworkService.swift */,
 				5C6965AC2799BCAB00076560 /* NetworkServiceProtocols.swift */,
 			);
 			path = Protocols;
