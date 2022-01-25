@@ -10,8 +10,8 @@ import FirebaseAuth
 import Foundation
 
 class VerificationControllerViewModel {
-    private var user = User()
     var result: Box<VerificationResult?> = Box(nil)
+    private var user = User()
 
     init() {
         NotificationCenter.default.addObserver(
@@ -25,30 +25,6 @@ class VerificationControllerViewModel {
             selector: #selector(updateUserName),
             name: Notification.Name("name"),
             object: nil)
-    }
-
-    @objc private func updateUserCountry(_ notification: Notification) {
-        if let tag = notification.object as? Int {
-            switch tag {
-            case 1:
-                user.country = "ru"
-            case 2:
-                user.country = "us"
-            case 3:
-                user.country = "fr"
-
-            case 4:
-                user.country = "de"
-            default:
-                user.country = "us"
-            }
-        }
-    }
-
-    @objc private func updateUserName(_ notification: Notification) {
-        if let name = notification.object as? String {
-            user.name = name
-        }
     }
 
     func reloadUser() {
@@ -74,6 +50,30 @@ class VerificationControllerViewModel {
 
     func saveUserImage(image: UIImage) {
         AppSettingsManager.shared.saveUserImage(image: image)
+    }
+
+    @objc private func updateUserCountry(_ notification: Notification) {
+        if let tag = notification.object as? Int {
+            switch tag {
+            case 1:
+                user.country = "ru"
+            case 2:
+                user.country = "us"
+            case 3:
+                user.country = "fr"
+
+            case 4:
+                user.country = "de"
+            default:
+                user.country = "us"
+            }
+        }
+    }
+
+    @objc private func updateUserName(_ notification: Notification) {
+        if let name = notification.object as? String {
+            user.name = name
+        }
     }
 
     private func saveUserSettings() {

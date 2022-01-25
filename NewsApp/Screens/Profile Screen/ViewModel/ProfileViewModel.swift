@@ -15,8 +15,8 @@ class ProfileViewModel {
     var user = User()
     var sections = DefaultParameters.sections
     var indexPath: Box<IndexPath?> = Box(nil)
-    var updateWithUser: ((User) -> Void)?
     var result: Box<ProfileResult?> = Box(nil)
+    var updateWithUser: ((User) -> Void)?
 
     init() {
         NotificationCenter.default.post(name: NSNotification.Name("user"), object: user)
@@ -26,17 +26,6 @@ class ProfileViewModel {
             selector: #selector(updateUserName),
             name: Notification.Name("profileName"),
             object: nil)
-    }
-
-    @objc private func updateUserName(_ notification: Notification) {
-        if let name = notification.object as? String {
-            if name.isEmpty {
-                user.name = "Reader"
-            } else {
-                user.name = name
-            }
-            AppSettingsManager.shared.saveUser(with: user)
-        }
     }
 
     func loadUserSettings() {
@@ -88,5 +77,16 @@ class ProfileViewModel {
 
     func saveUserImage(image: UIImage) {
         AppSettingsManager.shared.saveUserImage(image: image)
+    }
+
+    @objc private func updateUserName(_ notification: Notification) {
+        if let name = notification.object as? String {
+            if name.isEmpty {
+                user.name = "Reader"
+            } else {
+                user.name = name
+            }
+            AppSettingsManager.shared.saveUser(with: user)
+        }
     }
 }

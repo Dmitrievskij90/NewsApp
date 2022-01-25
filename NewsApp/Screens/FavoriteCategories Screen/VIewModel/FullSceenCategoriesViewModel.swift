@@ -8,10 +8,11 @@
 import Foundation
 
 class FullSceenCategoriesViewModel {
-    private var networkService: NetworkServiceFetchCategoriesNewsProtocol = NetworkService()
     var categoryNews: Box<[NewsCellModel]> = Box([])
     var category: String
     var stopAnimating: (() -> Void)?
+    
+    private var networkService: NetworkServiceFetchCategoriesNewsProtocol = NetworkService()
     private var defaultLocation = AppSettingsManager.shared.loadUser().country
 
     init(category: String) {

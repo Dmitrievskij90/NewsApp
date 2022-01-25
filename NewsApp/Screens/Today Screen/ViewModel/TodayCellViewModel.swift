@@ -8,10 +8,11 @@
 import Foundation
 
 public class TodayCellViewModel {
-    private var networkService: NetworkServiceFetchTodayNewsProtocol = NetworkService()
     var todayNews: Box<[TodayCellModel]> = Box([])
     var stockData: Box<[StockHeaderCellModel]> = Box([])
     var updateViews: (() -> Void)?
+
+    private var networkService: NetworkServiceFetchTodayNewsProtocol = NetworkService()
     private var defaultLocation = AppSettingsManager.shared.loadUser().country
     private var stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet().sorted().joined(separator: ",")
 

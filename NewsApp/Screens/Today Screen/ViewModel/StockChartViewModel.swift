@@ -8,9 +8,9 @@
 import Foundation
 
 class StockChartViewModel {
-    private var networkService: NetworkServiceFetchStockChartDataProtocol = NetworkService()
-    var stockModel: Box<StockHistoryData?> = Box(nil)
     let diffrience: Box<Double> = Box(0.0)
+    
+    var stockModel: Box<StockHistoryData?> = Box(nil)
     var priceLabel: String {
         return String(currentStockCompanyData.price ) + "$"
     }
@@ -19,6 +19,7 @@ class StockChartViewModel {
         return currentStockCompanyData.symbol
     }
 
+    private var networkService: NetworkServiceFetchStockChartDataProtocol = NetworkService()
     private var currentStockCompanyData: StockHeaderCellModel
 
     init(currentStockCompanyData: StockHeaderCellModel) {

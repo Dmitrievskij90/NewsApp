@@ -8,9 +8,10 @@
 import Foundation
 
 class NewsSearchControllerViewModel {
-    private var networkService: NetworkServiceSearchNewsProtocol = NetworkService()
     var newsBySearch: Box<[NewsCellModel]> = Box([])
     var stopAnimating: (() -> Void)?
+    
+    private var networkService: NetworkServiceSearchNewsProtocol = NetworkService()
     private var defaultLocation = AppSettingsManager.shared.loadUser().country
     private var term = ""
 
