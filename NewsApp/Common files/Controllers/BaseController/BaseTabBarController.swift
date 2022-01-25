@@ -5,8 +5,8 @@
 //  Created by Konstantin Dmitrievskiy on 04.09.2021.
 //
 
-import UIKit
 import FirebaseAuth
+import UIKit
 
 class BaseTabBarController: UITabBarController {
     override func viewDidLoad() {

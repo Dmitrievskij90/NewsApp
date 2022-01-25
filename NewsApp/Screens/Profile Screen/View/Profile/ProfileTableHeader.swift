@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileTableHeader: UIView {
     private let countryImageName = UserDefaults.standard.value(forKey: "countryImage") as? String ?? "usa_image"
-    var imageTapHandler: (() ->())? = nil
+    var imageTapHandler: (() -> Void)?
 
     let bcgView: UIView = {
         let view = UIView()
@@ -43,12 +43,12 @@ class ProfileTableHeader: UIView {
         textField.layer.shadowColor = UIColor.init(hex: 0x4EFDD).cgColor
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.lightGray,
-            .font : UIFont.boldSystemFont(ofSize: 35)
+            .font: UIFont.boldSystemFont(ofSize: 35)
         ]
         let attributedString = NSAttributedString(string: "Reader", attributes: attributes)
         textField.attributedPlaceholder = attributedString
         return textField
-   }()
+    }()
 
     let countrylabel: UILabel = {
         let label = UILabel()
@@ -90,7 +90,6 @@ class ProfileTableHeader: UIView {
         addSubview(profileView)
         profileView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 10, right: 10))
 
-
         let verticalStackVIew = UIStackView(arrangedSubviews: [
             countrylabel,
             countryImageView
@@ -114,6 +113,7 @@ class ProfileTableHeader: UIView {
         countryImageView.image = UIImage(named: countryImageName)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

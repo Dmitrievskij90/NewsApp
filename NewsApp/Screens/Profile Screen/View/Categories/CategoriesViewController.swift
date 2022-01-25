@@ -31,7 +31,7 @@ class CategoriesViewController: UIViewController {
     }
     
     private func setupCollectinView() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
         categoryCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)

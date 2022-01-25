@@ -16,9 +16,9 @@ class StockCompaniesViewModel {
         NotificationCenter.default.post(name: NSNotification.Name("stockCompaniesSet"), object: stockCompaniesSet)
     }
 
-     func viewWillAppear() {
+    func viewWillAppear() {
         stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet()
-        stockCompaniesStruct =  CategoryManager.shared.loadStockCompaniesStruct()
+        stockCompaniesStruct = CategoryManager.shared.loadStockCompaniesStruct()
     }
 
     private func addObserver() {
@@ -31,7 +31,9 @@ class StockCompaniesViewModel {
 
     @objc private func saveStockCompaniesByIndexPath(_ notification: Notification) {
         if let path = notification.object {
-            guard let indexPasth = path as? IndexPath else {return}
+            guard let indexPasth = path as? IndexPath else {
+                return
+            }
             didSelectItem(indexPath: indexPasth)
         }
     }

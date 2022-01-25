@@ -12,7 +12,7 @@ extension UITextField {
         self.init(frame: .zero)
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.lightGray,
-            .font : UIFont.systemFont(ofSize: 10)
+            .font: UIFont.systemFont(ofSize: 10)
         ]
         let attributedString = NSAttributedString(string: placeholder, attributes: attributes)
         self.attributedPlaceholder = attributedString

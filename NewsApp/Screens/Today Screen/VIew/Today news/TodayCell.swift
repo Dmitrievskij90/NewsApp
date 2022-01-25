@@ -82,7 +82,6 @@ class TodayCell: BaseCell {
         topVerticalStackView.spacing = 10
         topVerticalStackView.constrainHeight(constant: 40)
         
-        
         let verticalStackView = UIStackView(arrangedSubviews: [
             topVerticalStackView,
             imageView,
@@ -97,9 +96,8 @@ class TodayCell: BaseCell {
         self.topConstaraint = verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 24)
         self.topConstaraint?.isActive = true
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
 
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+}

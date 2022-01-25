@@ -51,8 +51,8 @@ class FavoriteCategoryNewsCell: UICollectionViewCell {
     }()
     
     private let separatorView: UIView = {
-        let view =  UIView()
-        view.backgroundColor =  UIColor(white: 0, alpha: 0.3)
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.3)
         return view
     }()
     
@@ -74,7 +74,6 @@ class FavoriteCategoryNewsCell: UICollectionViewCell {
         
         addSubview(separatorView)
         separatorView.anchor(top: nil, leading: authorLabel.leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: -8, right: 0), size: .init(width: 0, height: 0.5))
-        
     }
     
     @available(*, unavailable)

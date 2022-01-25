@@ -43,7 +43,7 @@ class CountryCell: UITableViewCell {
         stackView.spacing = 5
 
         let vStackView = UIStackView(arrangedSubviews: [
-           stackView,
+            stackView,
             bottomView
         ])
         vStackView.axis = .vertical
@@ -52,6 +52,7 @@ class CountryCell: UITableViewCell {
         vStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 5, left: 15, bottom: 5, right: 15))
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

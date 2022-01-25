@@ -8,7 +8,7 @@
 import UIKit
 
 class VerificationAlertView: UIView {
-    var tapHandler: (()->())?
+    var tapHandler: (() -> Void)?
 
     private let alertLabel: UILabel = {
         let label = UILabel()
@@ -50,7 +50,7 @@ class VerificationAlertView: UIView {
         layer.shadowOffset = .init(width: 0, height: 10)
         layer.shadowColor = UIColor.darkGray.cgColor
 
-        let stackView = UIStackView(arrangedSubviews: [alertLabel,virificationImageView])
+        let stackView = UIStackView(arrangedSubviews: [alertLabel, virificationImageView])
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .fillProportionally
@@ -61,7 +61,8 @@ class VerificationAlertView: UIView {
         addSubview(stackView)
         stackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: oKButton.topAnchor, trailing: trailingAnchor, padding: .init(top: 25, left: 25, bottom: 25, right: 25))
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

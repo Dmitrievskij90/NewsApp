@@ -9,23 +9,22 @@ import Foundation
 import UIKit
 
 enum DefaultParameters {
-
-    static private let view = UIScreen.main.bounds
+    private static let view = UIScreen.main.bounds
 
     static let  buttonHeight = view.height / 17
     static let  buttonWidth = view.width * 0.75
 
-     static var categoriesSet:Set = ["Business", "Entertainment", "Health", "Science", "Sports", "Technology"]
-     static var categoriesStruct = [
+    static var categoriesSet: Set = ["Business", "Entertainment", "Health", "Science", "Sports", "Technology"]
+    static var categoriesStruct = [
         Categories(name: "Business", isFavorited: true),
         Categories(name: "Entertainment", isFavorited: true),
         Categories(name: "Health", isFavorited: true),
         Categories(name: "Science", isFavorited: true),
         Categories(name: "Sports", isFavorited: true),
-        Categories(name: "Technology", isFavorited: true),
-    ]
-     static var stockCompaniesSet:Set  = ["AMZN", "AAPL", "KO", "FB", "GOGL", "IBM", "INTC", "MCD", "MSFT", "NFLX", "NKE", "PEP", "SBUX", "TSLA", "V"]
-     static var stockCompaniesStruct = [
+        Categories(name: "Technology", isFavorited: true)]
+
+    static var stockCompaniesSet: Set = ["AMZN", "AAPL", "KO", "FB", "GOGL", "IBM", "INTC", "MCD", "MSFT", "NFLX", "NKE", "PEP", "SBUX", "TSLA", "V"]
+    static var stockCompaniesStruct = [
         StockCompanies(name: "Apple", symbol: "AAPL", isFavorited: true),
         StockCompanies(name: "Amazon", symbol: "AMZN", isFavorited: true),
         StockCompanies(name: "Facebook", symbol: "FB", isFavorited: true),
@@ -40,14 +39,12 @@ enum DefaultParameters {
         StockCompanies(name: "Pepsi", symbol: "PEP", isFavorited: true),
         StockCompanies(name: "Starbucks", symbol: "SBUX", isFavorited: true),
         StockCompanies(name: "Tesla", symbol: "TSLA", isFavorited: true),
-        StockCompanies(name: "Visa", symbol: "V", isFavorited: true),
-    ]
+        StockCompanies(name: "Visa", symbol: "V", isFavorited: true)]
 
     static var user = User(name: "Reader", country: "us")
 
     static var sections = [
-    CountrySection(options: ["USA", "RUSSIA", "FRANCE", "GERMANY"],countriesImages: ["us", "ru", "fr", "de"]),
-    CountrySection(options: [], countriesImages: []),
-    CountrySection(options: [],countriesImages: []),
-    ]
+        CountrySection(options: ["USA", "RUSSIA", "FRANCE", "GERMANY"], countriesImages: ["us", "ru", "fr", "de"]),
+        CountrySection(options: [], countriesImages: []),
+        CountrySection(options: [], countriesImages: [])]
 }

@@ -5,9 +5,9 @@
 //  Created by Konstantin Dmitrievskiy on 22.12.2021.
 //
 
-import Foundation
 import Firebase
 import FirebaseAuth
+import Foundation
 
 class RegisterControllerViewModel {
     var result: Box<RegisterResult?> = Box(nil)
@@ -41,11 +41,11 @@ class RegisterControllerViewModel {
     }
 
     private func fetchSignInMethod(with login: String, password: String) {
-        Auth.auth().fetchSignInMethods(forEmail: login, completion: { [weak self] (providers, error) in
+        Auth.auth().fetchSignInMethods(forEmail: login) { [weak self] providers, error in
             guard let self = self else {
                 return
             }
-            if error != nil  {
+            if error != nil {
                 self.result.value = .badEmailFormat
             } else if providers != nil {
                 self.result.value = .userAlredyExists
@@ -54,11 +54,11 @@ class RegisterControllerViewModel {
                 self.result.value = .presentVerificationController
                 //                    self.presentVerificationController()
             }
-        })
+        }
     }
 
     private func createUser(with login: String, password: String) {
-        Auth.auth().createUser(withEmail: login, password: password) { [weak self] (authDataResult, error) in
+        Auth.auth().createUser(withEmail: login, password: password) { [weak self] authDataResult, error in
             guard let self = self else {
                 return
             }
@@ -84,4 +84,3 @@ class RegisterControllerViewModel {
         }
     }
 }
-

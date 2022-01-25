@@ -11,4 +11,3 @@ struct StockData: Codable {
     let symbol: String
     let price: Double
 }
-

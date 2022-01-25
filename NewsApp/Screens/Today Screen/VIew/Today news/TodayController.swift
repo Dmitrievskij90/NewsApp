@@ -5,8 +5,8 @@
 //  Created by Konstantin Dmitrievskiy on 11.09.2021.
 //
 
-import UIKit
 import KeychainAccess
+import UIKit
 
 class TodayController: UIViewController {
     private var appFullscreenController = TableDetailsController()
@@ -52,7 +52,7 @@ class TodayController: UIViewController {
     }
 
     private func setupCollectinView() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
 
         todayCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -87,17 +87,21 @@ class TodayController: UIViewController {
 
     @objc func refreshHandler() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { [weak self] _ in
-            guard let self = self else { return }
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { [weak self] _ in
+            guard let self = self else {
+                return
+            }
             self.refreshControl.endRefreshing()
-        })
+        }
         viewModel.refreshData()
     }
 
     func handleRemoveView() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
             [weak self]  in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
 
             self.blurVisualEffectView.alpha = 0
             self.appFullscreenController.view.transform = .identity
@@ -116,8 +120,7 @@ class TodayController: UIViewController {
             self.tabBarController?.tabBar.transform = .identity
             if let tabBarFrame = self.tabBarController?.tabBar.frame {
                 self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height - tabBarFrame.height
-
-                guard let cell = self.appFullscreenController.tableView.cellForRow(at: [0,0]) as? ImageHeaderTableCell else {
+                guard let cell = self.appFullscreenController.tableView.cellForRow(at: [0, 0]) as? ImageHeaderTableCell else {
                     return
                 }
 
@@ -127,20 +130,24 @@ class TodayController: UIViewController {
                 cell.layoutIfNeeded()
             }
         } completion: { [weak self] _ in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
             self.appFullscreenController.view.removeFromSuperview()
             self.appFullscreenController.removeFromParent()
             self.todayCollectionView.isUserInteractionEnabled = true
         }
     }
 
-    //MARK: - Методы анимации ячейки для одного приложения
+    // MARK: - Методы анимации ячейки для одного приложения
     private func setupAppSingleFullscreenController(_ indexPath: IndexPath) {
         let appFullscreenController = TableDetailsController()
         appFullscreenController.dataSource = viewModel.todayNews.value[indexPath.item]
 
         appFullscreenController.dismissHandler = { [weak self] in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
             self.handleRemoveView()
         }
 
@@ -164,12 +171,12 @@ class TodayController: UIViewController {
         if gesture.state == .changed {
             if translationY > 0 {
                 let trueOffset = translationY - appFullscreenBeginOffset
-                var scale = 1 - trueOffset / 1000
+                var scale = 1 - trueOffset / 1_000
                 scale = min(1, scale)
                 scale = max(0.5, scale)
                 let transform: CGAffineTransform = .init(scaleX: scale, y: scale)
                 self.appFullscreenController.view.transform = transform
-                guard let cell = self.appFullscreenController.tableView.cellForRow(at: [0,0]) as? ImageHeaderTableCell else {
+                guard let cell = self.appFullscreenController.tableView.cellForRow(at: [0, 0]) as? ImageHeaderTableCell else {
                     return
                 }
                 cell.layoutIfNeeded()
@@ -186,13 +193,17 @@ class TodayController: UIViewController {
             return
         }
 
-        guard let startingFrame = cell.superview?.convert(cell.frame, to: nil) else { return }
+        guard let startingFrame = cell.superview?.convert(cell.frame, to: nil) else {
+            return
+        }
 
         self.startingFrame = startingFrame
     }
 
     private func setupSingleAppFullScreenStartingPosition(_ indexPath: IndexPath) {
-        let fullScreenView = appFullscreenController.view!
+        guard let fullScreenView = appFullscreenController.view else {
+            return
+        }
 
         view.addSubview(fullScreenView)
 
@@ -213,7 +224,7 @@ class TodayController: UIViewController {
         widthConstraint = fullScreenView.widthAnchor.constraint(equalToConstant: startingFrame.width)
         heightConstraint = fullScreenView.heightAnchor.constraint(equalToConstant: startingFrame.height)
 
-        [topConstraint, leadingConstraint, widthConstraint, heightConstraint].forEach({$0?.isActive = true})
+        [topConstraint, leadingConstraint, widthConstraint, heightConstraint].forEach { $0?.isActive = true }
         self.view.layoutIfNeeded()
     }
 
@@ -229,7 +240,7 @@ class TodayController: UIViewController {
 
             self.tabBarController?.tabBar.frame.origin.y = self.view.frame.height + 100
 
-            guard let cell = self.appFullscreenController.tableView.cellForRow(at: [0,0]) as? ImageHeaderTableCell else {
+            guard let cell = self.appFullscreenController.tableView.cellForRow(at: [0, 0]) as? ImageHeaderTableCell else {
                 return
             }
             cell.layoutIfNeeded()
@@ -241,7 +252,6 @@ class TodayController: UIViewController {
         setupSingleAppFullScreenStartingPosition(indexPath)
         beginFullscreenAnimation()
     }
-
 }
 
 extension TodayController: UIGestureRecognizerDelegate {
@@ -250,7 +260,7 @@ extension TodayController: UIGestureRecognizerDelegate {
     }
 }
 
-extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
+extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.todayNews.value.count
     }

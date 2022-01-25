@@ -18,7 +18,8 @@ class FullScreenCategoriesViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -52,7 +53,7 @@ class FullScreenCategoriesViewController: UIViewController {
     }
     
     private func setupCollectinView() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
         categoryCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
@@ -78,15 +79,14 @@ class FullScreenCategoriesViewController: UIViewController {
     
     @objc func refreshHandler() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
             self.refreshControl.endRefreshing()
-        })
+        }
         viewModel.refreshData()
     }
 }
 
 extension FullScreenCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.categoryNews.value.count
     }

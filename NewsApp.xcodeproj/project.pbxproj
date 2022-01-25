@@ -41,7 +41,7 @@
 		5C61F62F2721C4A100C6D369 /* StockHeaderHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61F62E2721C4A100C6D369 /* StockHeaderHorizontalController.swift */; };
 		5C61F6322721C58C00C6D369 /* StockHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61F6312721C58C00C6D369 /* StockHeaderCell.swift */; };
 		5C664318270E0FE900C4F297 /* FullScreenCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C664317270E0FE900C4F297 /* FullScreenCategoriesViewController.swift */; };
-		5C6965AD2799BCAB00076560 /* NetworkServiceProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6965AC2799BCAB00076560 /* NetworkServiceProtocols.swift */; };
+		5C6965AD2799BCAB00076560 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6965AC2799BCAB00076560 /* NetworkServiceProtocol.swift */; };
 		5C7098C726E9382100A8AEC5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7098C626E9382100A8AEC5 /* Helpers.swift */; };
 		5C7098CA26E93EB600A8AEC5 /* FloatingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7098C926E93EB600A8AEC5 /* FloatingContainerView.swift */; };
 		5C75F8762733CAF0001F2B80 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C75F8752733CAF0001F2B80 /* GoogleService-Info.plist */; };
@@ -135,7 +135,7 @@
 		5C61F62E2721C4A100C6D369 /* StockHeaderHorizontalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHeaderHorizontalController.swift; sourceTree = "<group>"; };
 		5C61F6312721C58C00C6D369 /* StockHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHeaderCell.swift; sourceTree = "<group>"; };
 		5C664317270E0FE900C4F297 /* FullScreenCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCategoriesViewController.swift; sourceTree = "<group>"; };
-		5C6965AC2799BCAB00076560 /* NetworkServiceProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocols.swift; sourceTree = "<group>"; };
+		5C6965AC2799BCAB00076560 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		5C7098C626E9382100A8AEC5 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		5C7098C926E93EB600A8AEC5 /* FloatingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingContainerView.swift; sourceTree = "<group>"; };
 		5C75F8752733CAF0001F2B80 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				5C43A93226E51185005FDD7B /* NetworkService.swift */,
-				5C6965AC2799BCAB00076560 /* NetworkServiceProtocols.swift */,
+				5C6965AC2799BCAB00076560 /* NetworkServiceProtocol.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -677,6 +677,7 @@
 				5CA46EEC26E36DDC0031A540 /* Frameworks */,
 				5CA46EED26E36DDC0031A540 /* Resources */,
 				FF607D02BD3AE68B8BA71650 /* [CP] Embed Pods Frameworks */,
+				5C7453E3279F0B7600D0421D /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -757,6 +758,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5C7453E3279F0B7600D0421D /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n";
+		};
 		FF607D02BD3AE68B8BA71650 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -807,7 +826,7 @@
 				5C23AEF327662064006521BD /* TodayCellModel.swift in Sources */,
 				5C17A3622778D67B002F8A8D /* LoginResult.swift in Sources */,
 				5C7098CA26E93EB600A8AEC5 /* FloatingContainerView.swift in Sources */,
-				5C6965AD2799BCAB00076560 /* NetworkServiceProtocols.swift in Sources */,
+				5C6965AD2799BCAB00076560 /* NetworkServiceProtocol.swift in Sources */,
 				5C4BADE426EA702C000620A1 /* UIColor+Extension.swift in Sources */,
 				5C5A1BA9276B8DFC005FA529 /* FavouriteCategoriesViewModel.swift in Sources */,
 				5C61F62F2721C4A100C6D369 /* StockHeaderHorizontalController.swift in Sources */,

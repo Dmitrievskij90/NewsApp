@@ -67,7 +67,6 @@ class ImageHeaderTableCell: UITableViewCell {
         return label
     }()
 
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         clipsToBounds = true
@@ -82,7 +81,6 @@ class ImageHeaderTableCell: UITableViewCell {
         topVerticalStackView.alignment = .center
         topVerticalStackView.spacing = 10
         topVerticalStackView.constrainHeight(constant: 40)
-
 
         let verticalStackView = UIStackView(arrangedSubviews: [
             topVerticalStackView,
@@ -99,10 +97,8 @@ class ImageHeaderTableCell: UITableViewCell {
         self.topConstaraint?.isActive = true
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    
 }
-

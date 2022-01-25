@@ -12,7 +12,6 @@ class RegisterController: UIViewController {
     private let passwordLabel = UILabel(text: "Password")
     private let confirmLabel = UILabel(text: "Confirm password")
     private let viewModel = RegisterControllerViewModel()
-
     private let registerLabel: UILabel = {
         let label = UILabel()
         label.text = "Register your new account"
@@ -23,28 +22,24 @@ class RegisterController: UIViewController {
         label.minimumScaleFactor = 0.5
         return label
     }()
-
     private let loginTextField: UITextField = {
         let textField = UITextField(placeholder: "user@gmail.com")
         textField.autocapitalizationType = .words
         textField.returnKeyType = .continue
         return textField
     }()
-    
     private let passwordTextField: UITextField = {
         let textField = UITextField(placeholder: "******")
         textField.returnKeyType = .continue
         textField.isSecureTextEntry = true
         return textField
     }()
-    
     private let repeatPasswordTextField: UITextField = {
         let textField = UITextField(placeholder: "******")
         textField.returnKeyType = .done
         textField.isSecureTextEntry = true
         return textField
     }()
-    
     private let rememberSwitch: UISwitch = {
         let rememberSwitch = UISwitch()
         rememberSwitch.isOn = false
@@ -54,7 +49,6 @@ class RegisterController: UIViewController {
         rememberSwitch.addTarget(self, action: #selector(observeRememberSwitch), for: .valueChanged)
         return rememberSwitch
     }()
-    
     private let keepMeSignedInLabel: UILabel = {
         let label = UILabel()
         label.text = "Keep me signed in"
@@ -62,7 +56,6 @@ class RegisterController: UIViewController {
         label.textColor = .black
         return label
     }()
-    
     private let doneButton: BaseButton = {
         let button = BaseButton(type: .system)
         button.setTitle("Done", for: .normal)
@@ -86,7 +79,6 @@ class RegisterController: UIViewController {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
         self.view = view
-        
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButonPressed))
         navigationItem.leftBarButtonItem = cancelButton
         cancelButton.tintColor = .label
@@ -125,7 +117,6 @@ class RegisterController: UIViewController {
         ])
         confirmPasswordStackView.axis = .vertical
         confirmPasswordStackView.spacing = 4
-
 
         let stackView = UIStackView(arrangedSubviews: [
             emailStackView,
@@ -211,7 +202,7 @@ extension RegisterController: UITextFieldDelegate {
         textField.endEditing(true)
         return true
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }

@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct NewsData: Codable {
-    let articles: [Articles]
+struct Source: Codable {
+    let name: String
 }
 
 struct Articles: Codable {
@@ -21,6 +21,6 @@ struct Articles: Codable {
     let source: Source
 }
 
-struct Source: Codable {
-    let name: String
+struct NewsData: Codable {
+    let articles: [Articles]
 }

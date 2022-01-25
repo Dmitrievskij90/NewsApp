@@ -5,9 +5,9 @@
 //  Created by Konstantin Dmitrievskiy on 26.12.2021.
 //
 
-import Foundation
 import Firebase
 import FirebaseAuth
+import Foundation
 
 class LoginControllerViewModel {
     var result: Box<LoginResult?> = Box(nil)
@@ -33,7 +33,7 @@ class LoginControllerViewModel {
         if login.isEmpty || password.isEmpty {
             self.result.value = .emptyField
         } else {
-            Auth.auth().signIn(withEmail: login, password: password) { [weak self] (authResult, error) in
+            Auth.auth().signIn(withEmail: login, password: password) { [weak self] authResult, error in
                 guard let self = self else {
                     return
                 }
@@ -62,11 +62,11 @@ class LoginControllerViewModel {
 
     private func saveUserSettings() {
         CategoryManager.shared.isFirstLoad {
-            CategoryManager.shared.saveCategoriesSet(with:  DefaultParameters.categoriesSet)
+            CategoryManager.shared.saveCategoriesSet(with: DefaultParameters.categoriesSet)
             CategoryManager.shared.saveCategoriesStruct(with: DefaultParameters.categoriesStruct)
             CategoryManager.shared.saveStockCompaniesSet(with: DefaultParameters.stockCompaniesSet)
             CategoryManager.shared.saveStockCompaniesStruct(with: DefaultParameters.stockCompaniesStruct)
-            CategoryManager.shared.saveUser(with: DefaultParameters.user)
+            AppSettingsManager.shared.saveUser(with: DefaultParameters.user)
         }
     }
 
@@ -77,5 +77,4 @@ class LoginControllerViewModel {
             }
         }
     }
-    
 }

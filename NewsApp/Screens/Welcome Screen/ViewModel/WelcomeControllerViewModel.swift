@@ -22,5 +22,4 @@ class WelcomeControllerViewModel {
             defaults.setValue(true, forKey: "isTrue")
         }
     }
-    
 }

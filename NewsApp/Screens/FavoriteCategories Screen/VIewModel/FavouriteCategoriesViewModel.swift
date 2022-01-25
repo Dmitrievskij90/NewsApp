@@ -13,7 +13,7 @@ class FavouriteCategoriesViewModel {
     func viewWillAppear() {
         categories = CategoryManager.shared.loadCategoriesSet().sorted()
     }
-    
+
     func editViewModelForCategory(category: String) -> FullSceenCategoriesViewModel {
         return FullSceenCategoriesViewModel(category: category)
     }

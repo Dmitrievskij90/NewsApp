@@ -15,7 +15,7 @@ class CategoriesViewModel {
         addObserver()
     }
 
-     func viewWillAppear() {
+    func viewWillAppear() {
         categoriesSet = CategoryManager.shared.loadCategoriesSet()
         categoriesStruct = CategoryManager.shared.loadCategoriesStruct()
     }
@@ -30,7 +30,9 @@ class CategoriesViewModel {
 
     @objc private func saveCategoriesByIndexPath(_ notification: Notification) {
         if let path = notification.object {
-            guard let indexPasth = path as? IndexPath else {return}
+            guard let indexPasth = path as? IndexPath else {
+                return
+            }
             didSelectItem(indexPath: indexPasth)
         }
     }

@@ -33,7 +33,7 @@ class FavouriteCategoriesViewController: UIViewController {
     }
     
     private func setupCollectinView() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
         favouriteCategoriesCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
@@ -47,7 +47,6 @@ class FavouriteCategoriesViewController: UIViewController {
 }
 
 extension FavouriteCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.categories.count
     }
@@ -81,4 +80,3 @@ extension FavouriteCategoriesViewController: UICollectionViewDataSource, UIColle
         navigationController?.pushViewController(fullScreenController, animated: true)
     }
 }
-

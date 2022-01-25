@@ -5,8 +5,8 @@
 //  Created by Konstantin Dmitrievskiy on 31.10.2021.
 //
 
-import UIKit
 import Charts
+import UIKit
 
 class StockChartViewController: UIViewController, ChartViewDelegate {
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -106,6 +106,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -139,7 +140,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
     private func setupHalfView() {
         view.addSubview(halfView)
-        halfView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 5, bottom: 0, right: 5), size: .init(width: 0, height: view.frame.height / 2))
+        halfView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 5, bottom: 0, right: 5), size: .init(width: 0, height: view.frame.height / 2))
         halfView.addSubview(lineChartView)
         lineChartView.fillSuperview(padding: .init(top: 70, left: 0, bottom: 70, right: 0))
     }
@@ -153,7 +154,6 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         view.addSubview(stackView)
         stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: halfView.topAnchor, trailing: view.trailingAnchor)
     }
-
 
     private func setupLabelsData() {
         priceLabel.text = viewModel.priceLabel

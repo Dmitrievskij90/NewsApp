@@ -5,17 +5,17 @@
 //  Created by Konstantin Dmitrievskiy on 18.01.2022.
 //
 
-import Foundation
-import KeychainAccess
 import Firebase
 import FirebaseAuth
+import Foundation
+import KeychainAccess
 
 class ProfileViewModel {
     var image = UIImage(named: "imagePlaceholder")
     var user = User()
     var sections = DefaultParameters.sections
     var indexPath: Box<IndexPath?> = Box(nil)
-    var updateWithUser: ((User)-> Void)?
+    var updateWithUser: ((User) -> Void)?
     var result: Box<ProfileResult?> = Box(nil)
 
     init() {
@@ -35,13 +35,13 @@ class ProfileViewModel {
             } else {
                 user.name = name
             }
-            CategoryManager.shared.saveUser(with: user)
+            AppSettingsManager.shared.saveUser(with: user)
         }
     }
 
     func loadUserSettings() {
-        self.image = CategoryManager.shared.loadUserImage()
-        self.user = CategoryManager.shared.loadUser()
+        self.image = AppSettingsManager.shared.loadUserImage()
+        self.user = AppSettingsManager.shared.loadUser()
     }
 
     func signOut() {
@@ -49,7 +49,7 @@ class ProfileViewModel {
         do {
             try firebaseAuth.signOut()
         } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
+            print("Error signing out: %@", signOutError)
         }
         AppSettingsManager.shared.forgetUser()
         self.result.value = .presentWelcomeController
@@ -77,7 +77,7 @@ class ProfileViewModel {
                 self.updateWithUser?(user)
                 sections[indexPath.section].isOpened = false
                 self.indexPath.value = indexPath
-                CategoryManager.shared.saveUser(with: user)
+                AppSettingsManager.shared.saveUser(with: user)
             }
         } else if indexPath.section == 1 {
             self.result.value = .presentCategoriesViewController
@@ -87,6 +87,6 @@ class ProfileViewModel {
     }
 
     func saveUserImage(image: UIImage) {
-        CategoryManager.shared.saveUserImage(image: image)
+        AppSettingsManager.shared.saveUserImage(image: image)
     }
 }

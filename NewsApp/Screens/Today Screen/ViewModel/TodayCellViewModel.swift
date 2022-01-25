@@ -11,8 +11,8 @@ public class TodayCellViewModel {
     private var networkService: NetworkServiceFetchTodayNewsProtocol = NetworkService()
     var todayNews: Box<[TodayCellModel]> = Box([])
     var stockData: Box<[StockHeaderCellModel]> = Box([])
-    var updateViews: (()->())?
-    private var defaultLocation = CategoryManager.shared.loadUser().country
+    var updateViews: (() -> Void)?
+    private var defaultLocation = AppSettingsManager.shared.loadUser().country
     private var stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet().sorted().joined(separator: ",")
 
     init() {
@@ -22,7 +22,7 @@ public class TodayCellViewModel {
 
     func viewWillAppear() {
         stockCompaniesSet = CategoryManager.shared.loadStockCompaniesSet().sorted().joined(separator: ",")
-        defaultLocation = CategoryManager.shared.loadUser().country
+        defaultLocation = AppSettingsManager.shared.loadUser().country
     }
 
     func refreshData() {
@@ -45,16 +45,18 @@ public class TodayCellViewModel {
 
     @objc private func updateStockCompaniesSet(_ notification: Notification) {
         if let loc = notification.object {
-            guard let copm = loc as? Set<String> else {return}
+            guard let copm = loc as? Set<String> else {
+                return
+            }
             stockCompaniesSet = copm.sorted().joined(separator: ",")
-//            refreshData()
+            //            refreshData()
         }
     }
 
     @objc private func updateCountryforTodayNews(_ notification: Notification) {
         if let location = notification.object as? User {
             defaultLocation = location.country
-//            refreshData()
+            //            refreshData()
         }
     }
 
@@ -64,26 +66,26 @@ public class TodayCellViewModel {
 
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        networkService.fetchTodayNews(preferredCountry: country) { (results, error) in
+        networkService.fetchTodayNews(preferredCountry: country) { results, error in
             if let err = error {
                 print("Can't fetch today news", err)
             }
             dispatchGroup.leave()
             if let res = results?.articles {
-                todayNews.value = res.compactMap{TodayCellModel(source: $0.source.name, date: $0.publishedAt, title: $0.title ?? "", image: $0.urlToImage ?? "", description: $0.description ?? "", url: $0.url)}
+                todayNews.value = res.compactMap { TodayCellModel(source: $0.source.name, date: $0.publishedAt, title: $0.title ?? "", image: $0.urlToImage ?? "", description: $0.description ?? "", url: $0.url) }
             }
-
         }
-            dispatchGroup.enter()
-        networkService.fetchStockData(searchedStockCompanies: companies) { (results, error) in
-                if let err = error {
-                    print("Can't fetch stock data", err)
-                }
-                dispatchGroup.leave()
-                if let res = results {
-                    stockData.value = res.compactMap{StockHeaderCellModel(symbol: $0.symbol, price: $0.price)}
-                }
+
+        dispatchGroup.enter()
+        networkService.fetchStockData(searchedStockCompanies: companies) { results, error in
+            if let err = error {
+                print("Can't fetch stock data", err)
             }
+            dispatchGroup.leave()
+            if let res = results {
+                stockData.value = res.compactMap { StockHeaderCellModel(symbol: $0.symbol, price: $0.price) }
+            }
+        }
 
         dispatchGroup.notify(queue: .main) { [weak self] in
             self?.todayNews = todayNews
@@ -92,4 +94,3 @@ public class TodayCellViewModel {
         }
     }
 }
-

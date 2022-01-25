@@ -8,15 +8,15 @@
 import UIKit
 
 class NewsDetailCell: UICollectionViewCell {
-    private let attributes: [NSAttributedString.Key : Any] = [
-        .foregroundColor : UIColor.black,
-        .font : UIFont.systemFont(ofSize: 18)
+    private let attributes: [NSAttributedString.Key: Any] = [
+        .foregroundColor: UIColor.black,
+        .font: UIFont.systemFont(ofSize: 18)
     ]
 
     var dataSource: NewsCellModel? {
         didSet {
             if let source = dataSource {
-                let attributedString = NSAttributedString(string: source.description , attributes: attributes)
+                let attributedString = NSAttributedString(string: source.description, attributes: attributes)
                 titleLabel.text = source.title
                 descriptionTextView.attributedText = attributedString
                 dateLabel.text = Helpers.shared.convertDate(date: source.publishedAt) 
@@ -69,6 +69,7 @@ class NewsDetailCell: UICollectionViewCell {
         verticalStackView.fillSuperview(padding: .init(top: 0, left: 24, bottom: 0, right: 24))
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

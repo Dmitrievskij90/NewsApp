@@ -8,7 +8,6 @@
 import UIKit
 
 class BaseCell: UICollectionViewCell {
-
     override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
@@ -34,8 +33,8 @@ class BaseCell: UICollectionViewCell {
         layer.shadowColor = UIColor.darkGray.cgColor
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

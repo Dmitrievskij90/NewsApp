@@ -5,9 +5,9 @@
 //  Created by Konstantin Dmitrievskiy on 10.01.2022.
 //
 
-import Foundation
 import Firebase
 import FirebaseAuth
+import Foundation
 
 class VerificationControllerViewModel {
     private var user = User()
@@ -55,12 +55,13 @@ class VerificationControllerViewModel {
         Auth.auth().currentUser?.reload()
     }
 
-     func letsGoButonPressed() {
+    func letsGoButonPressed() {
         guard let user = Auth.auth().currentUser else {
             return
         }
         user.reload { [weak self] _ in
-            guard let self = self else { return }
+            guard let self = self else {
+                return }
             switch user.isEmailVerified {
             case true:
                 self.saveUserSettings()
@@ -72,14 +73,14 @@ class VerificationControllerViewModel {
     }
 
     func saveUserImage(image: UIImage) {
-        CategoryManager.shared.saveUserImage(image: image)
+        AppSettingsManager.shared.saveUserImage(image: image)
     }
 
     private func saveUserSettings() {
-        CategoryManager.shared.saveCategoriesSet(with:  DefaultParameters.categoriesSet)
+        CategoryManager.shared.saveCategoriesSet(with: DefaultParameters.categoriesSet)
         CategoryManager.shared.saveCategoriesStruct(with: DefaultParameters.categoriesStruct)
         CategoryManager.shared.saveStockCompaniesSet(with: DefaultParameters.stockCompaniesSet)
         CategoryManager.shared.saveStockCompaniesStruct(with: DefaultParameters.stockCompaniesStruct)
-        CategoryManager.shared.saveUser(with: user)
+        AppSettingsManager.shared.saveUser(with: user)
     }
 }

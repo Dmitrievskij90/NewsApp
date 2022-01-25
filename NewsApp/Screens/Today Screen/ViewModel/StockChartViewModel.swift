@@ -29,7 +29,7 @@ class StockChartViewModel {
     private func fetchData(result: String) {
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        networkService.fetchStockChartData(searchedStockCompany: result ) { (res, error) in
+        networkService.fetchStockChartData(searchedStockCompany: result ) { res, error in
             if let err = error {
                 print("failed error", err)
             }

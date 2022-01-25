@@ -8,9 +8,9 @@
 import UIKit
 
 class TableDetailsController: UIViewController {
-    var dismissHandler: (() ->())?
+    var dismissHandler: (() -> Void)?
     var dataSource: TodayCellModel?
-    private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+    private let bottomPadding = UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     let floatingContainerView = FloatingContainerView()
 
     let closeButton: UIButton = {
@@ -73,7 +73,7 @@ class TableDetailsController: UIViewController {
 
     private func setupTableView() {
         view.addSubview(tableView)
-        let height = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero
+        let height = UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero
         tableView.fillSuperview()
         tableView.dataSource = self
         tableView.delegate = self
@@ -127,7 +127,6 @@ class TableDetailsController: UIViewController {
 }
 
 extension TableDetailsController: UITableViewDelegate, UITableViewDataSource {
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }

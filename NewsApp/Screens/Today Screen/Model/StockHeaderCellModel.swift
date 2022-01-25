@@ -8,6 +8,6 @@
 import Foundation
 
 struct StockHeaderCellModel {
-  let symbol: String
-  let price: Double
+    let symbol: String
+    let price: Double
 }

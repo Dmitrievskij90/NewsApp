@@ -61,14 +61,14 @@ class WelcomeController: UIViewController {
         let width = view.frame.width / 2
         let stackVIew = UIStackView(arrangedSubviews: [
             registerButton,
-            signInButton,
+            signInButton
         ])
         stackVIew.axis = .vertical
         stackVIew.spacing = 16
         stackVIew.alignment = .fill
         stackVIew.distribution = .fillEqually
         view.addSubview(stackVIew)
-        stackVIew.anchor(top: nil, leading: nil, bottom: view.bottomAnchor, trailing: nil,padding: .init(top: 0, left: 0, bottom: height, right: 0) ,size: .init(width: width, height: height ))
+        stackVIew.anchor(top: nil, leading: nil, bottom: view.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: height, right: 0), size: .init(width: width, height: height ))
         stackVIew.centerXInSuperview()
     }
 
@@ -77,7 +77,6 @@ class WelcomeController: UIViewController {
         let navVC = UINavigationController(rootViewController: destinationVC)
         navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true, completion: nil)
-        
         //        let destinationVC = VerificationController()
         //        let navVC = UINavigationController(rootViewController: destinationVC)
         //        navVC.modalPresentationStyle = .fullScreen
