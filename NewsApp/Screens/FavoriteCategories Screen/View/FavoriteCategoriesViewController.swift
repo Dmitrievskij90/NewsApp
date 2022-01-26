@@ -7,9 +7,9 @@
 
 import UIKit
 
-class FavouriteCategoriesViewController: UIViewController {
+class FavoriteCategoriesViewController: UIViewController {
     private var favouriteCategoriesCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
-    private let viewModel = FavouriteCategoriesViewModel()
+    private let viewModel = FavoriteCategoriesViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,7 @@ class FavouriteCategoriesViewController: UIViewController {
     }
 }
 
-extension FavouriteCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension FavoriteCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.categories.count
     }

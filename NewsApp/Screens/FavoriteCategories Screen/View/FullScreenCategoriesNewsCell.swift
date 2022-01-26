@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoriteCategoryNewsCell: UICollectionViewCell {
+class FullScreenCategoriesNewsCell: UICollectionViewCell {
     var article: NewsCellModel? {
         didSet {
             if let source = article {

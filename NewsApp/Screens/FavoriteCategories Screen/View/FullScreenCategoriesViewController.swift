@@ -57,7 +57,7 @@ class FullScreenCategoriesViewController: UIViewController {
         layout.scrollDirection = .vertical
         
         categoryCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        categoryCollectionView.register(FavoriteCategoryNewsCell.self, forCellWithReuseIdentifier: FavoriteCategoryNewsCell.identifier)
+        categoryCollectionView.register(FullScreenCategoriesNewsCell.self, forCellWithReuseIdentifier: FullScreenCategoriesNewsCell.identifier)
         categoryCollectionView.backgroundColor = UIColor.white
         categoryCollectionView.dataSource = self
         categoryCollectionView.delegate = self
@@ -92,7 +92,7 @@ extension FullScreenCategoriesViewController: UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCategoryNewsCell.identifier, for: indexPath) as? FavoriteCategoryNewsCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FullScreenCategoriesNewsCell.identifier, for: indexPath) as? FullScreenCategoriesNewsCell else {
             return UICollectionViewCell()
         }
         cell.article = viewModel.categoryNews.value[indexPath.item]
