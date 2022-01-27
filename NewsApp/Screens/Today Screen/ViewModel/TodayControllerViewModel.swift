@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class TodayCellViewModel {
+public class TodayControllerViewModel {
     var todayNews: Box<[TodayCellModel]> = Box([])
     var stockData: Box<[StockHeaderCellModel]> = Box([])
     var updateViews: (() -> Void)?

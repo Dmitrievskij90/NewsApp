@@ -22,7 +22,7 @@ class TodayController: UIViewController {
     private let refreshControl = UIRefreshControl()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private let activityIndicator = BaseActivityIndicator(style: .medium)
-    private let viewModel = TodayCellViewModel()
+    private let viewModel = TodayControllerViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()

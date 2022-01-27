@@ -17,7 +17,7 @@
 		5C17A35E2778D3CC002F8A8D /* LoginControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C17A35D2778D3CC002F8A8D /* LoginControllerViewModel.swift */; };
 		5C17A3622778D67B002F8A8D /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C17A3612778D67B002F8A8D /* LoginResult.swift */; };
 		5C23AEED27662002006521BD /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C23AEEC27662002006521BD /* Box.swift */; };
-		5C23AEF02766204B006521BD /* TodayCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C23AEEF2766204B006521BD /* TodayCellViewModel.swift */; };
+		5C23AEF02766204B006521BD /* TodayControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C23AEEF2766204B006521BD /* TodayControllerViewModel.swift */; };
 		5C23AEF327662064006521BD /* TodayCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C23AEF227662064006521BD /* TodayCellModel.swift */; };
 		5C24EEB3271899B100F302D0 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C24EEB2271899B100F302D0 /* BaseButton.swift */; };
 		5C28A10A2731476500C100A4 /* StockHistoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C28A1092731476500C100A4 /* StockHistoryData.swift */; };
@@ -111,7 +111,7 @@
 		5C17A35D2778D3CC002F8A8D /* LoginControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginControllerViewModel.swift; sourceTree = "<group>"; };
 		5C17A3612778D67B002F8A8D /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
 		5C23AEEC27662002006521BD /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
-		5C23AEEF2766204B006521BD /* TodayCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCellViewModel.swift; sourceTree = "<group>"; };
+		5C23AEEF2766204B006521BD /* TodayControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayControllerViewModel.swift; sourceTree = "<group>"; };
 		5C23AEF227662064006521BD /* TodayCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayCellModel.swift; sourceTree = "<group>"; };
 		5C24EEB2271899B100F302D0 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		5C28A1092731476500C100A4 /* StockHistoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHistoryData.swift; sourceTree = "<group>"; };
@@ -431,7 +431,7 @@
 		5CBDA4172768F329003AB428 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				5C23AEEF2766204B006521BD /* TodayCellViewModel.swift */,
+				5C23AEEF2766204B006521BD /* TodayControllerViewModel.swift */,
 				5C4A388A278DDEDE008BCF5A /* StockChartViewModel.swift */,
 			);
 			path = ViewModel;
@@ -869,7 +869,7 @@
 				5CBF2FEF26EE4DEF00DB1D89 /* RegisterController.swift in Sources */,
 				5CF9EFCE26EFC33500655DD2 /* UIViewController+UIAlertController.swift in Sources */,
 				5CE2D6C2270392B300362909 /* FavoriteCategoriesViewController.swift in Sources */,
-				5C23AEF02766204B006521BD /* TodayCellViewModel.swift in Sources */,
+				5C23AEF02766204B006521BD /* TodayControllerViewModel.swift in Sources */,
 				5CBA606926FA432B00A81A53 /* ChooseCountryCell.swift in Sources */,
 				5CB501D926E6513900246670 /* BaseCell.swift in Sources */,
 				5C8917C82767BE6400927EE9 /* BaseActivityIndicator.swift in Sources */,
