@@ -39,7 +39,6 @@ class CategoriesCell: BaseCell {
         return imageView
     }()
 
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = 16
@@ -52,7 +51,7 @@ class CategoriesCell: BaseCell {
         starImageView.centerInSuperview()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
 }

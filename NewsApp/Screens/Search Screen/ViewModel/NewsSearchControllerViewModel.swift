@@ -9,8 +9,10 @@ import Foundation
 
 class NewsSearchControllerViewModel {
     var newsBySearch: Box<[NewsCellModel]> = Box([])
-    var stopAnimating: (()->())?
-    private var defaultLocation = CategoryManager.shared.loadUser().country
+    var stopAnimating: (() -> Void)?
+    
+    private var networkService: NetworkServiceSearchNewsProtocol = NetworkService()
+    private var defaultLocation = AppSettingsManager.shared.loadUser().country
     private var term = ""
 
     init() {
@@ -19,12 +21,12 @@ class NewsSearchControllerViewModel {
     }
 
     func viewWillAppear() {
-        defaultLocation = CategoryManager.shared.loadUser().country
+        defaultLocation = AppSettingsManager.shared.loadUser().country
     }
 
-   private func refreshData() {
-         fetchNews(defaultLocation, category: term)
-     }
+    private func refreshData() {
+        fetchNews(defaultLocation, category: term)
+    }
 
     private func addObserver() {
         NotificationCenter.default.addObserver(
@@ -36,19 +38,21 @@ class NewsSearchControllerViewModel {
 
     @objc private func updateStockCompaniesSet(_ notification: Notification) {
         if let loc = notification.object {
-            guard let copm = loc as? String else {return}
+            guard let copm = loc as? String else {
+                return
+            }
             term = copm
             refreshData()
         }
     }
 
     private func fetchNews(_ country: String, category: String) {
-        NetworkService.shared.fetchNews(searchTerm: term, preferredCountry: country) {  (results, error) in
+        networkService.searchNews(searchTerm: term, preferredCountry: country) { results, error in
             if let err = error {
                 print("Can't fetch stock data", err)
             }
-            if let res = results?.articles  {
-                self.newsBySearch.value = res.compactMap{NewsCellModel(source: $0.source.name, date: $0.publishedAt, title: $0.title ?? "", image: $0.urlToImage ?? "", description: $0.description ?? "", url: $0.url, publishedAt: $0.publishedAt)}
+            if let res = results?.articles {
+                self.newsBySearch.value = res.compactMap { NewsCellModel(source: $0.source.name, date: $0.publishedAt, title: $0.title ?? "", image: $0.urlToImage ?? "", description: $0.description ?? "", url: $0.url, publishedAt: $0.publishedAt) }
             }
         }
     }

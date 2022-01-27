@@ -29,7 +29,7 @@ class StockHeaderHorizontalController: UIViewController {
     }
     
     private func setupCollectinView() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
         stockCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)

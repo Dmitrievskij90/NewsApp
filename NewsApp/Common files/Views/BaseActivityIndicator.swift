@@ -8,7 +8,6 @@
 import UIKit
 
 class BaseActivityIndicator: UIActivityIndicatorView {
-
     override init(style: UIActivityIndicatorView.Style) {
         super.init(style: style)
         color = .darkGray
@@ -16,6 +15,7 @@ class BaseActivityIndicator: UIActivityIndicatorView {
         startAnimating()
     }
 
+    @available(*, unavailable)
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -75,6 +75,7 @@ class LoginViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         viewModel.reloadUser()
         updateControllerWithVIewModel()
     }
@@ -162,8 +163,8 @@ class LoginViewController: UIViewController {
         }
     }
 
-    //MARK: - Actions methods
-    //MARK: -
+    // MARK: - Actions methods
+    // MARK: -
     @objc func cancelButonPressed() {
         dismiss(animated: true, completion: nil)
         viewModel.cancelButonPressed()
@@ -177,8 +178,8 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name("loginSwitch"), object: rememberSwitch)
     }
 
-    //MARK: - login methods
-    //MARK: -
+    // MARK: - login methods
+    // MARK: -
     private func updateControllerWithVIewModel() {
         viewModel.result.bind { [weak self] result in
             guard let self = self else {
@@ -206,8 +207,8 @@ class LoginViewController: UIViewController {
         viewModel.validateCredentials(with: login, password: password)
     }
 
-    //MARK: - alertView animation methods
-    //MARK: -
+    // MARK: - alertView animation methods
+    // MARK: -
     private func hideAlertView() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
             self.topConstraint?.isActive = true

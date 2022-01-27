@@ -5,8 +5,8 @@
 //  Created by Konstantin Dmitrievskiy on 04.09.2021.
 //
 
-import UIKit
 import SDWebImage
+import UIKit
 
 class NewsSearchController: UIViewController {
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
@@ -60,7 +60,7 @@ class NewsSearchController: UIViewController {
     }
 
     private func setupCollectinView() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
 
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
@@ -77,7 +77,7 @@ class NewsSearchController: UIViewController {
 // MARK: -
 extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        enterSearchTermLabel.isHidden = viewModel.newsBySearch.value.count != 0
+        enterSearchTermLabel.isHidden = !viewModel.newsBySearch.value.isEmpty
         return viewModel.newsBySearch.value.count
     }
 
@@ -118,6 +118,3 @@ extension NewsSearchController: UISearchBarDelegate {
         }
     }
 }
-
-
-

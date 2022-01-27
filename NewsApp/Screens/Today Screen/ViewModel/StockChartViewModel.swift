@@ -8,8 +8,9 @@
 import Foundation
 
 class StockChartViewModel {
-    var stockModel: Box<StockHistoryData?> = Box(nil)
     let diffrience: Box<Double> = Box(0.0)
+    
+    var stockModel: Box<StockHistoryData?> = Box(nil)
     var priceLabel: String {
         return String(currentStockCompanyData.price ) + "$"
     }
@@ -18,6 +19,7 @@ class StockChartViewModel {
         return currentStockCompanyData.symbol
     }
 
+    private var networkService: NetworkServiceFetchStockChartDataProtocol = NetworkService()
     private var currentStockCompanyData: StockHeaderCellModel
 
     init(currentStockCompanyData: StockHeaderCellModel) {
@@ -28,7 +30,7 @@ class StockChartViewModel {
     private func fetchData(result: String) {
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
-        NetworkService.shared.fetchStockChartData(searchedStockCompany: result ) { (res, error) in
+        networkService.fetchStockChartData(searchedStockCompany: result ) { res, error in
             if let err = error {
                 print("failed error", err)
             }

@@ -33,36 +33,6 @@ class ProfileViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
 
-    func updateControllerWithViewModel() {
-        viewModel.indexPath.bind { [weak self] result in
-            if let res = result {
-                self?.tableView.reloadSections([res.section], with: .none)
-            }
-        }
-
-        viewModel.updateWithUser = { [weak self] user in
-            self?.header.nameTextField.text = "\(user.name)"
-            self?.header.countryImageView.image = UIImage(named: user.country)
-        }
-
-        viewModel.result.bind { [weak self] result in
-            switch result {
-            case .presentCategoriesViewController:
-                self?.presentCategoriesViewController()
-            case .presentStockCompaniesViewController:
-                self?.presentStockCompaniesViewController()
-            case .presentWelcomeController:
-                self?.presentWelcomeController()
-            default:
-                break
-            }
-        }
-
-        header.nameTextField.text = "\(viewModel.user.name)"
-        header.userImageView.image = viewModel.image
-        header.countryImageView.image = UIImage(named: viewModel.user.country)
-    }
-    
     // MARK: - setup user interface methods
     // MARK: -
     override func loadView() {
@@ -125,10 +95,40 @@ class ProfileViewController: UIViewController {
         viewController.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(viewController, animated: true)
     }
+
+    private func updateControllerWithViewModel() {
+        viewModel.indexPath.bind { [weak self] result in
+            if let res = result {
+                self?.tableView.reloadSections([res.section], with: .none)
+            }
+        }
+
+        viewModel.updateWithUser = { [weak self] user in
+            self?.header.nameTextField.text = "\(user.name)"
+            self?.header.countryImageView.image = UIImage(named: user.country)
+        }
+
+        viewModel.result.bind { [weak self] result in
+            switch result {
+            case .presentCategoriesViewController:
+                self?.presentCategoriesViewController()
+            case .presentStockCompaniesViewController:
+                self?.presentStockCompaniesViewController()
+            case .presentWelcomeController:
+                self?.presentWelcomeController()
+            default:
+                break
+            }
+        }
+
+        header.nameTextField.text = "\(viewModel.user.name)"
+        header.userImageView.image = viewModel.image
+        header.countryImageView.image = UIImage(named: viewModel.user.country)
+    }
 }
 
-//MARK: - UITableViewDataSource and UITableViewDelegate methods
-//MARK: -
+// MARK: - UITableViewDataSource and UITableViewDelegate methods
+// MARK: -
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.sections.count
@@ -181,8 +181,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-//MARK: - UIImagePickerControllerDelegate methods
-//MARK: -
+// MARK: - UIImagePickerControllerDelegate methods
+// MARK: -
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {

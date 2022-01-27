@@ -8,7 +8,6 @@
 import UIKit
 
 class BaseButton: UIButton {
-
     override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
@@ -38,12 +37,13 @@ class BaseButton: UIButton {
         layer.shadowColor = UIColor.darkGray.cgColor
     }
 
-        override func layoutSubviews() {
-            super.layoutSubviews()
-            layer.cornerRadius = layer.frame.height / 3
-        }
-
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = layer.frame.height / 3
     }
 }

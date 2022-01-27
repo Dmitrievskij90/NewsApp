@@ -8,10 +8,9 @@
 import UIKit
 
 class FloatingContainerView: UIView {
-
-    var transitionHandler: (()->())?
-
-     let imageView: UIImageView = {
+    var transitionHandler: (() -> Void)?
+    
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.constrainWidth(constant: 80)
         imageView.contentMode = .scaleAspectFill
@@ -19,7 +18,7 @@ class FloatingContainerView: UIView {
         imageView.layer.cornerRadius = 16
         return imageView
     }()
-
+    
     private let label: UILabel = {
         let label = UILabel()
         label.text = "Do you want more information?"
@@ -31,7 +30,7 @@ class FloatingContainerView: UIView {
         label.textColor = .black
         return label
     }()
-
+    
     private let goButton: BaseButton = {
         let button = BaseButton(type: .system)
         button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
@@ -44,14 +43,14 @@ class FloatingContainerView: UIView {
         button.addTarget(self, action: #selector(goToWebController), for: .touchUpInside)
         return button
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         layer.cornerRadius = 16
         clipsToBounds = true
         backgroundColor = .init(hex: 0xE6E6E6)
-
+        
         let stackVIew = UIStackView(arrangedSubviews: [
             imageView,
             label,
@@ -59,19 +58,20 @@ class FloatingContainerView: UIView {
         ])
         stackVIew.spacing = 16
         stackVIew.alignment = .center
-
+        
         addSubview(stackVIew)
         stackVIew.fillSuperview(padding: .init(top: 10, left: 10, bottom: 10, right: 10))
     }
-
+    
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
     }
-
+    
     @objc func goToWebController() {
         transitionHandler?()
     }

@@ -22,7 +22,7 @@ class NewsSearchCell: UICollectionViewCell {
         }
     }
 
-   private let newsImageView: UIImageView = {
+    private let newsImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -31,7 +31,7 @@ class NewsSearchCell: UICollectionViewCell {
         return imageView
     }()
 
-   private let authorLabel: UILabel = {
+    private let authorLabel: UILabel = {
         let label = UILabel()
         label.text = "Autor"
         label.font = .boldSystemFont(ofSize: 18)
@@ -51,8 +51,8 @@ class NewsSearchCell: UICollectionViewCell {
     }()
 
     private let separatorView: UIView = {
-        let view =  UIView()
-        view.backgroundColor =  UIColor(white: 0, alpha: 0.3)
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0, alpha: 0.3)
         return view
     }()
 
@@ -74,7 +74,6 @@ class NewsSearchCell: UICollectionViewCell {
 
         addSubview(separatorView)
         separatorView.anchor(top: nil, leading: authorLabel.leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: -8, right: 0), size: .init(width: 0, height: 0.5))
-
     }
 
     @available(*, unavailable)

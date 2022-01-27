@@ -11,13 +11,14 @@ class DetailsController: UIViewController {
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var article: NewsCellModel
     private let floatingContainerView = FloatingContainerView()
-    private let bottomPadding = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+    private let bottomPadding = UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
 
     init(article: NewsCellModel) {
         self.article = article
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -62,7 +63,7 @@ class DetailsController: UIViewController {
     }
 
     private func setupCollectinView() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
 
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
@@ -141,7 +142,4 @@ extension DetailsController: UICollectionViewDataSource, UICollectionViewDelegat
         }
         return .init(width: view.frame.width, height: view.frame.height / 2)
     }
-
-
 }
-

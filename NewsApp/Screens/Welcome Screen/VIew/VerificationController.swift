@@ -101,6 +101,7 @@ class VerificationController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         viewModel.reloadUser()
         updateControllerWithVIewModel()
     }
@@ -187,15 +188,14 @@ class VerificationController: UIViewController {
         alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         alertView.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        
         alertView.tapHandler = { [weak self] in
             self?.viewModel.reloadUser()
             self?.hideAlertView()
         }
     }
 
-    //MARK: - Presentation methods
-    //MARK: -
+    // MARK: - Presentation methods
+    // MARK: -
     private func updateControllerWithVIewModel() {
         viewModel.result.bind { [weak self] result in
             guard let self = self else {
@@ -212,8 +212,8 @@ class VerificationController: UIViewController {
         }
     }
 
-    //MARK: - Animation methods
-    //MARK: -
+    // MARK: - Animation methods
+    // MARK: -
     private func hideAlertView() {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
             self.topConstraint?.isActive = true
@@ -252,8 +252,8 @@ class VerificationController: UIViewController {
         }
     }
 
-    //MARK: - Actions methods
-    //MARK: -
+    // MARK: - Actions methods
+    // MARK: -
     @objc func countryButtonTapped(button: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name("country"), object: button.tag)
         animateCountryButton(button: button)
@@ -301,8 +301,8 @@ class VerificationController: UIViewController {
     }
 }
 
-//MARK: - UIImagePickerControllerDelegate methods
-//MARK: -
+// MARK: - UIImagePickerControllerDelegate methods
+// MARK: -
 extension VerificationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
@@ -315,8 +315,8 @@ extension VerificationController: UIImagePickerControllerDelegate, UINavigationC
     }
 }
 
-//MARK: - UITextFieldDelegate methods
-//MARK: -
+// MARK: - UITextFieldDelegate methods
+// MARK: -
 extension VerificationController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -334,4 +334,3 @@ extension VerificationController: UITextFieldDelegate {
         }
     }
 }
-

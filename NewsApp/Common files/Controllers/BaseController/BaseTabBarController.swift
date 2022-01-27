@@ -5,8 +5,8 @@
 //  Created by Konstantin Dmitrievskiy on 04.09.2021.
 //
 
-import UIKit
 import FirebaseAuth
+import UIKit
 
 class BaseTabBarController: UITabBarController {
     override func viewDidLoad() {
@@ -15,7 +15,7 @@ class BaseTabBarController: UITabBarController {
 
         viewControllers = [
             createNavController(viewController: TodayController(), title: "Today", imageName: "iphone"),
-            createNavController(viewController: FavouriteCategoriesViewController(), title: "Favorite", imageName: "star"),
+            createNavController(viewController: FavoriteCategoriesViewController(), title: "Favorite", imageName: "star"),
             createNavController(viewController: NewsSearchController(), title: "Search", imageName: "magnifyingglass"),
             createNavController(viewController: ProfileViewController(), title: "Profile", imageName: "person")
         ]

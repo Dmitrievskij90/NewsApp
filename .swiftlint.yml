@@ -30,7 +30,6 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - block_based_kvo #default
   - class_delegate_protocol #default
   - closing_brace #default
-  - closure_body_length
   - closure_end_indentation
   - closure_parameter_position #default
   - closure_spacing
@@ -73,7 +72,6 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - file_name
   - file_name_no_space
   - file_types_order
-  - first_where
   - flatmap_over_map_reduce
   - for_where #default
   - force_cast #default
@@ -168,7 +166,7 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - trailing_comma #default
   - trailing_newline #default
   - trailing_semicolon #default
-  - trailing_whitespace #default
+#  - trailing_whitespace #default
   - type_body_length #default
   - type_contents_order
   - type_name #default
@@ -202,6 +200,11 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
 #   - empty_parameters
 #   - vertical_whitespace
 
+disabled_rules: # rule identifiers to exclude from running
+  - trailing_whitespace
+  - first_where
+  - closure_body_length
+
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Carthage
   - Pods
@@ -212,6 +215,7 @@ excluded: # paths to ignore during linting. Takes precedence over `included`.
   - empty_string
 
 
+
 # configurable rules can be customized from this configuration file
 # binary rules can set their severity level
 force_cast: warning # implicitly
@@ -219,11 +223,11 @@ force_try:
   severity: warning # explicitly
 # rules that have both warning and error levels, can set just the warning level
 # implicitly
-line_length: 180
+line_length: 300
 # they can set both implicitly with an array
 type_body_length:
-  - 300 # warning
-  - 400 # error
+  - 400 # warning
+  - 500 # error
 # or they can set both explicitly
 file_length:
   warning: 500

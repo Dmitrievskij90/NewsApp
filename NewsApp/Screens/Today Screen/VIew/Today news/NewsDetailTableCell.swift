@@ -9,12 +9,12 @@ import UIKit
 
 class NewsDetailTableCell: UITableViewCell {
     private let paragraph = NSMutableParagraphStyle()
-    private var attributes = [NSAttributedString.Key : Any]()
+    private var attributes = [NSAttributedString.Key: Any]()
     
     var dataSource: TodayCellModel? {
         didSet {
             if let source = dataSource {
-                let attributedString = NSAttributedString(string: source.description , attributes: attributes)
+                let attributedString = NSAttributedString(string: source.description, attributes: attributes)
                 descriptionTextView.attributedText = attributedString
             }
         }
@@ -30,17 +30,17 @@ class NewsDetailTableCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         paragraph.alignment = .justified
         attributes = [
-            .foregroundColor : UIColor.black,
-            .font : UIFont.systemFont(ofSize: 19),
-            .paragraphStyle : paragraph
+            .foregroundColor: UIColor.black,
+            .font: UIFont.systemFont(ofSize: 19),
+            .paragraphStyle: paragraph
         ]
 
         addSubview(descriptionTextView)
         descriptionTextView.fillSuperview(padding: .init(top: 0, left: 24, bottom: 0, right: 24))
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

@@ -7,13 +7,13 @@
 
 import Foundation
 
-class FavouriteCategoriesViewModel {
+class FavoriteCategoriesViewModel {
     var categories = CategoryManager.shared.loadCategoriesSet().sorted()
     
     func viewWillAppear() {
         categories = CategoryManager.shared.loadCategoriesSet().sorted()
     }
-    
+
     func editViewModelForCategory(category: String) -> FullSceenCategoriesViewModel {
         return FullSceenCategoriesViewModel(category: category)
     }

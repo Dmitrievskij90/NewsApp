@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct StockHistoryData: Codable {
-    let values: [Values]
-}
-
 struct Values: Codable {
     let datetime: String
     let close: String
     let open: String
+}
+
+struct StockHistoryData: Codable {
+    let values: [Values]
 }
