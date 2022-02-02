@@ -11,10 +11,18 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    var window: UIWindow?
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         let documentDirectorypath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask )
         print(documentDirectorypath)
+
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = window
+        window.rootViewController = WelcomeController()
+        window.makeKeyAndVisible()
+
         return true
     }
 
