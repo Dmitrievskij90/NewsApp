@@ -66,6 +66,14 @@ class RegisterController: UIViewController {
         return button
     }()
 
+    private let closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        button.tintColor = .init(hex: 0xDB6400)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         loginTextField.delegate = self
@@ -79,12 +87,10 @@ class RegisterController: UIViewController {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
         self.view = view
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButonPressed))
-        navigationItem.leftBarButtonItem = cancelButton
-        cancelButton.tintColor = .label
 
         setupStackView()
         setupDoneButton()
+        setupCloseButton()
     }
 
     // MARK: - setup user interface methods
@@ -141,14 +147,20 @@ class RegisterController: UIViewController {
         doneButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 50, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))
         doneButton.centerXInSuperview()
     }
-    
-    @objc private func cancelButonPressed() {
-        dismiss(animated: true, completion: nil)
-        viewModel.cancelButonPressed()
+
+    private func setupCloseButton() {
+        view.addSubview(closeButton)
+        closeButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
     }
+
 
     @objc private func doneButonPressed() {
         setUserData()
+    }
+
+    @objc func handleDismiss() {
+        viewModel.cancelButonPressed()
+        navigationController?.popToRootViewController(animated: true)
     }
 
     @objc private func observeRememberSwitch() {
@@ -190,9 +202,7 @@ class RegisterController: UIViewController {
 
     private func presentVerificationController() {
         let destinationVC = VerificationController()
-        let navVC = UINavigationController(rootViewController: destinationVC)
-        navVC.modalPresentationStyle = .fullScreen
-        present(navVC, animated: true, completion: nil)
+        navigationController?.pushViewController(destinationVC, animated: true)
     }
 }
 

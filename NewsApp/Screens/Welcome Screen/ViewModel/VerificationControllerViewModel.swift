@@ -27,6 +27,10 @@ class VerificationControllerViewModel {
             object: nil)
     }
 
+    func cancelButonPressed() {
+        AppSettingsManager.shared.forgetUser()
+    }
+
     func reloadUser() {
         Auth.auth().currentUser?.reload()
     }

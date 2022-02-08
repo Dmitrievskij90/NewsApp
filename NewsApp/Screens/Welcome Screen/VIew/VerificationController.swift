@@ -84,6 +84,14 @@ class VerificationController: UIViewController {
         label.minimumScaleFactor = 0.5
         return label
     }()
+
+    private let closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        button.tintColor = .init(hex: 0xDB6400)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
     
     private let countryRussiaButton = UIButton()
     private let countryUSAButton = UIButton()
@@ -113,9 +121,6 @@ class VerificationController: UIViewController {
         view.backgroundColor = .white
         self.view = view
         
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButonPressed))
-        navigationItem.leftBarButtonItem = cancelButton
-        cancelButton.tintColor = .label
         
         setupCountryButtons(with: countryRussiaButton, imageName: "ru", tag: 1)
         setupCountryButtons(with: countryUSAButton, imageName: "us", tag: 2)
@@ -151,6 +156,12 @@ class VerificationController: UIViewController {
         
         setupCountryStackView()
         setupVerificationAlertView()
+        setupCloseButton()
+    }
+
+    private func setupCloseButton() {
+        view.addSubview(closeButton)
+        closeButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
     }
     
     private func setupCountryButtons(with button: UIButton, imageName: String, tag: Int) {
@@ -271,10 +282,6 @@ class VerificationController: UIViewController {
         }
     }
 
-    @objc private func cancelButonPressed() {
-        dismiss(animated: true, completion: nil)
-    }
-
     @objc private func letsGoButonPressed() {
         viewModel.letsGoButonPressed()
     }
@@ -287,6 +294,11 @@ class VerificationController: UIViewController {
         displayImagePickerController()
     }
 
+    @objc func handleDismiss() {
+        viewModel.cancelButonPressed()
+        navigationController?.popToRootViewController(animated: true)
+    }
+
     private func displayImagePickerController() {
         let imagePicerController = UIImagePickerController()
         imagePicerController.delegate = self
@@ -295,9 +307,8 @@ class VerificationController: UIViewController {
     }
 
     private func presentBaseTabBarController() {
-        let dV = BaseTabBarController()
-        dV.modalPresentationStyle = .fullScreen
-        present(dV, animated: true, completion: nil)
+        let destinationVC = BaseTabBarController()
+        navigationController?.pushViewController(destinationVC, animated: true)
     }
 }
 

@@ -68,6 +68,14 @@ class LoginViewController: UIViewController {
         return button
     }()
 
+    private let closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        button.tintColor = .init(hex: 0xDB6400)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         loginTextField.delegate = self
@@ -85,12 +93,9 @@ class LoginViewController: UIViewController {
         view.backgroundColor = .white
         self.view = view
 
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButonPressed))
-        navigationItem.leftBarButtonItem = cancelButton
-        cancelButton.tintColor = .label
-
         setupStackView()
         setupDoneButton()
+        setupCloseButton()
 
         view.addSubview(blurVisualEffectView)
         blurVisualEffectView.fillSuperview()
@@ -140,6 +145,11 @@ class LoginViewController: UIViewController {
         sigInLabel.anchor(top: nil, leading: view.leadingAnchor, bottom: stackView.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 50, right: 50), size: .init(width: 0, height: 50))
     }
 
+    private func setupCloseButton() {
+        view.addSubview(closeButton)
+        closeButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
+    }
+
     private func setupDoneButton() {
         view.addSubview(letsGoButton)
         letsGoButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 50, right: 0), size: .init(width: DefaultParameters.buttonWidth, height: DefaultParameters.buttonHeight))
@@ -165,9 +175,9 @@ class LoginViewController: UIViewController {
 
     // MARK: - Actions methods
     // MARK: -
-    @objc func cancelButonPressed() {
-        dismiss(animated: true, completion: nil)
+    @objc func handleDismiss() {
         viewModel.cancelButonPressed()
+        navigationController?.popToRootViewController(animated: true)
     }
 
     @objc func letsGoButonPressed() {
@@ -229,8 +239,7 @@ class LoginViewController: UIViewController {
 
     private func presentBaseTabBarController() {
         let dV = BaseTabBarController()
-        dV.modalPresentationStyle = .fullScreen
-        present(dV, animated: true, completion: nil)
+        navigationController?.pushViewController(dV, animated: true)
     }
 }
 

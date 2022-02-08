@@ -74,13 +74,7 @@ class WelcomeController: UIViewController {
 
     @objc func registerButtopnTapped() {
         let destinationVC = RegisterController()
-        let navVC = UINavigationController(rootViewController: destinationVC)
-        navVC.modalPresentationStyle = .fullScreen
-        present(navVC, animated: true, completion: nil)
-        //        let destinationVC = VerificationController()
-        //        let navVC = UINavigationController(rootViewController: destinationVC)
-        //        navVC.modalPresentationStyle = .fullScreen
-        //        present(navVC, animated: true, completion: nil)
+        navigationController?.pushViewController(destinationVC, animated: true)
     }
 
     @objc func signinButtonTapped() {
@@ -88,15 +82,12 @@ class WelcomeController: UIViewController {
             presentBaseTabBarController()
         } else {
             let destinationVC = LoginViewController()
-            let navVC = UINavigationController(rootViewController: destinationVC)
-            navVC.modalPresentationStyle = .fullScreen
-            present(navVC, animated: true, completion: nil)
+            navigationController?.pushViewController(destinationVC, animated: true)
         }
     }
 
     private func presentBaseTabBarController() {
         let dV = BaseTabBarController()
-        dV.modalPresentationStyle = .fullScreen
-        present(dV, animated: true, completion: nil)
+        navigationController?.pushViewController(dV, animated: true)
     }
 }
