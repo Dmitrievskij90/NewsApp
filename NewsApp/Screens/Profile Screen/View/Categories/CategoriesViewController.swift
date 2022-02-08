@@ -10,7 +10,7 @@ import UIKit
 class CategoriesViewController: UIViewController {
     private var categoryCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
     private var viewModel = CategoriesViewModel()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }

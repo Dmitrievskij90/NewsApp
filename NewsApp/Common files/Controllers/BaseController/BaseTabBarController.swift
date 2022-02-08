@@ -12,6 +12,7 @@ class BaseTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .black
+        navigationItem.setHidesBackButton(true, animated: true)
 
         viewControllers = [
             createNavController(viewController: TodayController(), title: "Today", imageName: "iphone"),
