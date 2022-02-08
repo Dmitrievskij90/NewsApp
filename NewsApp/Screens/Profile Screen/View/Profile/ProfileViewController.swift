@@ -79,9 +79,7 @@ class ProfileViewController: UIViewController {
     }
 
     private func presentWelcomeController() {
-        let destinationVC = WelcomeController()
-        destinationVC.modalPresentationStyle = .fullScreen
-        present(destinationVC, animated: true, completion: nil)
+        self.navigationController?.navigationController?.popToRootViewController(animated: true)
     }
 
     private func presentCategoriesViewController() {
