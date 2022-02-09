@@ -18,6 +18,7 @@ class ProfileViewController: UIViewController {
         tableView.register(ChooseCountryCell.self, forCellReuseIdentifier: ChooseCountryCell.identifier)
         tableView.register(FavouriteCategoriesCell.self, forCellReuseIdentifier: FavouriteCategoriesCell.identifier)
         tableView.register(StockCompaniesCell.self, forCellReuseIdentifier: StockCompaniesCell.identifier)
+        tableView.register(DeleteCell.self, forCellReuseIdentifier: DeleteCell.identifier)
         tableView.backgroundColor = .white
         return tableView
     }()
