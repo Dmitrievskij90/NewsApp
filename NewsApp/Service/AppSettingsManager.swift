@@ -99,4 +99,31 @@ class AppSettingsManager {
         }
         return user ?? User()
     }
+
+    func deleteUser() {
+        deleteUserSettings()
+        deleteUserImage()
+    }
+
+   private func deleteUserSettings() {
+        let filemanager = FileManager.default
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        let destinationPath = documentsPath.appendingPathComponent(AppSettingsManager.shared.userLogin)
+        do {
+            try filemanager.removeItem(atPath: destinationPath)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+   private func deleteUserImage() {
+        let filemanager = FileManager.default
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] as NSString
+        let destinationPath = documentsPath.appendingPathComponent(AppSettingsManager.shared.userLogin)
+        do {
+            try filemanager.removeItem(atPath: destinationPath)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
