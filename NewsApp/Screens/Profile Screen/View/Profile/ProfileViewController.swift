@@ -115,6 +115,8 @@ class ProfileViewController: UIViewController {
                 self?.presentStockCompaniesViewController()
             case .presentWelcomeController:
                 self?.presentWelcomeController()
+            case .presentDeleteAlert:
+                self?.presentDeleteAlert()
             default:
                 break
             }
@@ -123,6 +125,21 @@ class ProfileViewController: UIViewController {
         header.nameTextField.text = "\(viewModel.user.name)"
         header.userImageView.image = viewModel.image
         header.countryImageView.image = UIImage(named: viewModel.user.country)
+    }
+
+    func presentDeleteAlert() {
+        let alertController = UIAlertController(title: "Warning!", message: "Do you want to delete your account?", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+            alertController.dismiss(animated: true, completion: nil)
+            self.viewModel.deleteUser()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { _ in
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
