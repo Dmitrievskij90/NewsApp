@@ -11,4 +11,5 @@ enum ProfileResult {
     case presentCategoriesViewController
     case presentStockCompaniesViewController
     case presentWelcomeController
+    case presentDeleteAlert
 }
