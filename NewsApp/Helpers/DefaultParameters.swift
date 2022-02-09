@@ -46,5 +46,6 @@ enum DefaultParameters {
     static var sections = [
         CountrySection(options: ["USA", "RUSSIA", "FRANCE", "GERMANY"], countriesImages: ["us", "ru", "fr", "de"]),
         CountrySection(options: [], countriesImages: []),
+        CountrySection(options: [], countriesImages: []),
         CountrySection(options: [], countriesImages: [])]
 }
