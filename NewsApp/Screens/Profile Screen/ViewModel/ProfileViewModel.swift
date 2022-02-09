@@ -79,6 +79,18 @@ class ProfileViewModel {
         AppSettingsManager.shared.saveUserImage(image: image)
     }
 
+    func deleteUser() {
+        AppSettingsManager.shared.deleteUser()
+        let user = Auth.auth().currentUser
+        user?.delete { error in
+            if let error = error {
+                print("Can't delete", error)
+            } else {
+                self.result.value = .presentWelcomeController
+            }
+        }
+    }
+
     @objc private func updateUserName(_ notification: Notification) {
         if let name = notification.object as? String {
             if name.isEmpty {
