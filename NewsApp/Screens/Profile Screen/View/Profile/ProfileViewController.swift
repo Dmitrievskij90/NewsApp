@@ -162,28 +162,23 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: ChooseCountryCell.identifier, for: indexPath) as? ChooseCountryCell else {
-                    return UITableViewCell()
-                }
+                let cell = tableView.dequeueReusableCell(withClass: ChooseCountryCell.self, for: indexPath)
                 return cell
             } else {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier, for: indexPath) as? CountryCell else {
-                    return UITableViewCell()
-                }
+                let cell = tableView.dequeueReusableCell(withClass: CountryCell.self, for: indexPath)
                 cell.countryLabel.text = viewModel.sections[indexPath.section].options[indexPath.row - 1]
                 cell.countryImageView.image = UIImage(named: viewModel.sections[indexPath.section].countriesImages[indexPath.row - 1])
                 return cell
             }
         } else if indexPath.section == 1 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: FavouriteCategoriesCell.identifier, for: indexPath) as? FavouriteCategoriesCell else {
-                return UITableViewCell()
-            }
+            let cell = tableView.dequeueReusableCell(withClass: FavouriteCategoriesCell.self, for: indexPath)
+            return cell
+        } else if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withClass: StockCompaniesCell.self, for: indexPath)
             return cell
         }
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: StockCompaniesCell.identifier, for: indexPath) as? StockCompaniesCell else {
-            return UITableViewCell()
-        }
+        let cell = tableView.dequeueReusableCell(withClass: DeleteCell.self, for: indexPath)
         return cell
     }
     
