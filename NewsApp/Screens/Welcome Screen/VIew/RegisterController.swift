@@ -176,7 +176,7 @@ class RegisterController: UIViewController {
             case .emptyField :
                 self.presentOneButtonAlert(withTitle: "Empty field", message: "Please enter user data")
             case .badEmailFormat:
-                self.presentOneButtonAlert(withTitle: "Bad Email format", message: "")
+                self.presentOneButtonAlert(withTitle: "Incorrect Email format", message: "")
             case .passwordsNotmatch:
                 self.presentOneButtonAlert(withTitle: "Passwords don't match", message: "Please check the spelling and try again")
             case .registrationFailed:
