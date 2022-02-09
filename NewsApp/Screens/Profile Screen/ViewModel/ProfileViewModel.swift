@@ -70,8 +70,10 @@ class ProfileViewModel {
             }
         } else if indexPath.section == 1 {
             self.result.value = .presentCategoriesViewController
-        } else {
+        } else if indexPath.section == 2 {
             self.result.value = .presentStockCompaniesViewController
+        } else {
+            self.result.value = .presentDeleteAlert
         }
     }
 
@@ -80,7 +82,6 @@ class ProfileViewModel {
     }
 
     func deleteUser() {
-        AppSettingsManager.shared.deleteUser()
         let user = Auth.auth().currentUser
         user?.delete { error in
             if let error = error {
@@ -89,6 +90,8 @@ class ProfileViewModel {
                 self.result.value = .presentWelcomeController
             }
         }
+        AppSettingsManager.shared.deleteUser()
+        AppSettingsManager.shared.forgetUser()
     }
 
     @objc private func updateUserName(_ notification: Notification) {
