@@ -31,6 +31,7 @@
 		5C4A388B278DDEDE008BCF5A /* StockChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A388A278DDEDE008BCF5A /* StockChartViewModel.swift */; };
 		5C4BADE426EA702C000620A1 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4BADE326EA702C000620A1 /* UIColor+Extension.swift */; };
 		5C4BADE726EA7E93000620A1 /* WebNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */; };
+		5C4F562427B5631200AB9DCC /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F562327B5631200AB9DCC /* CloseButton.swift */; };
 		5C55A51026F0EC79004B148F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55A50F26F0EC79004B148F /* LoginViewController.swift */; };
 		5C55A52126F101ED004B148F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55A52026F101ED004B148F /* ProfileViewController.swift */; };
 		5C5A1BA9276B8DFC005FA529 /* FavoriteCategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A1BA8276B8DFC005FA529 /* FavoriteCategoriesViewModel.swift */; };
@@ -125,6 +126,7 @@
 		5C4A388A278DDEDE008BCF5A /* StockChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockChartViewModel.swift; sourceTree = "<group>"; };
 		5C4BADE326EA702C000620A1 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebNewsViewController.swift; sourceTree = "<group>"; };
+		5C4F562327B5631200AB9DCC /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		5C55A50F26F0EC79004B148F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5C55A52026F101ED004B148F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5C5A1BA8276B8DFC005FA529 /* FavoriteCategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCategoriesViewModel.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				5C24EEB2271899B100F302D0 /* BaseButton.swift */,
 				5CBA4EB5273C28B700FC2505 /* CircularImageView.swift */,
 				5C8917C72767BE6400927EE9 /* BaseActivityIndicator.swift */,
+				5C4F562327B5631200AB9DCC /* CloseButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -839,6 +842,7 @@
 				5C2DF30B27024B6B00D51EEE /* CategoriesViewController.swift in Sources */,
 				5C31FF6627286B7E0001E714 /* StockCompaniesCell.swift in Sources */,
 				5C148E9626FDDAC500F465AC /* ProfileTableHeader.swift in Sources */,
+				5C4F562427B5631200AB9DCC /* CloseButton.swift in Sources */,
 				5C7E3021279710BC002FC232 /* ProfileViewModel.swift in Sources */,
 				5C16C7E8277A131900F96CE6 /* UITextField+Extension.swift in Sources */,
 				5C4867052709A0B20087A708 /* CategoryManager.swift in Sources */,

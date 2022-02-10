@@ -68,10 +68,8 @@ class LoginViewController: UIViewController {
         return button
     }()
 
-    private let closeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        button.tintColor = .init(hex: 0xDB6400)
+    private let closeButton: CloseButton = {
+        let button = CloseButton(type: .system)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         return button
     }()
