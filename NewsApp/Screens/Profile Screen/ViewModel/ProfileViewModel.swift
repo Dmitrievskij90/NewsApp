@@ -70,13 +70,28 @@ class ProfileViewModel {
             }
         } else if indexPath.section == 1 {
             self.result.value = .presentCategoriesViewController
-        } else {
+        } else if indexPath.section == 2 {
             self.result.value = .presentStockCompaniesViewController
+        } else {
+            self.result.value = .presentDeleteAlert
         }
     }
 
     func saveUserImage(image: UIImage) {
         AppSettingsManager.shared.saveUserImage(image: image)
+    }
+
+    func deleteUser() {
+        let user = Auth.auth().currentUser
+        user?.delete { error in
+            if let error = error {
+                print("Can't delete", error)
+            } else {
+                self.result.value = .presentWelcomeController
+            }
+        }
+        AppSettingsManager.shared.deleteUser()
+        AppSettingsManager.shared.forgetUser()
     }
 
     @objc private func updateUserName(_ notification: Notification) {

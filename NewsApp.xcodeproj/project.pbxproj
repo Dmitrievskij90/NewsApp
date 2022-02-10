@@ -37,6 +37,8 @@
 		5C5A1BAC276B9990005FA529 /* FullSceenCategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A1BAB276B9990005FA529 /* FullSceenCategoriesViewModel.swift */; };
 		5C5A1BAF276B9F9F005FA529 /* NewsCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A1BAE276B9F9F005FA529 /* NewsCellModel.swift */; };
 		5C5A1BB2276BA751005FA529 /* FullScreenCategoriesNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A1BB1276BA751005FA529 /* FullScreenCategoriesNewsCell.swift */; };
+		5C5B0FCE27B414D4008E85EB /* DeleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5B0FCD27B414D4008E85EB /* DeleteCell.swift */; };
+		5C5B0FD527B42329008E85EB /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5B0FD427B42329008E85EB /* UITableView+Extension.swift */; };
 		5C61F62C2721C3B200C6D369 /* StockPageHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61F62B2721C3B200C6D369 /* StockPageHeader.swift */; };
 		5C61F62F2721C4A100C6D369 /* StockHeaderHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61F62E2721C4A100C6D369 /* StockHeaderHorizontalController.swift */; };
 		5C61F6322721C58C00C6D369 /* StockHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61F6312721C58C00C6D369 /* StockHeaderCell.swift */; };
@@ -129,6 +131,8 @@
 		5C5A1BAB276B9990005FA529 /* FullSceenCategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullSceenCategoriesViewModel.swift; sourceTree = "<group>"; };
 		5C5A1BAE276B9F9F005FA529 /* NewsCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCellModel.swift; sourceTree = "<group>"; };
 		5C5A1BB1276BA751005FA529 /* FullScreenCategoriesNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCategoriesNewsCell.swift; sourceTree = "<group>"; };
+		5C5B0FCD27B414D4008E85EB /* DeleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCell.swift; sourceTree = "<group>"; };
+		5C5B0FD427B42329008E85EB /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		5C61F62B2721C3B200C6D369 /* StockPageHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockPageHeader.swift; sourceTree = "<group>"; };
 		5C61F62E2721C4A100C6D369 /* StockHeaderHorizontalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHeaderHorizontalController.swift; sourceTree = "<group>"; };
 		5C61F6312721C58C00C6D369 /* StockHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHeaderCell.swift; sourceTree = "<group>"; };
@@ -552,6 +556,7 @@
 				5CE576EE2701EFAB00D24069 /* ProfileTableFooter.swift */,
 				5CC07475272876B00083D6B8 /* FavouriteCategoriesCell.swift */,
 				5C31FF6527286B7E0001E714 /* StockCompaniesCell.swift */,
+				5C5B0FCD27B414D4008E85EB /* DeleteCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -638,6 +643,7 @@
 				5CBB48BC276A4439005F2F69 /* UIView+Extension.swift */,
 				5C16C7E7277A131900F96CE6 /* UITextField+Extension.swift */,
 				5C16C7EA277A1AF500F96CE6 /* UILabel+Extension.swift */,
+				5C5B0FD427B42329008E85EB /* UITableView+Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -796,6 +802,7 @@
 				5CB501E626E674B700246670 /* ImageHeaderCell.swift in Sources */,
 				5C8A73F22713016600AFFA76 /* TableDetailsController.swift in Sources */,
 				5C17A35E2778D3CC002F8A8D /* LoginControllerViewModel.swift in Sources */,
+				5C5B0FCE27B414D4008E85EB /* DeleteCell.swift in Sources */,
 				5C7098C726E9382100A8AEC5 /* Helpers.swift in Sources */,
 				5C4BADE726EA7E93000620A1 /* WebNewsViewController.swift in Sources */,
 				5C7E303A27972466002FC232 /* ProfileResult.swift in Sources */,
@@ -815,6 +822,7 @@
 				5C16C7EB277A1AF500F96CE6 /* UILabel+Extension.swift in Sources */,
 				5CA46F0A26E377A70031A540 /* BaseTabBarController.swift in Sources */,
 				5C24EEB3271899B100F302D0 /* BaseButton.swift in Sources */,
+				5C5B0FD527B42329008E85EB /* UITableView+Extension.swift in Sources */,
 				5CBF2FE726EE411E00DB1D89 /* WelcomeController.swift in Sources */,
 				5C23AEF327662064006521BD /* TodayCellModel.swift in Sources */,
 				5C17A3622778D67B002F8A8D /* LoginResult.swift in Sources */,
