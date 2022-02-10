@@ -58,10 +58,7 @@ class RegisterController: UIViewController {
     }()
     private let doneButton: BaseButton = {
         let button = BaseButton(type: .system)
-        button.setTitle("Done", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
-        button.backgroundColor = .init(hex: 0x494d4e)
+        button.createGraphiteButton(title: "Done")
         button.addTarget(self, action: #selector(doneButonPressed), for: .touchUpInside)
         return button
     }()

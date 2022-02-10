@@ -21,21 +21,14 @@ class WelcomeController: UIViewController {
 
     private let registerButton: BaseButton = {
         let button = BaseButton(type: .system)
-        button.setTitle("REGISTER", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
-        button.backgroundColor = .init(hex: 0x494d4e)
+        button.createGraphiteButton(title: "REGISTER")
         button.addTarget(self, action: #selector(registerButtopnTapped), for: .touchUpInside)
         return button
     }()
 
     private let signInButton: BaseButton = {
         let button = BaseButton(type: .system)
-        button.setTitle("SIGN IN", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.darkGray, for: .normal)
-        button.backgroundColor = .white
-        button.layer.borderColor = UIColor.init(hex: 0x4EFDD).cgColor
+        button.createWhiteButton(title: "SIGN IN")
         button.addTarget(self, action: #selector(signinButtonTapped), for: .touchUpInside)
         return button
     }()

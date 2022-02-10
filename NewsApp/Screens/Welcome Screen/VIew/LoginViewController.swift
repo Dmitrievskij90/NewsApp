@@ -58,12 +58,9 @@ class LoginViewController: UIViewController {
         return label
     }()
 
-    private let letsGoButton: UIButton = {
+    private let letsGoButton: BaseButton = {
         let button = BaseButton(type: .system)
-        button.setTitle("Let's go", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
-        button.backgroundColor = .init(hex: 0x494d4e)
+        button.createGraphiteButton(title: "Let's go")
         button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
         return button
     }()

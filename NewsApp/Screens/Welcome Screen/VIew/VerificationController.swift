@@ -13,17 +13,7 @@ class VerificationController: UIViewController {
     private let alertView = VerificationAlertView()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private let viewModel = VerificationControllerViewModel()
-    
-    private let letsGoButton: UIButton = {
-        let button = BaseButton(type: .system)
-        button.setTitle("Let's go", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
-        button.backgroundColor = .init(hex: 0x494d4e)
-        button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
-        return button
-    }()
-    
+
     private let setupProfileLabel: UILabel = {
         let label = UILabel()
         label.text = "Set up profile"
@@ -88,6 +78,13 @@ class VerificationController: UIViewController {
     private let closeButton: CloseButton = {
         let button = CloseButton(type: .system)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+
+    private let letsGoButton: UIButton = {
+        let button = BaseButton(type: .system)
+        button.createGraphiteButton(title: "Let's go")
+        button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
         return button
     }()
     
