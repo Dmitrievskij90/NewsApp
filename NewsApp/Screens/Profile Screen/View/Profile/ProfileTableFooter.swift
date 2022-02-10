@@ -14,7 +14,7 @@ class ProfileTableFooter: UIView {
         let button = BaseButton(type: .system)
         button.createGraphiteButton(title: "LOG OUT")
         button.constrainHeight(constant: 50)
-
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
     }()
 
