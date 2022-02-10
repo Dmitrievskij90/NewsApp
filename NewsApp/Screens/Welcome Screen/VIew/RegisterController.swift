@@ -153,7 +153,6 @@ class RegisterController: UIViewController {
         closeButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
     }
 
-
     @objc private func doneButonPressed() {
         setUserData()
     }

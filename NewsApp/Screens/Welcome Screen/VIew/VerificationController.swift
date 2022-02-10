@@ -121,7 +121,6 @@ class VerificationController: UIViewController {
         view.backgroundColor = .white
         self.view = view
         
-        
         setupCountryButtons(with: countryRussiaButton, imageName: "ru", tag: 1)
         setupCountryButtons(with: countryUSAButton, imageName: "us", tag: 2)
         setupCountryButtons(with: countryFranceButton, imageName: "fr", tag: 3)

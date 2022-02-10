@@ -13,14 +13,14 @@ class AppSettingsManager {
     static let shared = AppSettingsManager()
     private let defaults = UserDefaults.standard
     private let keychain = Keychain()
-
+    
     var notFirsAppLaunch = UserDefaults.standard.bool(forKey: "isTrue")
-
+    
     var country: String {
         let country = defaults.value(forKey: "chosenCountry") as? String ?? "us"
         return country
     }
-
+    
     var userLogin: String {
         var login = ""
         let user = Auth.auth().currentUser
@@ -31,24 +31,24 @@ class AppSettingsManager {
         }
         return login
     }
-
+    
     var isUserSignedIn: String {
         guard let rememberUser = try? keychain.get("remember") else {
             return ""
         }
         return rememberUser
     }
-
+    
     // MARK: - User settings data manipulation methods
     // MARK: -
     func keepUserSignedIn() {
         keychain["remember"] = "yes"
     }
-
+    
     func forgetUser() {
         keychain["remember"] = nil
     }
-
+    
     func saveUserImage(image: UIImage) {
         guard let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
             return
@@ -64,7 +64,7 @@ class AppSettingsManager {
         let imageName = "userImage.png"
         FileManager.default.createFile(atPath: "\(documentsPath.path)/\(imageName)", contents: data, attributes: nil)
     }
-
+    
     func loadUserImage() -> UIImage? {
         var image = UIImage()
         guard let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
@@ -78,7 +78,7 @@ class AppSettingsManager {
         }
         return image
     }
-
+    
     func saveUser(with user: User) {
         guard let documentDirectoryPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
             return
@@ -88,7 +88,7 @@ class AppSettingsManager {
         let dataPath = documentDirectoryPath.appendingPathComponent("user.json")
         FileManager.default.createFile(atPath: dataPath.path, contents: data, attributes: nil)
     }
-
+    
     func loadUser() -> User {
         guard let documentDirectoryPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ).first?.appendingPathComponent(AppSettingsManager.shared.userLogin) else {
             fatalError("Can't find directory path")}
@@ -99,13 +99,13 @@ class AppSettingsManager {
         }
         return user ?? User()
     }
-
+    
     func deleteUser() {
         deleteUserSettings()
         deleteUserImage()
     }
-
-   private func deleteUserSettings() {
+    
+    private func deleteUserSettings() {
         let filemanager = FileManager.default
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
         let destinationPath = documentsPath.appendingPathComponent(AppSettingsManager.shared.userLogin)
@@ -115,8 +115,8 @@ class AppSettingsManager {
             print(error.localizedDescription)
         }
     }
-
-   private func deleteUserImage() {
+    
+    private func deleteUserImage() {
         let filemanager = FileManager.default
         let documentsPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] as NSString
         let destinationPath = documentsPath.appendingPathComponent(AppSettingsManager.shared.userLogin)
