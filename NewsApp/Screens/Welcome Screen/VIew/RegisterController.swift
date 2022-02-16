@@ -12,14 +12,10 @@ class RegisterController: UIViewController {
     private let passwordLabel = UILabel(text: "Password")
     private let confirmLabel = UILabel(text: "Confirm password")
     private let viewModel = RegisterControllerViewModel()
+    
     private let registerLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Register your new account"
-        label.font = .boldSystemFont(ofSize: 25)
+        let label = UILabel(text: "Register your new account", font: .boldSystemFont(ofSize: 25), textColor: .black)
         label.textAlignment = .center
-        label.textColor = .black
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
         return label
     }()
     private let loginTextField: UITextField = {

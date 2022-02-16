@@ -11,11 +11,8 @@ class WelcomeController: UIViewController {
     private let viewModel = WelcomeControllerViewModel()
 
     private let appLabel: UILabel = {
-        let label = UILabel()
-        label.text = "JUST NEWS"
-        label.font = .boldSystemFont(ofSize: 35)
+        let label = UILabel(text: "JUST NEWS", font: .boldSystemFont(ofSize: 35), textColor: .black)
         label.textAlignment = .center
-        label.textColor = .black
         return label
     }()
 

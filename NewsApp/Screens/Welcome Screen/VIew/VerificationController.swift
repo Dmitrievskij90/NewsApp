@@ -15,13 +15,8 @@ class VerificationController: UIViewController {
     private let viewModel = VerificationControllerViewModel()
 
     private let setupProfileLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Set up profile"
-        label.font = .boldSystemFont(ofSize: 35)
+        let label = UILabel(text: "Set up profile", font: .boldSystemFont(ofSize: 35), textColor: .black)
         label.textAlignment = .center
-        label.textColor = .black
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -47,13 +42,7 @@ class VerificationController: UIViewController {
     }()
     
     private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "User name"
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .left
-        label.textColor = .darkGray
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+        let label = UILabel(text: "User name", font: .boldSystemFont(ofSize: 18))
         return label
     }()
     
@@ -65,13 +54,7 @@ class VerificationController: UIViewController {
     }()
     
     private let countryLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Country:"
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .left
-        label.textColor = .darkGray
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+        let label = UILabel(text: "Country:", font: .boldSystemFont(ofSize: 18))
         return label
     }()
 

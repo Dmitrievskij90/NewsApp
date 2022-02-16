@@ -9,11 +9,7 @@ import UIKit
 
 class StockCompaniesCell: UITableViewCell {
     let countryLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textColor = .black
-        label.text = "Stock companies"
-        label.textAlignment = .left
+        let label = UILabel(text: "Stock companies", font: .boldSystemFont(ofSize: 18), textColor: .black)
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
         return label

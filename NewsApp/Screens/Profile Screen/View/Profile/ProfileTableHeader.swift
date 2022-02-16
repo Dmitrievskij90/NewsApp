@@ -8,7 +8,6 @@
 import UIKit
 
 class ProfileTableHeader: UIView {
-    private let countryImageName = UserDefaults.standard.value(forKey: "countryImage") as? String ?? "usa_image"
     var imageTapHandler: (() -> Void)?
 
     let bcgView: UIView = {
@@ -51,14 +50,7 @@ class ProfileTableHeader: UIView {
     }()
 
     let countrylabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.textAlignment = .left
-        label.font = .boldSystemFont(ofSize: 15)
-        label.numberOfLines = 1
-        label.text = "Country for top headlines:"
-        label.minimumScaleFactor = 0.5
-        label.adjustsFontSizeToFitWidth = true
+        let label = UILabel(text: "Country for top headlines:", font: .boldSystemFont(ofSize: 15), textColor: .white)
         return label
     }()
 
@@ -109,8 +101,6 @@ class ProfileTableHeader: UIView {
 
         let tapGestureregognizer = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
         userImageView.addGestureRecognizer(tapGestureregognizer)
-
-        countryImageView.image = UIImage(named: countryImageName)
     }
 
     @available(*, unavailable)

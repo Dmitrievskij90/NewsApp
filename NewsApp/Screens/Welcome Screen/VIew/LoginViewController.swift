@@ -16,13 +16,8 @@ class LoginViewController: UIViewController {
     private let emailLabel = UILabel(text: "Email")
     private let passwordLabel = UILabel(text: "Password")
     private let sigInLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Sign in to your account"
-        label.font = .boldSystemFont(ofSize: 25)
+        let label = UILabel(text: "Sign in to your account", font: .boldSystemFont(ofSize: 25), textColor: .black)
         label.textAlignment = .center
-        label.textColor = .black
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
         return label
     }()
 
@@ -51,10 +46,7 @@ class LoginViewController: UIViewController {
     }()
 
     private let keepMeSignedInLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Keep me signed in"
-        label.font = .boldSystemFont(ofSize: 15)
-        label.textColor = .black
+        let label = UILabel(text: "Keep me signed in", font: .boldSystemFont(ofSize: 15), textColor: .black)
         return label
     }()
 

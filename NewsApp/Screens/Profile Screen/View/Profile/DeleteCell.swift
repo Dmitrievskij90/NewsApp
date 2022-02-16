@@ -9,11 +9,7 @@ import UIKit
 
 class DeleteCell: UITableViewCell {
     let deleteLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textColor = .black
-        label.text = "Delete account"
-        label.textAlignment = .left
+        let label = UILabel(text: "Delete account", font: .boldSystemFont(ofSize: 18), textColor: .black)
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
         return label

@@ -22,6 +22,9 @@ class NewsSearchCell: UICollectionViewCell {
         }
     }
 
+    private let authorLabel = UILabel(font: .boldSystemFont(ofSize: 18), textColor: .black)
+    private let titleLabel = UILabel(font: .systemFont(ofSize: 13), textColor: .black, numberOfLines: 0)
+
     private let newsImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -29,25 +32,6 @@ class NewsSearchCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 8
         imageView.image = UIImage(named: "news_image")
         return imageView
-    }()
-
-    private let authorLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Autor"
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textColor = .black
-        return label
-    }()
-
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "A Field Guide for Nature-Resistant Nerds"
-        label.font = .systemFont(ofSize: 13)
-        label.textColor = .black
-        label.numberOfLines = 0
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        return label
     }()
 
     private let separatorView: UIView = {
