@@ -10,8 +10,9 @@ import UIKit
 class TableDetailsController: UIViewController {
     var dismissHandler: (() -> Void)?
     var dataSource: TodayCellModel?
-    private let bottomPadding = UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+
     let floatingContainerView = FloatingContainerView()
+    private let bottomPadding = UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
 
     let closeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -42,6 +43,8 @@ class TableDetailsController: UIViewController {
         return tableView
     }()
 
+    // MARK: - lifecycle methods
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         view.clipsToBounds = true
@@ -60,6 +63,8 @@ class TableDetailsController: UIViewController {
         }
     }
 
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
@@ -103,7 +108,9 @@ class TableDetailsController: UIViewController {
         }
     }
 
-    @objc func moveFloatinContainerView() {
+    // MARK: - Actions methods
+    // MARK: -
+    @objc private func moveFloatinContainerView() {
         if floatingContainerView.transform == .identity {
             UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
                 self.floatingContainerView.transform = .init(translationX: 0, y: -100 - self.bottomPadding)
@@ -115,17 +122,19 @@ class TableDetailsController: UIViewController {
         }
     }
 
-    @objc func shareButtonTapped() {
+    @objc private func shareButtonTapped() {
         let aiv = UIActivityViewController(activityItems: [dataSource?.url ?? ""], applicationActivities: nil)
         present(aiv, animated: true, completion: nil)
     }
 
-    @objc func handleDismiss(button: UIButton) {
+    @objc private func handleDismiss(button: UIButton) {
         button.isHidden = true
         dismissHandler?()
     }
 }
 
+// MARK: - UITableViewDelegate and  UITableViewDataSource methods
+// MARK: -
 extension TableDetailsController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
