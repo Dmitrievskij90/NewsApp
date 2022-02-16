@@ -24,6 +24,8 @@ class TodayController: UIViewController {
     private let activityIndicator = BaseActivityIndicator(style: .medium)
     private let viewModel = TodayControllerViewModel()
 
+    // MARK: - lifecycle methods
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .label
@@ -38,6 +40,8 @@ class TodayController: UIViewController {
         viewModel.viewWillAppear()
     }
 
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view

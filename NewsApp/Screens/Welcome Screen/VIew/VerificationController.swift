@@ -200,6 +200,18 @@ class VerificationController: UIViewController {
         }
     }
 
+    private func displayImagePickerController() {
+        let imagePicerController = UIImagePickerController()
+        imagePicerController.delegate = self
+        imagePicerController.sourceType = .photoLibrary
+        present(imagePicerController, animated: true, completion: nil)
+    }
+
+    private func presentBaseTabBarController() {
+        let destinationVC = BaseTabBarController()
+        navigationController?.pushViewController(destinationVC, animated: true)
+    }
+
     // MARK: - Animation methods
     // MARK: -
     private func hideAlertView() {
@@ -242,7 +254,7 @@ class VerificationController: UIViewController {
 
     // MARK: - Actions methods
     // MARK: -
-    @objc func countryButtonTapped(button: UIButton) {
+    @objc private func countryButtonTapped(button: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name("country"), object: button.tag)
         animateCountryButton(button: button)
         switch button.tag {
@@ -271,21 +283,9 @@ class VerificationController: UIViewController {
         displayImagePickerController()
     }
 
-    @objc func handleDismiss() {
+    @objc private func handleDismiss() {
         viewModel.cancelButonPressed()
         navigationController?.popToRootViewController(animated: true)
-    }
-
-    private func displayImagePickerController() {
-        let imagePicerController = UIImagePickerController()
-        imagePicerController.delegate = self
-        imagePicerController.sourceType = .photoLibrary
-        present(imagePicerController, animated: true, completion: nil)
-    }
-
-    private func presentBaseTabBarController() {
-        let destinationVC = BaseTabBarController()
-        navigationController?.pushViewController(destinationVC, animated: true)
     }
 }
 
@@ -311,14 +311,14 @@ extension VerificationController: UITextFieldDelegate {
         textField.endEditing(true)
         return true
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = textField.text {
             NotificationCenter.default.post(name: NSNotification.Name("name"), object: text)
         }
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }

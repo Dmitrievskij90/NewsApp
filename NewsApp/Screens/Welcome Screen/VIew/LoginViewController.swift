@@ -9,6 +9,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
     private let viewModel = LoginControllerViewModel()
+
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
     private let alertView = VerificationAlertView()
@@ -75,6 +76,8 @@ class LoginViewController: UIViewController {
         updateControllerWithVIewModel()
     }
 
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
@@ -91,8 +94,6 @@ class LoginViewController: UIViewController {
         setupVerificationAlertView()
     }
 
-    // MARK: - setup user interface methods
-    // MARK: -
     private func setupStackView() {
         let keepMeSignedInStackView = UIStackView(arrangedSubviews: [
             rememberSwitch,
@@ -160,21 +161,6 @@ class LoginViewController: UIViewController {
         }
     }
 
-    // MARK: - Actions methods
-    // MARK: -
-    @objc func handleDismiss() {
-        viewModel.cancelButonPressed()
-        navigationController?.popToRootViewController(animated: true)
-    }
-
-    @objc func letsGoButonPressed() {
-        validateCredentials()
-    }
-
-    @objc private func observeRememberSwitch() {
-        NotificationCenter.default.post(name: NSNotification.Name("loginSwitch"), object: rememberSwitch)
-    }
-
     // MARK: - login methods
     // MARK: -
     private func updateControllerWithVIewModel() {
@@ -228,17 +214,30 @@ class LoginViewController: UIViewController {
         let dV = BaseTabBarController()
         navigationController?.pushViewController(dV, animated: true)
     }
+
+    // MARK: - Actions methods
+    // MARK: -
+    @objc private func handleDismiss() {
+        viewModel.cancelButonPressed()
+        navigationController?.popToRootViewController(animated: true)
+    }
+
+    @objc private func letsGoButonPressed() {
+        validateCredentials()
+    }
+
+    @objc private func observeRememberSwitch() {
+        NotificationCenter.default.post(name: NSNotification.Name("loginSwitch"), object: rememberSwitch)
+    }
 }
 
+// MARK: - UITextFieldDelegate methods
+// MARK: -
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         textField.endEditing(true)
         return true
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -247,5 +246,9 @@ extension LoginViewController: UITextFieldDelegate {
         } else {
             rememberSwitch.isUserInteractionEnabled = true
         }
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }

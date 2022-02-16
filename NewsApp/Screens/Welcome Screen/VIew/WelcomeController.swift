@@ -62,22 +62,24 @@ class WelcomeController: UIViewController {
         stackVIew.centerXInSuperview()
     }
 
-    @objc func registerButtopnTapped() {
+    private func presentBaseTabBarController() {
+        let dV = BaseTabBarController()
+        navigationController?.pushViewController(dV, animated: true)
+    }
+
+    // MARK: - Actions methods
+    // MARK: -
+    @objc private func registerButtopnTapped() {
         let destinationVC = RegisterController()
         navigationController?.pushViewController(destinationVC, animated: true)
     }
 
-    @objc func signinButtonTapped() {
+    @objc private func signinButtonTapped() {
         if !AppSettingsManager.shared.isUserSignedIn.isEmpty {
             presentBaseTabBarController()
         } else {
             let destinationVC = LoginViewController()
             navigationController?.pushViewController(destinationVC, animated: true)
         }
-    }
-
-    private func presentBaseTabBarController() {
-        let dV = BaseTabBarController()
-        navigationController?.pushViewController(dV, animated: true)
     }
 }
