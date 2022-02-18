@@ -11,31 +11,21 @@ class WelcomeController: UIViewController {
     private let viewModel = WelcomeControllerViewModel()
 
     private let appLabel: UILabel = {
-        let label = UILabel()
-        label.text = "JUST NEWS"
-        label.font = .boldSystemFont(ofSize: 35)
+        let label = UILabel(text: "JUST NEWS", font: .boldSystemFont(ofSize: 35), textColor: .black)
         label.textAlignment = .center
-        label.textColor = .black
         return label
     }()
 
     private let registerButton: BaseButton = {
         let button = BaseButton(type: .system)
-        button.setTitle("REGISTER", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
-        button.backgroundColor = .init(hex: 0x494d4e)
+        button.createGraphiteButton(title: "REGISTER")
         button.addTarget(self, action: #selector(registerButtopnTapped), for: .touchUpInside)
         return button
     }()
 
     private let signInButton: BaseButton = {
         let button = BaseButton(type: .system)
-        button.setTitle("SIGN IN", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.darkGray, for: .normal)
-        button.backgroundColor = .white
-        button.layer.borderColor = UIColor.init(hex: 0x4EFDD).cgColor
+        button.createWhiteButton(title: "SIGN IN")
         button.addTarget(self, action: #selector(signinButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -72,22 +62,24 @@ class WelcomeController: UIViewController {
         stackVIew.centerXInSuperview()
     }
 
-    @objc func registerButtopnTapped() {
+    private func presentBaseTabBarController() {
+        let dV = BaseTabBarController()
+        navigationController?.pushViewController(dV, animated: true)
+    }
+
+    // MARK: - Actions methods
+    // MARK: -
+    @objc private func registerButtopnTapped() {
         let destinationVC = RegisterController()
         navigationController?.pushViewController(destinationVC, animated: true)
     }
 
-    @objc func signinButtonTapped() {
+    @objc private func signinButtonTapped() {
         if !AppSettingsManager.shared.isUserSignedIn.isEmpty {
             presentBaseTabBarController()
         } else {
             let destinationVC = LoginViewController()
             navigationController?.pushViewController(destinationVC, animated: true)
         }
-    }
-
-    private func presentBaseTabBarController() {
-        let dV = BaseTabBarController()
-        navigationController?.pushViewController(dV, animated: true)
     }
 }

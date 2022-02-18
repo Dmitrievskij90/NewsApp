@@ -9,6 +9,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
     private let viewModel = LoginControllerViewModel()
+
     private var topConstraint: NSLayoutConstraint?
     private var bottomConstraint: NSLayoutConstraint?
     private let alertView = VerificationAlertView()
@@ -16,13 +17,8 @@ class LoginViewController: UIViewController {
     private let emailLabel = UILabel(text: "Email")
     private let passwordLabel = UILabel(text: "Password")
     private let sigInLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Sign in to your account"
-        label.font = .boldSystemFont(ofSize: 25)
+        let label = UILabel(text: "Sign in to your account", font: .boldSystemFont(ofSize: 25), textColor: .black)
         label.textAlignment = .center
-        label.textColor = .black
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
         return label
     }()
 
@@ -51,27 +47,19 @@ class LoginViewController: UIViewController {
     }()
 
     private let keepMeSignedInLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Keep me signed in"
-        label.font = .boldSystemFont(ofSize: 15)
-        label.textColor = .black
+        let label = UILabel(text: "Keep me signed in", font: .boldSystemFont(ofSize: 15), textColor: .black)
         return label
     }()
 
-    private let letsGoButton: UIButton = {
+    private let letsGoButton: BaseButton = {
         let button = BaseButton(type: .system)
-        button.setTitle("Let's go", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
-        button.backgroundColor = .init(hex: 0x494d4e)
+        button.createGraphiteButton(title: "Let's go")
         button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
         return button
     }()
 
-    private let closeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        button.tintColor = .init(hex: 0xDB6400)
+    private let closeButton: CloseButton = {
+        let button = CloseButton(type: .system)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         return button
     }()
@@ -88,6 +76,8 @@ class LoginViewController: UIViewController {
         updateControllerWithVIewModel()
     }
 
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
@@ -104,8 +94,6 @@ class LoginViewController: UIViewController {
         setupVerificationAlertView()
     }
 
-    // MARK: - setup user interface methods
-    // MARK: -
     private func setupStackView() {
         let keepMeSignedInStackView = UIStackView(arrangedSubviews: [
             rememberSwitch,
@@ -173,21 +161,6 @@ class LoginViewController: UIViewController {
         }
     }
 
-    // MARK: - Actions methods
-    // MARK: -
-    @objc func handleDismiss() {
-        viewModel.cancelButonPressed()
-        navigationController?.popToRootViewController(animated: true)
-    }
-
-    @objc func letsGoButonPressed() {
-        validateCredentials()
-    }
-
-    @objc private func observeRememberSwitch() {
-        NotificationCenter.default.post(name: NSNotification.Name("loginSwitch"), object: rememberSwitch)
-    }
-
     // MARK: - login methods
     // MARK: -
     private func updateControllerWithVIewModel() {
@@ -241,17 +214,30 @@ class LoginViewController: UIViewController {
         let dV = BaseTabBarController()
         navigationController?.pushViewController(dV, animated: true)
     }
+
+    // MARK: - Actions methods
+    // MARK: -
+    @objc private func handleDismiss() {
+        viewModel.cancelButonPressed()
+        navigationController?.popToRootViewController(animated: true)
+    }
+
+    @objc private func letsGoButonPressed() {
+        validateCredentials()
+    }
+
+    @objc private func observeRememberSwitch() {
+        NotificationCenter.default.post(name: NSNotification.Name("loginSwitch"), object: rememberSwitch)
+    }
 }
 
+// MARK: - UITextFieldDelegate methods
+// MARK: -
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         textField.endEditing(true)
         return true
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -260,5 +246,9 @@ extension LoginViewController: UITextFieldDelegate {
         } else {
             rememberSwitch.isUserInteractionEnabled = true
         }
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }

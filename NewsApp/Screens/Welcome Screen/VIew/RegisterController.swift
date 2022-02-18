@@ -8,18 +8,15 @@
 import UIKit
 
 class RegisterController: UIViewController {
+    private let viewModel = RegisterControllerViewModel()
+
     private let emailLabel = UILabel(text: "Email")
     private let passwordLabel = UILabel(text: "Password")
     private let confirmLabel = UILabel(text: "Confirm password")
-    private let viewModel = RegisterControllerViewModel()
+    
     private let registerLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Register your new account"
-        label.font = .boldSystemFont(ofSize: 25)
+        let label = UILabel(text: "Register your new account", font: .boldSystemFont(ofSize: 25), textColor: .black)
         label.textAlignment = .center
-        label.textColor = .black
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
         return label
     }()
     private let loginTextField: UITextField = {
@@ -58,18 +55,13 @@ class RegisterController: UIViewController {
     }()
     private let doneButton: BaseButton = {
         let button = BaseButton(type: .system)
-        button.setTitle("Done", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
-        button.backgroundColor = .init(hex: 0x494d4e)
+        button.createGraphiteButton(title: "Done")
         button.addTarget(self, action: #selector(doneButonPressed), for: .touchUpInside)
         return button
     }()
 
-    private let closeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        button.tintColor = .init(hex: 0xDB6400)
+    private let closeButton: CloseButton = {
+        let button = CloseButton(type: .system)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         return button
     }()
@@ -82,7 +74,9 @@ class RegisterController: UIViewController {
 
         updateControllerWithVIewModel()
     }
-    
+
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
@@ -93,8 +87,6 @@ class RegisterController: UIViewController {
         setupCloseButton()
     }
 
-    // MARK: - setup user interface methods
-    // MARK: -
     private func setupStackView() {
         let keepMeSignedInStackView = UIStackView(arrangedSubviews: [
             rememberSwitch,
@@ -153,19 +145,8 @@ class RegisterController: UIViewController {
         closeButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 12, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 40))
     }
 
-    @objc private func doneButonPressed() {
-        setUserData()
-    }
-
-    @objc func handleDismiss() {
-        viewModel.cancelButonPressed()
-        navigationController?.popToRootViewController(animated: true)
-    }
-
-    @objc private func observeRememberSwitch() {
-        NotificationCenter.default.post(name: NSNotification.Name("rememberSwitch"), object: rememberSwitch)
-    }
-
+    // MARK: - Presentation methods
+    // MARK: -
     private func updateControllerWithVIewModel() {
         viewModel.result.bind { [weak self ] result in
             guard let self = self else {
@@ -192,6 +173,13 @@ class RegisterController: UIViewController {
         }
     }
 
+    private func presentVerificationController() {
+        let destinationVC = VerificationController()
+        navigationController?.pushViewController(destinationVC, animated: true)
+    }
+
+    // MARK: - set user data to database method
+    // MARK: -
     private func setUserData() {
         guard let login = loginTextField.text, let password = passwordTextField.text, let repeatPassword = repeatPasswordTextField.text else {
             return
@@ -199,21 +187,29 @@ class RegisterController: UIViewController {
         viewModel.setUserData(with: login, password: password, repeatPassword: repeatPassword)
     }
 
-    private func presentVerificationController() {
-        let destinationVC = VerificationController()
-        navigationController?.pushViewController(destinationVC, animated: true)
+    // MARK: - Actions methods
+    // MARK: -
+    @objc private func doneButonPressed() {
+        setUserData()
+    }
+
+    @objc private func handleDismiss() {
+        viewModel.cancelButonPressed()
+        navigationController?.popToRootViewController(animated: true)
+    }
+
+    @objc private func observeRememberSwitch() {
+        NotificationCenter.default.post(name: NSNotification.Name("rememberSwitch"), object: rememberSwitch)
     }
 }
 
+// MARK: - UITextFieldDelegate methods
+// MARK: -
 extension RegisterController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         textField.endEditing(true)
         return true
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -222,5 +218,9 @@ extension RegisterController: UITextFieldDelegate {
         } else {
             rememberSwitch.isUserInteractionEnabled = true
         }
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }

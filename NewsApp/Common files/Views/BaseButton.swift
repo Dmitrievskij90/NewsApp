@@ -28,9 +28,6 @@ class BaseButton: UIButton {
         super.init(frame: frame)
         contentMode = .center
         layer.borderWidth = 0.5
-        layer.borderColor = UIColor.lightGray.cgColor
-        layer.cornerRadius = layer.frame.height / 3.3
-
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 10
         layer.shadowOffset = .init(width: 0, height: 10)
@@ -45,5 +42,23 @@ class BaseButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = layer.frame.height / 3
+    }
+}
+
+extension BaseButton {
+    func createGraphiteButton(title: String) {
+        setTitle(title, for: .normal)
+        titleLabel?.font = .boldSystemFont(ofSize: 20)
+        setTitleColor(.init(hex: 0x4EFDD), for: .normal)
+        backgroundColor = .init(hex: 0x494d4e)
+        layer.borderColor = UIColor.lightGray.cgColor
+    }
+
+    func createWhiteButton(title: String) {
+        setTitle(title, for: .normal)
+        titleLabel?.font = .boldSystemFont(ofSize: 20)
+        setTitleColor(.darkGray, for: .normal)
+        backgroundColor = .white
+        layer.borderColor = UIColor.init(hex: 0x4EFDD).cgColor
     }
 }

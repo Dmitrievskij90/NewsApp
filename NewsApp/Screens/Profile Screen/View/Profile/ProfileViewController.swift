@@ -22,7 +22,9 @@ class ProfileViewController: UIViewController {
         tableView.backgroundColor = .white
         return tableView
     }()
-    
+
+    // MARK: - lifecycle methods
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.loadUserSettings()
@@ -71,7 +73,9 @@ class ProfileViewController: UIViewController {
         }
         self.tableView.tableFooterView = footer
     }
-    
+
+    // MARK: - Presentation methods
+    // MARK: -
     private func displayImagePickerController() {
         let imagePicerController = UIImagePickerController()
         imagePicerController.delegate = self
@@ -95,6 +99,23 @@ class ProfileViewController: UIViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 
+    private func presentDeleteAlert() {
+        let alertController = UIAlertController(title: "Warning!", message: "Do you want to delete your account?", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+            alertController.dismiss(animated: true, completion: nil)
+            self.viewModel.deleteUser()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { _ in
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    // MARK: - viewModel methods
+    // MARK: -
     private func updateControllerWithViewModel() {
         viewModel.indexPath.bind { [weak self] result in
             if let res = result {
@@ -125,21 +146,6 @@ class ProfileViewController: UIViewController {
         header.nameTextField.text = "\(viewModel.user.name)"
         header.userImageView.image = viewModel.image
         header.countryImageView.image = UIImage(named: viewModel.user.country)
-    }
-
-    func presentDeleteAlert() {
-        let alertController = UIAlertController(title: "Warning!", message: "Do you want to delete your account?", preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
-            alertController.dismiss(animated: true, completion: nil)
-            self.viewModel.deleteUser()
-        }
-
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { _ in
-            alertController.dismiss(animated: true, completion: nil)
-        }
-        alertController.addAction(deleteAction)
-        alertController.addAction(cancelAction)
-        self.present(alertController, animated: true, completion: nil)
     }
 }
 

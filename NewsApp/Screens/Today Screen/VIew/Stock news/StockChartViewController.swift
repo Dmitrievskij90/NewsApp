@@ -119,6 +119,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         setDataToDifferenceLabel()
     }
 
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
@@ -155,38 +157,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: halfView.topAnchor, trailing: view.trailingAnchor)
     }
 
-    private func setupLabelsData() {
-        priceLabel.text = viewModel.priceLabel
-        companyLogoImageView.image = UIImage(named: viewModel.stockChartSymbol)
-        companyLabel.text = viewModel.stockChartSymbol
-        dateLabel.text = Helpers.shared.getCurrentDate()
-    }
-
-    private func setupStockChart() {
-        viewModel.stockModel.bind {result in
-            if let res = result {
-                var entries = [ChartDataEntry]()
-                for (index, value) in res.values.reversed().enumerated() {
-                    entries.append(ChartDataEntry(x: Double(index), y: Double(value.close ) ?? 0.0))
-                }
-                self.setupLineChartDataSet(entries)
-            }
-        }
-    }
-
-    private func setDataToDifferenceLabel() {
-        viewModel.diffrience.bind { diffrience in
-            let price = String(format: "%.2f", diffrience)
-            if diffrience > 0 {
-                self.differenceButton.setTitleColor(.green, for: .normal)
-                self.differenceButton.setTitle("(+\(price))", for: .normal)
-            } else {
-                self.differenceButton.setTitle("(\(price))", for: .normal)
-                self.differenceButton.setTitleColor(.red, for: .normal)
-            }
-        }
-    }
-
+    // MARK: - setup ChartData methods
+    // MARK: -
     private func setupLineChartDataSet(_ entries: [ChartDataEntry]) {
         let set = LineChartDataSet(entries: entries, label: "Price for the last 30 days")
         set.drawCirclesEnabled = false
@@ -203,11 +175,47 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         lineChartView.data = data
     }
 
-    @objc func handleDismiss() {
+    private func setupStockChart() {
+        viewModel.stockModel.bind {result in
+            if let res = result {
+                var entries = [ChartDataEntry]()
+                for (index, value) in res.values.reversed().enumerated() {
+                    entries.append(ChartDataEntry(x: Double(index), y: Double(value.close ) ?? 0.0))
+                }
+                self.setupLineChartDataSet(entries)
+            }
+        }
+    }
+
+    // MARK: - set data to UI elements
+    // MARK: -
+    private func setupLabelsData() {
+        priceLabel.text = viewModel.priceLabel
+        companyLogoImageView.image = UIImage(named: viewModel.stockChartSymbol)
+        companyLabel.text = viewModel.stockChartSymbol
+        dateLabel.text = Helpers.shared.getCurrentDate()
+    }
+
+    private func setDataToDifferenceLabel() {
+        viewModel.diffrience.bind { diffrience in
+            let price = String(format: "%.2f", diffrience)
+            if diffrience > 0 {
+                self.differenceButton.setTitleColor(.green, for: .normal)
+                self.differenceButton.setTitle("(+\(price))", for: .normal)
+            } else {
+                self.differenceButton.setTitle("(\(price))", for: .normal)
+                self.differenceButton.setTitleColor(.red, for: .normal)
+            }
+        }
+    }
+
+    // MARK: - Actions methods
+    // MARK: -
+    @objc private func handleDismiss() {
         dismiss(animated: true, completion: nil)
     }
 
-    @objc func differenceButtonTapped() {
+    @objc private func differenceButtonTapped() {
         presentOneButtonAlert(withTitle: "", message: "The difference between the current price and yesterday's closing price")
     }
 }

@@ -24,6 +24,8 @@ class TodayController: UIViewController {
     private let activityIndicator = BaseActivityIndicator(style: .medium)
     private let viewModel = TodayControllerViewModel()
 
+    // MARK: - lifecycle methods
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .label
@@ -38,6 +40,8 @@ class TodayController: UIViewController {
         viewModel.viewWillAppear()
     }
 
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
@@ -66,6 +70,8 @@ class TodayController: UIViewController {
         todayCollectionView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
 
+    // MARK: - Data manipulation methods
+    // MARK: -
     private func updateControllerWithVIewModel() {
         viewModel.stockData.bind { _ in
             DispatchQueue.main.async { [weak self] in
@@ -85,7 +91,7 @@ class TodayController: UIViewController {
         }
     }
 
-    @objc func refreshHandler() {
+    @objc private func refreshHandler() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { [weak self] _ in
             guard let self = self else {
@@ -96,50 +102,8 @@ class TodayController: UIViewController {
         viewModel.refreshData()
     }
 
-    func handleRemoveView() {
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
-            [weak self]  in
-            guard let self = self else {
-                return
-            }
-
-            self.blurVisualEffectView.alpha = 0
-            self.appFullscreenController.view.transform = .identity
-
-            guard let startingFrame = self.startingFrame else {
-                return
-            }
-            self.topConstraint?.constant = startingFrame.origin.y
-            self.leadingConstraint?.constant = startingFrame.origin.x
-            self.widthConstraint?.constant = startingFrame.width
-            self.heightConstraint?.constant = startingFrame.height
-
-            self.view.layoutIfNeeded()
-            self.appFullscreenController.tableView.contentOffset = .zero
-
-            self.tabBarController?.tabBar.transform = .identity
-            if let tabBarFrame = self.tabBarController?.tabBar.frame {
-                self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height - tabBarFrame.height
-                guard let cell = self.appFullscreenController.tableView.cellForRow(at: [0, 0]) as? ImageHeaderTableCell else {
-                    return
-                }
-
-                self.appFullscreenController.closeButton.alpha = 0
-                self.appFullscreenController.shareButton.alpha = 0
-                self.appFullscreenController.floatingContainerView.alpha = 0
-                cell.layoutIfNeeded()
-            }
-        } completion: { [weak self] _ in
-            guard let self = self else {
-                return
-            }
-            self.appFullscreenController.view.removeFromSuperview()
-            self.appFullscreenController.removeFromParent()
-            self.todayCollectionView.isUserInteractionEnabled = true
-        }
-    }
-
-    // MARK: - Методы анимации ячейки для одного приложения
+    // MARK: - methods for display TableDetailsController
+    // MARK: -
     private func setupAppSingleFullscreenController(_ indexPath: IndexPath) {
         let appFullscreenController = TableDetailsController()
         appFullscreenController.dataSource = viewModel.todayNews.value[indexPath.item]
@@ -159,7 +123,7 @@ class TodayController: UIViewController {
         appFullscreenController.view.addGestureRecognizer(gesture)
     }
 
-    @objc func handleDrag(gesture: UIPanGestureRecognizer) {
+    @objc private func handleDrag(gesture: UIPanGestureRecognizer) {
         if gesture.state == .began {
             appFullscreenBeginOffset = appFullscreenController.tableView.contentOffset.y
         }
@@ -252,14 +216,63 @@ class TodayController: UIViewController {
         setupSingleAppFullScreenStartingPosition(indexPath)
         beginFullscreenAnimation()
     }
+
+    // MARK: - method for display TableDetailsController
+    // MARK: -
+    private func handleRemoveView() {
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut) {
+            [weak self]  in
+            guard let self = self else {
+                return
+            }
+
+            self.blurVisualEffectView.alpha = 0
+            self.appFullscreenController.view.transform = .identity
+
+            guard let startingFrame = self.startingFrame else {
+                return
+            }
+            self.topConstraint?.constant = startingFrame.origin.y
+            self.leadingConstraint?.constant = startingFrame.origin.x
+            self.widthConstraint?.constant = startingFrame.width
+            self.heightConstraint?.constant = startingFrame.height
+
+            self.view.layoutIfNeeded()
+            self.appFullscreenController.tableView.contentOffset = .zero
+
+            self.tabBarController?.tabBar.transform = .identity
+            if let tabBarFrame = self.tabBarController?.tabBar.frame {
+                self.tabBarController?.tabBar.frame.origin.y = self.view.frame.size.height - tabBarFrame.height
+                guard let cell = self.appFullscreenController.tableView.cellForRow(at: [0, 0]) as? ImageHeaderTableCell else {
+                    return
+                }
+
+                self.appFullscreenController.closeButton.alpha = 0
+                self.appFullscreenController.shareButton.alpha = 0
+                self.appFullscreenController.floatingContainerView.alpha = 0
+                cell.layoutIfNeeded()
+            }
+        } completion: { [weak self] _ in
+            guard let self = self else {
+                return
+            }
+            self.appFullscreenController.view.removeFromSuperview()
+            self.appFullscreenController.removeFromParent()
+            self.todayCollectionView.isUserInteractionEnabled = true
+        }
+    }
 }
 
+// MARK: - UIGestureRecognizerDelegate methods
+// MARK: -
 extension TodayController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }
 
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout methods
+// MARK: -
 extension TodayController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.todayNews.value.count

@@ -13,25 +13,10 @@ class VerificationController: UIViewController {
     private let alertView = VerificationAlertView()
     private let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     private let viewModel = VerificationControllerViewModel()
-    
-    private let letsGoButton: UIButton = {
-        let button = BaseButton(type: .system)
-        button.setTitle("Let's go", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
-        button.backgroundColor = .init(hex: 0x494d4e)
-        button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
-        return button
-    }()
-    
+
     private let setupProfileLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Set up profile"
-        label.font = .boldSystemFont(ofSize: 35)
+        let label = UILabel(text: "Set up profile", font: .boldSystemFont(ofSize: 35), textColor: .black)
         label.textAlignment = .center
-        label.textColor = .black
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -57,13 +42,7 @@ class VerificationController: UIViewController {
     }()
     
     private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "User name"
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .left
-        label.textColor = .darkGray
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+        let label = UILabel(text: "User name", font: .boldSystemFont(ofSize: 18))
         return label
     }()
     
@@ -75,21 +54,20 @@ class VerificationController: UIViewController {
     }()
     
     private let countryLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Country:"
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .left
-        label.textColor = .darkGray
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+        let label = UILabel(text: "Country:", font: .boldSystemFont(ofSize: 18))
         return label
     }()
 
-    private let closeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        button.tintColor = .init(hex: 0xDB6400)
+    private let closeButton: CloseButton = {
+        let button = CloseButton(type: .system)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        return button
+    }()
+
+    private let letsGoButton: UIButton = {
+        let button = BaseButton(type: .system)
+        button.createGraphiteButton(title: "Let's go")
+        button.addTarget(self, action: #selector(letsGoButonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -222,6 +200,18 @@ class VerificationController: UIViewController {
         }
     }
 
+    private func displayImagePickerController() {
+        let imagePicerController = UIImagePickerController()
+        imagePicerController.delegate = self
+        imagePicerController.sourceType = .photoLibrary
+        present(imagePicerController, animated: true, completion: nil)
+    }
+
+    private func presentBaseTabBarController() {
+        let destinationVC = BaseTabBarController()
+        navigationController?.pushViewController(destinationVC, animated: true)
+    }
+
     // MARK: - Animation methods
     // MARK: -
     private func hideAlertView() {
@@ -264,7 +254,7 @@ class VerificationController: UIViewController {
 
     // MARK: - Actions methods
     // MARK: -
-    @objc func countryButtonTapped(button: UIButton) {
+    @objc private func countryButtonTapped(button: UIButton) {
         NotificationCenter.default.post(name: NSNotification.Name("country"), object: button.tag)
         animateCountryButton(button: button)
         switch button.tag {
@@ -293,21 +283,9 @@ class VerificationController: UIViewController {
         displayImagePickerController()
     }
 
-    @objc func handleDismiss() {
+    @objc private func handleDismiss() {
         viewModel.cancelButonPressed()
         navigationController?.popToRootViewController(animated: true)
-    }
-
-    private func displayImagePickerController() {
-        let imagePicerController = UIImagePickerController()
-        imagePicerController.delegate = self
-        imagePicerController.sourceType = .photoLibrary
-        present(imagePicerController, animated: true, completion: nil)
-    }
-
-    private func presentBaseTabBarController() {
-        let destinationVC = BaseTabBarController()
-        navigationController?.pushViewController(destinationVC, animated: true)
     }
 }
 
@@ -333,14 +311,14 @@ extension VerificationController: UITextFieldDelegate {
         textField.endEditing(true)
         return true
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = textField.text {
             NotificationCenter.default.post(name: NSNotification.Name("name"), object: text)
         }
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }

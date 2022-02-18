@@ -23,7 +23,9 @@ class FullScreenCategoriesViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // MARK: - lifecycle methods
+    // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         updateControllerWithViewModel()
@@ -39,7 +41,9 @@ class FullScreenCategoriesViewController: UIViewController {
         tabBarController?.tabBar.alpha = 1
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
-    
+
+    // MARK: - setup user interface methods
+    // MARK: -
     override func loadView() {
         let view = UIView(frame: UIScreen.main.bounds)
         self.view = view
@@ -64,7 +68,9 @@ class FullScreenCategoriesViewController: UIViewController {
         
         view.addSubview(categoryCollectionView)
     }
-    
+
+    // MARK: - viewModel methods
+    // MARK: -
     private func updateControllerWithViewModel() {
         viewModel.categoryNews.bind { _ in
             DispatchQueue.main.async { [weak self] in
@@ -77,7 +83,7 @@ class FullScreenCategoriesViewController: UIViewController {
         }
     }
     
-    @objc func refreshHandler() {
+    @objc private func refreshHandler() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
             self.refreshControl.endRefreshing()
@@ -86,6 +92,8 @@ class FullScreenCategoriesViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate and UICollectionViewDelegateFlowLayout methods
+// MARK: -
 extension FullScreenCategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.categoryNews.value.count

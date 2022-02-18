@@ -31,6 +31,7 @@
 		5C4A388B278DDEDE008BCF5A /* StockChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A388A278DDEDE008BCF5A /* StockChartViewModel.swift */; };
 		5C4BADE426EA702C000620A1 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4BADE326EA702C000620A1 /* UIColor+Extension.swift */; };
 		5C4BADE726EA7E93000620A1 /* WebNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */; };
+		5C4F562427B5631200AB9DCC /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F562327B5631200AB9DCC /* CloseButton.swift */; };
 		5C55A51026F0EC79004B148F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55A50F26F0EC79004B148F /* LoginViewController.swift */; };
 		5C55A52126F101ED004B148F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55A52026F101ED004B148F /* ProfileViewController.swift */; };
 		5C5A1BA9276B8DFC005FA529 /* FavoriteCategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A1BA8276B8DFC005FA529 /* FavoriteCategoriesViewModel.swift */; };
@@ -125,6 +126,7 @@
 		5C4A388A278DDEDE008BCF5A /* StockChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockChartViewModel.swift; sourceTree = "<group>"; };
 		5C4BADE326EA702C000620A1 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebNewsViewController.swift; sourceTree = "<group>"; };
+		5C4F562327B5631200AB9DCC /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		5C55A50F26F0EC79004B148F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5C55A52026F101ED004B148F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5C5A1BA8276B8DFC005FA529 /* FavoriteCategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCategoriesViewModel.swift; sourceTree = "<group>"; };
@@ -209,9 +211,7 @@
 		5C141CE426ECD1CE0052028E /* WebNews Screen */ = {
 			isa = PBXGroup;
 			children = (
-				5CBDA4322768F8E4003AB428 /* Model */,
 				5CBDA4332768F8E9003AB428 /* View */,
-				5CBDA4342768F8EE003AB428 /* ViewModel */,
 			);
 			path = "WebNews Screen";
 			sourceTree = "<group>";
@@ -339,6 +339,7 @@
 				5C24EEB2271899B100F302D0 /* BaseButton.swift */,
 				5CBA4EB5273C28B700FC2505 /* CircularImageView.swift */,
 				5C8917C72767BE6400927EE9 /* BaseActivityIndicator.swift */,
+				5C4F562327B5631200AB9DCC /* CloseButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -467,13 +468,6 @@
 			path = "Stock news";
 			sourceTree = "<group>";
 		};
-		5CBDA4212768F599003AB428 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		5CBDA4222768F5A1003AB428 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -579,26 +573,12 @@
 			path = "Stock companies";
 			sourceTree = "<group>";
 		};
-		5CBDA4322768F8E4003AB428 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		5CBDA4332768F8E9003AB428 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		5CBDA4342768F8EE003AB428 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		5CBDA4352768F997003AB428 /* Common files */ = {
@@ -624,7 +604,6 @@
 		5CE2D6C02703926A00362909 /* FavoriteCategories Screen */ = {
 			isa = PBXGroup;
 			children = (
-				5CBDA4212768F599003AB428 /* Model */,
 				5CBDA4222768F5A1003AB428 /* View */,
 				5CBDA4232768F5A8003AB428 /* VIewModel */,
 			);
@@ -634,12 +613,12 @@
 		5CFB9F4E26E3AFE00095D548 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				5CFB9F4F26E3AFF90095D548 /* UIView+Layout.swift */,
 				5C7098C626E9382100A8AEC5 /* Helpers.swift */,
+				5C23AEEC27662002006521BD /* Box.swift */,
+				5C8B46F227469D9900206D07 /* DefaultParameters.swift */,
+				5CFB9F4F26E3AFF90095D548 /* UIView+Layout.swift */,
 				5C4BADE326EA702C000620A1 /* UIColor+Extension.swift */,
 				5CF9EFCD26EFC33500655DD2 /* UIViewController+UIAlertController.swift */,
-				5C8B46F227469D9900206D07 /* DefaultParameters.swift */,
-				5C23AEEC27662002006521BD /* Box.swift */,
 				5CBB48BC276A4439005F2F69 /* UIView+Extension.swift */,
 				5C16C7E7277A131900F96CE6 /* UITextField+Extension.swift */,
 				5C16C7EA277A1AF500F96CE6 /* UILabel+Extension.swift */,
@@ -839,6 +818,7 @@
 				5C2DF30B27024B6B00D51EEE /* CategoriesViewController.swift in Sources */,
 				5C31FF6627286B7E0001E714 /* StockCompaniesCell.swift in Sources */,
 				5C148E9626FDDAC500F465AC /* ProfileTableHeader.swift in Sources */,
+				5C4F562427B5631200AB9DCC /* CloseButton.swift in Sources */,
 				5C7E3021279710BC002FC232 /* ProfileViewModel.swift in Sources */,
 				5C16C7E8277A131900F96CE6 /* UITextField+Extension.swift in Sources */,
 				5C4867052709A0B20087A708 /* CategoryManager.swift in Sources */,

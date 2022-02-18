@@ -25,25 +25,15 @@ class ImageHeaderTableCell: UITableViewCell {
     }
 
     private let sourceLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
-        label.textColor = .black
+        let label = UILabel(font: .boldSystemFont(ofSize: 20), textColor: .black)
         label.textAlignment = .center
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        label.text = "BBC"
         return label
     }()
 
     private let dateLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 15)
-        label.textColor = .lightGray
+        let label = UILabel(font: .systemFont(ofSize: 15), textColor: .lightGray)
         label.textAlignment = .center
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
         label.constrainHeight(constant: 15)
-        label.text = "8 September 2021"
         return label
     }()
 
@@ -56,14 +46,9 @@ class ImageHeaderTableCell: UITableViewCell {
     }()
 
     private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.constrainWidth(constant: 250)
-        label.numberOfLines = 0
-        label.font = .boldSystemFont(ofSize: 15)
-        label.textColor = .black
+        let label = UILabel(font: .boldSystemFont(ofSize: 15), textColor: .black, numberOfLines: 0)
         label.textAlignment = .center
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+        label.constrainWidth(constant: 250)
         return label
     }()
 

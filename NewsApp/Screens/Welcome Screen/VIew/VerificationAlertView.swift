@@ -11,14 +11,9 @@ class VerificationAlertView: UIView {
     var tapHandler: (() -> Void)?
 
     private let alertLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Verify your account.\nWe have sent a verification letter to your email. Please confirm your email and try again"
-        label.font = .boldSystemFont(ofSize: 20)
+        let text = "Verify your account.\nWe have sent a verification letter to your email. Please confirm your email and try again"
+        let label = UILabel(text: text, font: .boldSystemFont(ofSize: 20), textColor: .white, numberOfLines: 0)
         label.textAlignment = .center
-        label.textColor = .white
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        label.numberOfLines = 0
         return label
     }()
 
@@ -31,7 +26,7 @@ class VerificationAlertView: UIView {
         return imageView
     }()
 
-    private let oKButton: UIButton = {
+    private let oKButton: BaseButton = {
         let button = BaseButton(type: .system)
         button.setTitle("OK", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)

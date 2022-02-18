@@ -12,13 +12,9 @@ class ProfileTableFooter: UIView {
 
     private let logOutButton: BaseButton = {
         let button = BaseButton(type: .system)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.setTitle("LOG OUT", for: .normal)
-        button.setTitleColor(.init(hex: 0x4EFDD), for: .normal)
-        button.backgroundColor = .init(hex: 0x494d4e)
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        button.createGraphiteButton(title: "LOG OUT")
         button.constrainHeight(constant: 50)
-
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
     }()
 

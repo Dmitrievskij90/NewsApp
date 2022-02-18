@@ -20,14 +20,9 @@ class FloatingContainerView: UIView {
     }()
     
     private let label: UILabel = {
-        let label = UILabel()
-        label.text = "Do you want more information?"
-        label.numberOfLines = 2
-        label.minimumScaleFactor = 0.5
-        label.adjustsFontSizeToFitWidth = true
+        let text = "Do you want more information?"
+        let label = UILabel(text: text, textColor: .black, numberOfLines: 2)
         label.textAlignment = .center
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textColor = .black
         return label
     }()
     

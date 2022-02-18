@@ -46,6 +46,8 @@ class StockHeaderHorizontalController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate and  UICollectionViewDelegateFlowLayout methods
+// MARK: -
 extension StockHeaderHorizontalController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return stockData.count

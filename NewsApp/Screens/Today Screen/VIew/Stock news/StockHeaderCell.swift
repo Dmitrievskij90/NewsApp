@@ -82,24 +82,14 @@ class StockHeaderCell: UICollectionViewCell {
     }()
     
     private let logoLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = .boldSystemFont(ofSize: 13)
-        label.textColor = .darkGray
+        let label = UILabel(font: .boldSystemFont(ofSize: 13), numberOfLines: 0)
         label.textAlignment = .center
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
         return label
     }()
     
     private let priceLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = .boldSystemFont(ofSize: 15)
-        label.textColor = .darkGray
+        let label = UILabel(font: .boldSystemFont(ofSize: 15), numberOfLines: 0)
         label.textAlignment = .center
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
         return label
     }()
 

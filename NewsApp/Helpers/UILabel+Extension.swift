@@ -8,13 +8,13 @@
 import UIKit
 
 extension UILabel {
-    convenience init(text: String, font: UIFont = .boldSystemFont(ofSize: 18), numberOfLines: Int = 1) {
+    convenience init(text: String = "", font: UIFont = .boldSystemFont(ofSize: 18), textColor: UIColor = .darkGray, numberOfLines: Int = 1) {
         self.init(frame: .zero)
         self.text = text
         self.font = font
         self.numberOfLines = numberOfLines
         self.textAlignment = .left
-        self.textColor = .darkGray
+        self.textColor = textColor
         self.adjustsFontSizeToFitWidth = true
         self.minimumScaleFactor = 0.5
     }

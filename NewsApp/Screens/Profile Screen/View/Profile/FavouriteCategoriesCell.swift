@@ -8,18 +8,14 @@
 import UIKit
 
 class FavouriteCategoriesCell: UITableViewCell {
-    let countryLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textColor = .black
-        label.text = "Favourite categories"
-        label.textAlignment = .left
+    private let countryLabel: UILabel = {
+        let label = UILabel(text: "Favourite categories", font: .boldSystemFont(ofSize: 18), textColor: .black)
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
         return label
     }()
 
-    let bottomView: UIView = {
+    private let bottomView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         view.constrainHeight(constant: 1)
