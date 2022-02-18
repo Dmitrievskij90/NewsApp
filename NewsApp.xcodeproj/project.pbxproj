@@ -211,9 +211,7 @@
 		5C141CE426ECD1CE0052028E /* WebNews Screen */ = {
 			isa = PBXGroup;
 			children = (
-				5CBDA4322768F8E4003AB428 /* Model */,
 				5CBDA4332768F8E9003AB428 /* View */,
-				5CBDA4342768F8EE003AB428 /* ViewModel */,
 			);
 			path = "WebNews Screen";
 			sourceTree = "<group>";
@@ -470,13 +468,6 @@
 			path = "Stock news";
 			sourceTree = "<group>";
 		};
-		5CBDA4212768F599003AB428 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		5CBDA4222768F5A1003AB428 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -582,26 +573,12 @@
 			path = "Stock companies";
 			sourceTree = "<group>";
 		};
-		5CBDA4322768F8E4003AB428 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		5CBDA4332768F8E9003AB428 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				5C4BADE626EA7E93000620A1 /* WebNewsViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		5CBDA4342768F8EE003AB428 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		5CBDA4352768F997003AB428 /* Common files */ = {
@@ -627,7 +604,6 @@
 		5CE2D6C02703926A00362909 /* FavoriteCategories Screen */ = {
 			isa = PBXGroup;
 			children = (
-				5CBDA4212768F599003AB428 /* Model */,
 				5CBDA4222768F5A1003AB428 /* View */,
 				5CBDA4232768F5A8003AB428 /* VIewModel */,
 			);

@@ -25,23 +25,16 @@ class NewsDetailCell: UICollectionViewCell {
     }
 
     private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
+        let label = UILabel(font: .boldSystemFont(ofSize: 25), textColor: .black, numberOfLines: 0)
         label.constrainHeight(constant: 100)
-        label.font = .boldSystemFont(ofSize: 25)
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
-        label.textColor = .black
         label.textAlignment = .center
         return label
     }()
 
     private let dateLabel: UILabel = {
-        let label = UILabel()
+        let label = UILabel(font: .systemFont(ofSize: 15), textColor: .lightGray)
         label.constrainHeight(constant: 30)
         label.centerXInSuperview()
-        label.font = .systemFont(ofSize: 15)
-        label.textColor = .lightGray
         label.textAlignment = .center
         return label
     }()

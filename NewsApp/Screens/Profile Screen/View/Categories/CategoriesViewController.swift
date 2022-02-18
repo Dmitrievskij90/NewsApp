@@ -45,6 +45,8 @@ class CategoriesViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate and UICollectionViewDelegateFlowLayout methods
+// MARK: -
 extension CategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.categoriesStruct.count

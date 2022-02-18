@@ -37,7 +37,7 @@ class StockCell: UITableViewCell {
         return imageView
     }()
 
-    let bottomView: UIView = {
+    private let bottomView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.constrainHeight(constant: 1)

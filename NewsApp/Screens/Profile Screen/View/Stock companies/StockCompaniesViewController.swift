@@ -44,6 +44,8 @@ class StockCompaniesViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDelegate and UITableViewDataSource methods
+// MARK: -
 extension StockCompaniesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.stockCompaniesStruct.count

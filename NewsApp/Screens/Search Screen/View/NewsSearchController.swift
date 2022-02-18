@@ -109,6 +109,8 @@ extension NewsSearchController: UICollectionViewDataSource, UICollectionViewDele
     }
 }
 
+// MARK: - UISearchBarDelegate methods
+// MARK: -
 extension NewsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let term = searchText.replacingOccurrences(of: " ", with: "")
