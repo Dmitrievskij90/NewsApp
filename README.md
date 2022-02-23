@@ -7,7 +7,7 @@ An app for browsing news and stock prices of popular companies.
 + UI from code
 + UserDefaults, FileManager, Keychain
 + URLSession, JSON
-+ API: "News API" for get news data, "Twelvedata" for get stock market data
++ API: "News API" for getting news data, "Twelve data" for getting stock market data
 + Firebase Authentication/Email verification
 + Third-Party libraries: SDWebImage, Charts, KeychainAccess
 + MVVM
