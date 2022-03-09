@@ -65,7 +65,7 @@ class ProfileTableHeader: UIView {
     
     let userImageView: CircularImageView = {
         let imageView = CircularImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.backgroundColor = .white
         imageView.constrainHeight(constant: 75)
