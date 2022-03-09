@@ -11,6 +11,7 @@ An app for browsing news and stock prices of popular companies.
 + Firebase Authentication/Email verification.
 + Third-Party libraries: SDWebImage, Charts, KeychainAccess.
 + MVVM
++ SwiftLint
 
 ### Features:
 + Register user by email.
