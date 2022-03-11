@@ -10,8 +10,8 @@ An app for browsing news and stock prices of popular companies.
 + API: "News API" for getting news data, "Twelve data" for getting stock market data.
 + Firebase Authentication/Email verification.
 + Third-Party libraries: SDWebImage, Charts, KeychainAccess.
-+ MVVM
-+ SwiftLint
++ MVVM.
++ SwiftLint.
 
 ### Features:
 + Register user by email.
