@@ -1,4 +1,5 @@
 # NewsApp
+
 An app for browsing news and stock prices of popular companies.
 
 ### Stack:
